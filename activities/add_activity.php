@@ -236,11 +236,11 @@ function check_form()
 	    else
 		 {          
            
-                  add_image();
+                  ajaxbackend();
                  } 
    }
 
-function add_image(){
+function ajaxbackend(){
   
 
     //stop submit the form, we will post it manually.
