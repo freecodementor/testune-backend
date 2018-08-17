@@ -553,7 +553,7 @@ function check_form()
 	    else
 		 {          
            
-                  add_image();
+                  ajaxbackend();
                  } 
    }
 
@@ -563,7 +563,7 @@ function close_popup(p)
      parent.$.fancybox.close();
     //window.location.href='Home/select_exam.php?id='+p;
 } 
-function add_image(){
+function ajaxbackend(){
   
 
     //stop submit the form, we will post it manually.
