@@ -153,8 +153,8 @@ textarea {
                                 <tbody><tr>  
                                   <td style="padding: 0em 0em;">
 					<section class="wrapper special popup ">
-                                                     <header class="mb-4">
-              <h2 class="text-grey " style=" line-height:1.25em;"><strong>NEW CONTENT MANAGER</strong></h2>
+                                                     <header class="mb-3">
+              <h2 class="text-grey " style=" line-height:1.25em;"><strong>NEW VENDOR</strong></h2>
               
               <p id="msg"></p>
 						      </header>
@@ -164,41 +164,19 @@ textarea {
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Name" name="institute_name" id="institute_name" class="padding-popup radius03" required="">
+												<input type="text" placeholder="Name" name="vendor_name" id="vendor_name" class="padding-popup radius03" required="true">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="email" placeholder="Email Id" name="email" id="email" class="padding-popup radius03" required="">
-											</div>
-                      <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                        
-												<input type="email" placeholder="Secondary Email Id" name="secemail" id="secemail" class="padding-popup radius03" required="">
-											</div>
-                      <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                        
-                      <input placeholder="DOB" type="text" name="datepicker" id="datepicker">									</div>
-                      <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                                                                         <select style="min-height:30px;" name="qual" id="qual" required="" placeholder="Country *" autocomplete="off" onchange="change_country()">
-  
-    <option value="ae">Post Graduate</option>
-    <option value="ad">Graduate</option>
-  <option value="af">Matriculation</option>
-  </select>
-  </div>
+                      <input placeholder="Date of Formation" type="text" name="datepicker" id="datepicker"  required="true">									</div>
                       
-                      <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                        
-												<input type="text" placeholder="Phone No 1" name="phone" id="phone" class="padding-popup radius03" required="">
-											</div>
-                      <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                        
-												<input type="text" placeholder="Phone No 2" name="phone2" id="phone2" class="padding-popup radius03" required="">
-											</div>
+                      
+                     
                       
                        
 										 	
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                                                                         <select style="min-height:30px;" name="country" id="country" required="" placeholder="Country *" autocomplete="off" onchange="change_country()">
+                                                                                         <select style="min-height:30px;" name="country" id="country" required="" placeholder="Country *" autocomplete="off" onchange="change_country()  required="true">
   <option value="ad">Andorra</option>
   <option value="ae">United Arab Emirates</option>
   <option value="af">Afghanistan</option>
@@ -449,17 +427,18 @@ textarea {
 </select>
 </div>
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Experience" name="exp" id="exp" class="padding-popup radius03" required=""></textarea>
+												<textarea type="text" placeholder="Address" name="address" id="address" class="padding-popup radius03" required="true"></textarea>
 											</div> 
 
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Address" name="address" id="address" class="padding-popup radius03" required=""></textarea>
+												<textarea type="text" placeholder="" name="desc" id="desc" class="padding-popup radius03" required="true"></textarea>
 											</div> 
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
 											
-   
-                      Upload Photo: <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
-                                            <input name="fileToUpload" type="file" /><br>
+                      <div class="10u -1u" style="padding: 20px 0 0 20px;"> 
+											</div>
+                      Upload Icon: <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
+                                            <input name="fileToUpload" type="file" required="true" /><br>
 											</div>
 											
                       
@@ -487,35 +466,6 @@ $("#password").keyup(function(event){
 });
 });
 
-function login()
-    {
-          var user=$.trim($('#username').val());
-  	  var pass=$.trim($('#password').val());
-           if(user == '' || pass == '')
-           { 
-               alert('Please enter the username & password'); 
-           }
-           else
-           {  
-               // alert(user+pass);
-                  $.ajax({
-			  type: 'POST',
-			  url: '../Home/login_check.php',
-			  data: { username:user, password:pass, logintype:'institute' },
-			  beforeSend: function() {
-			  },
-			  success: function(response){   
-                                 if(response == 'institute')
-				 {
-				    parent.window.location="../dummy_page.php#cta";
-				 }
-				 else
-				 {
-				    alert("Incorrect username & password");
-				 }  
-			  }
-			 }); 
-}  }
 
 
 function validateEmail(email) {
@@ -529,22 +479,21 @@ function validateEmail(email) {
 
 function check_form()
    {
-           var institute_name= $('#institute_name').val();    
+           var vendor_name= $('#institute_name').val();    
 	   
      var country= $('#country').val(); 
-     var qual= $('#qual').val(); 
+     
      var dob= $('#datepicker').val(); 
 
-	   var phone= $('#phone').val();  
-     var phone2= $('#phone2').val(); 
+	  
      var address= $('#address').val(); 
-     var exp= $('#exp').val(); 
-           var username=$('#username').val();      
-	   var email= $('#email').val();    
-     var secemail= $('#secemail').val(); 
+     var desc= $('#desc').val(); 
+                
+	    
+    
 	  
           
-           if(institute_name === '' || address === '' )
+           if(vendor_name === '' || address === '' || desc === '' || country === '' || dob === '' )
                   {
 		        alert('Please make sure all fields are filled.');
 		  }
@@ -557,12 +506,6 @@ function check_form()
                  } 
    }
 
-function close_popup(p)
-{
-     alert('Thankyou for registering with Testune. We have sent you verification link to your registered email id. Kindly verify your account.');
-     parent.$.fancybox.close();
-    //window.location.href='Home/select_exam.php?id='+p;
-} 
 function add_image(){
   
 
@@ -584,7 +527,7 @@ function add_image(){
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "cont_mgr_back.php",
+        url: "vendor_back.php",
         data: data,
         processData: false,
         contentType: false,

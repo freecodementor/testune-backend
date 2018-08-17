@@ -1,5 +1,5 @@
 <?php
-$target_dir = "img/";
+$target_dir = "../img/vendor/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -20,7 +20,7 @@ if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
 
 } else {
-     $tmp_name = $_POST['institute_name'].$_POST['phone'].".jpg";
+     $tmp_name = $_POST['vendor_name']."_".$_POST['datepicker']."_".rand(1,100).".jpg";
      
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {
         
@@ -32,50 +32,43 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "testune";
-$name = $_POST['institute_name'];
-$qual = $_POST['qual'];
-$phone = $_POST['phone'];
-$phone2 = $_POST['phone2'];
-$exp = $_POST['exp'];
-$email = $_POST['email'];
-$secemail = $_POST['secemail'];
-
-$dob = $_POST['datepicker'];
+$vendor_name = $_POST['vendor_name'];
+$desc = $_POST['desc'];
+$form_year = $_POST['datepicker'];
 $address = $_POST['address'];
 $country = $_POST['country'];
 
- $result = "";
-
 
 $conn = new mysqli($servername, $username, $password, $dbname);
-$check="SELECT * FROM content_manager WHERE email_id = '$email'";
+$check="SELECT * FROM vendor WHERE vendor_name = '$vendor_name'";
 $result1 = $conn->query($check);
 $num_rows = mysqli_num_rows($result1);
 
 if ($num_rows>=1) {
     
-    echo "Email Id already exists";
+    echo "Vendor already exists";
     
 } 
 
 else {
    
    
-    $sql = "INSERT INTO content_manager (name, dob,address,phone_number,email_id,nationality,qualification,experience,photo,phone_no2,sec_email_id,username)
-VALUES ('$name','$dob','$address','$phone','$email','$country','$qual','$exp','$tmp_name','$phone2','$secemail','$email');";
+    $sql = "INSERT INTO vendor (vendor_name, vendor_description,formation_year,country,permanent_address,vendor_icon)
+VALUES ('$vendor_name','$desc','$form_year','$country','$address','$tmp_name');";
  $sql .= "SELECT LAST_INSERT_ID()"; 
  
  if ($conn->multi_query($sql)) {
     do {
         if ($result = $conn->store_result()) {
             while ($row = $result->fetch_row()) {
-                printf("%s\n", $row[0]);
+               
                 $var = (string) $row[0];
             }
-            $cont_id = "inst_".$var."";
-            $sqli = "UPDATE  content_manager SET content_manager_id = '$cont_id' where sno= $var";
-          
+            $ven_id = "inst_".$var."";
+            $sqli = "UPDATE  vendor SET vendor_id = '$ven_id' where sno= $var";
+         
             $conn->query($sqli);
+            echo "Data Saved";
             $result->free();
             
         }
