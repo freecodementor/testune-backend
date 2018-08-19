@@ -127,7 +127,7 @@
               <td>Technology</td>
               <td>Technology</td>
               <td></td>
-              <td><a href="./add_club.php?id=inst_6" class="view_faculty_detail"> Add</td>
+              <td><a href="update_club_detail.php?id=inst_5" class="view_faculty_detail"> Update</td>
             </tr>
        	  </tbody>
 	          <tbody>
@@ -137,7 +137,7 @@
               <td>Language</td>
               <td>Language</td>
               <td></td>
-              <td><a href="update_club_detail.php?id=inst_6" class="view_faculty_detail"> Add</td>
+              <td><a href="update_club_detail.php?id=inst_6" class="view_faculty_detail"> View</td>
             </tr>
        	  </tbody>
 	          <tbody>
@@ -147,7 +147,7 @@
               <td>Smarter Mind</td>
               <td>Smarter Mind</td>
               <td></td>
-              <td><a href="update_club_detail.php?id=inst_7" class="view_faculty_detail"> Add</td>
+              <td><a href="update_club_detail.php?id=inst_7" class="view_faculty_detail"> View</td>
             </tr>
        	  </tbody>
 	          <tbody>

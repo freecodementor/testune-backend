@@ -1,4 +1,24 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "testune";
+$club_id = $_GET['id'];
+$conn = new mysqli($servername, $username, $password, $dbname);
+$check="SELECT club_name,club_description FROM clubs WHERE club_id = '$club_id'";
 
+$result = $conn->query($check);
+
+    while($row = $result->fetch_array())
+    {
+     $name =$row['club_name'];
+     $desc = $row['club_description'];
+    
+    }
+
+
+$conn->close();
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -116,35 +136,7 @@ textarea {
 </head>
 <body>
 <!--top starts-->
-<div id="top">
-  <div class="container clearfix">
-    <div class="grid_12">
-      <p>Welcome to SpacedTimes!</p>
-      <p class="call">Admin Name <span class="color">Abhi    </span></p>
-    </div>
-  </div>
-</div>
-<!--top ends--> 
-<!--header starts-->
-<div id="header">
-  <div class="container  header_inner clearfix">
-    <div class="grid_12"> 
-        <!--logo here--> 
-         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
-       <!--menu / navigation starts-->
-      <ul class="sf-menu">
-         <li class="login_link"> 
-           <!--login_wrapper starts-->
-          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
-            </div>
-          <!--login_wrapper ends--> 
-         </li>
-      </ul>
-      <!--menu ends-->
-       <div class="clear"></div>
-    </div>
-  </div>
-</div>
+
 <!--header ends--> <!--section for intro text and button starts-->
 <div class="section">
   <div class="container clearfix">
@@ -164,7 +156,7 @@ textarea {
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Club Name" name="club_name" id="club_name" class="padding-popup radius03" required="true">
+												<input type="text" placeholder="Club Name" value="<?php if(isset($name)){echo $name;unset($name);}else{echo 'No data';} ?>" name="club_name" id="club_name" class="padding-popup radius03" required="true">
 											</div>
                       
                       
@@ -175,19 +167,21 @@ textarea {
 										 	
                                                                                         
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Description" style="margin-bottom:10px; min-height:100px;"name="desc" id="desc" class="padding-popup radius03" required="true"></textarea>
+												<textarea type="text" placeholder="Description"  style="margin-bottom:10px; min-height:100px;" name="desc" id="desc" class="padding-popup radius03" required="true"><?php if(isset($desc)){echo $desc;unset($desc);}else{echo 'No data';} ?></textarea>
 											</div> 
 
 
 
 											
-                       
-                      <input type="hidden" name="action" value="add"> 
+                      
+										 	
 											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
 												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
                                             </div><br>
                                             
-                                            
+                                            <input type="hidden" name="action" value="update"> 
+                                            <input type="hidden" name="club_id" value="<?php echo $club_id;?>"> 
+
                                         </form>
 										</div>  
                                       	 </div>
@@ -246,7 +240,7 @@ function ajaxbackend(){
     var data = new FormData(form);
 
     // If you want to add an extra field for the FormData
-    
+    data.append("action", "update");
 
     // disabled the submit button
     $("#sub").prop("disabled", true);
@@ -270,7 +264,7 @@ function ajaxbackend(){
         error: function (e) {
 
             $("#result").text(e.responseText);
-            document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
+            
             $("#sub").prop("disabled", false);
 
         }
@@ -291,22 +285,7 @@ function ajaxbackend(){
 </div>
 <!--section for intro text and button ends--> 
 <!--section for features starts-->
-<div class="section colored">
-  <div class="container clearfix"> 
-     <!--features starts-->
-     
-</div> 
+ 
 
-<br /> <br /> 
-<!--copyright starts-->
-<div id="copyright">
-  <div class="container clearfix"> 
-      <!--copyright text and general links-->
-    <div class="grid_12">
-     Copyright 2018. All the respective rights reserved. SpacedTimes
-     </div>
-     <div class="clear"></div>
-  </div>
-</div><!--copyright ends--> 
 </body>
 </html>
