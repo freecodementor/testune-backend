@@ -1,10 +1,4 @@
-<?php
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "testune";
-
-?>
+<!--THIS IS TEMPORARY FILE TO SIMULATE ADMIN PANEL-->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -133,7 +127,7 @@
               <td>Technology</td>
               <td>Technology</td>
               <td></td>
-              <td><a href="./add_activity.php?id=inst_6" class="view_faculty_detail"> Add</td>
+              <td><a href="./add_club.php?id=inst_6" class="view_faculty_detail"> Add</td>
             </tr>
        	  </tbody>
 	          <tbody>

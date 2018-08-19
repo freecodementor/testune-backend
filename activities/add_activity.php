@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -44,7 +43,6 @@
 	padding: 5px;
 	margin-top: 10px;
 }
-
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -116,7 +114,35 @@ textarea {
 </head>
 <body>
 <!--top starts-->
-
+<div id="top">
+  <div class="container clearfix">
+    <div class="grid_12">
+      <p>Welcome to SpacedTimes!</p>
+      <p class="call">Admin Name <span class="color">Abhi    </span></p>
+    </div>
+  </div>
+</div>
+<!--top ends--> 
+<!--header starts-->
+<div id="header">
+  <div class="container  header_inner clearfix">
+    <div class="grid_12"> 
+        <!--logo here--> 
+         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
+       <!--menu / navigation starts-->
+      <ul class="sf-menu">
+         <li class="login_link"> 
+           <!--login_wrapper starts-->
+          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
+            </div>
+          <!--login_wrapper ends--> 
+         </li>
+      </ul>
+      <!--menu ends-->
+       <div class="clear"></div>
+    </div>
+  </div>
+</div>
 <!--header ends--> <!--section for intro text and button starts-->
 <div class="section">
   <div class="container clearfix">
@@ -177,9 +203,6 @@ $("#password").keyup(function(event){
     }
 });
 });
-
-
-
 function validateEmail(email) {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   if(!emailReg.test(email)) {
@@ -188,11 +211,9 @@ function validateEmail(email) {
     return true;
   }
 }
-
 function check_form()
    {
            var activity_name= $('#activity_name').val();    
-
      var desc= $('#desc').val(); 
                 
 	    
@@ -211,25 +232,18 @@ function check_form()
                   ajaxbackend();
                  } 
    }
-
 function ajaxbackend(){
   
-
     //stop submit the form, we will post it manually.
     event.preventDefault();
-
     // Get form
     var form = $('#fileUploadForm')[0];
-
     // Create an FormData object 
     var data = new FormData(form);
-
     // If you want to add an extra field for the FormData
     data.append("CustomField", "This is some extra data, testing");
-
     // disabled the submit button
     $("#sub").prop("disabled", true);
-
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
@@ -240,25 +254,18 @@ function ajaxbackend(){
         cache: false,
         timeout: 600000,
         success: function (data) {
-
             $("#result").text(data);
             document.getElementById('msg').innerHTML = data;
             $("#sub").prop("disabled", false);
-
         },
         error: function (e) {
-
             $("#result").text(e.responseText);
             document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
             $("#sub").prop("disabled", false);
-
         }
   
-
 });
-
 }
-
  
 </script>
 <script>
@@ -278,6 +285,14 @@ function ajaxbackend(){
 
 <br /> <br /> 
 <!--copyright starts-->
-
+<div id="copyright">
+  <div class="container clearfix"> 
+      <!--copyright text and general links-->
+    <div class="grid_12">
+     Copyright 2018. All the respective rights reserved. SpacedTimes
+     </div>
+     <div class="clear"></div>
+  </div>
+</div><!--copyright ends--> 
 </body>
 </html>
