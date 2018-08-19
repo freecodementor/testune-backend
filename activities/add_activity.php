@@ -116,35 +116,7 @@ textarea {
 </head>
 <body>
 <!--top starts-->
-<div id="top">
-  <div class="container clearfix">
-    <div class="grid_12">
-      <p>Welcome to SpacedTimes!</p>
-      <p class="call">Admin Name <span class="color">Abhi    </span></p>
-    </div>
-  </div>
-</div>
-<!--top ends--> 
-<!--header starts-->
-<div id="header">
-  <div class="container  header_inner clearfix">
-    <div class="grid_12"> 
-        <!--logo here--> 
-         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
-       <!--menu / navigation starts-->
-      <ul class="sf-menu">
-         <li class="login_link"> 
-           <!--login_wrapper starts-->
-          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
-            </div>
-          <!--login_wrapper ends--> 
-         </li>
-      </ul>
-      <!--menu ends-->
-       <div class="clear"></div>
-    </div>
-  </div>
-</div>
+
 <!--header ends--> <!--section for intro text and button starts-->
 <div class="section">
   <div class="container clearfix">
@@ -306,14 +278,6 @@ function ajaxbackend(){
 
 <br /> <br /> 
 <!--copyright starts-->
-<div id="copyright">
-  <div class="container clearfix"> 
-      <!--copyright text and general links-->
-    <div class="grid_12">
-     Copyright 2018. All the respective rights reserved. SpacedTimes
-     </div>
-     <div class="clear"></div>
-  </div>
-</div><!--copyright ends--> 
+
 </body>
 </html>
