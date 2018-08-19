@@ -1,3 +1,24 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "testune";
+$activity_id = $_GET['id'];
+$conn = new mysqli($servername, $username, $password, $dbname);
+$check="SELECT activities_name,activities_description FROM activities WHERE activities_id = '$activity_id'";
+
+$result = $conn->query($check);
+
+    while($row = $result->fetch_array())
+    {
+     $name =$row['activities_name'];
+     $desc = $row['activities_description'];
+    
+    }
+
+
+$conn->close();
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -113,36 +134,7 @@ textarea {
 			</script>
 </head>
 <body>
-<!--top starts-->
-<div id="top">
-  <div class="container clearfix">
-    <div class="grid_12">
-      <p>Welcome to SpacedTimes!</p>
-      <p class="call">Admin Name <span class="color">Abhi    </span></p>
-    </div>
-  </div>
-</div>
-<!--top ends--> 
-<!--header starts-->
-<div id="header">
-  <div class="container  header_inner clearfix">
-    <div class="grid_12"> 
-        <!--logo here--> 
-         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
-       <!--menu / navigation starts-->
-      <ul class="sf-menu">
-         <li class="login_link"> 
-           <!--login_wrapper starts-->
-          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
-            </div>
-          <!--login_wrapper ends--> 
-         </li>
-      </ul>
-      <!--menu ends-->
-       <div class="clear"></div>
-    </div>
-  </div>
-</div>
+
 <!--header ends--> <!--section for intro text and button starts-->
 <div class="section">
   <div class="container clearfix">
@@ -152,7 +144,7 @@ textarea {
                                   <td style="padding: 0em 0em;">
 					<section class="wrapper special popup ">
                                                      <header class="mb-3">
-              <h2 class="text-grey " style=" line-height:1.25em;"><strong>NEW ACTIVITY</strong></h2>
+              <h2 class="text-grey " style=" line-height:1.25em;"><strong>UPDATE ACTIVITY</strong></h2>
               
               <p id="msg"></p>
 						      </header>
@@ -162,7 +154,7 @@ textarea {
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Activity Name" name="activity_name" id="activity_name" class="padding-popup radius03" required="true">
+												<input type="text" placeholder="Activity Name" value="<?php if(isset($name)){echo $name;unset($name);}else{echo 'No data';} ?>" name="activity_name" id="activity_name" class="padding-popup radius03" required="true">
 											</div>
                       
                       
@@ -173,14 +165,15 @@ textarea {
 										 	
                                                                                         
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Description" style="margin-bottom:10px; min-height:100px;"name="desc" id="desc" class="padding-popup radius03" required="true"></textarea>
+												<textarea type="text" placeholder="Description" style="margin-bottom:10px; min-height:100px;"name="desc" id="desc" class="padding-popup radius03" required="true"><?php if(isset($desc)){echo $desc;unset($desc);}else{echo 'No data';} ?></textarea>
 											</div> 
 
 
 
 											
                       
-										 	<input type="hidden" name="action" value="add">
+										 	<input type="hidden" name="action" value="update">
+                                             <input type="hidden" name="activity_id" value="<?php echo $activity_id;?>">
 											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
 												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
                                             </div><br>
@@ -268,31 +261,8 @@ function ajaxbackend(){
 }
  
 </script>
-<script>
-   
-</script>
 
-    </div>
-  </div>
-</div>
-<!--section for intro text and button ends--> 
-<!--section for features starts-->
-<div class="section colored">
-  <div class="container clearfix"> 
-     <!--features starts-->
-     
-</div> 
 
-<br /> <br /> 
-<!--copyright starts-->
-<div id="copyright">
-  <div class="container clearfix"> 
-      <!--copyright text and general links-->
-    <div class="grid_12">
-     Copyright 2018. All the respective rights reserved. SpacedTimes
-     </div>
-     <div class="clear"></div>
-  </div>
-</div><!--copyright ends--> 
+
 </body>
 </html>
