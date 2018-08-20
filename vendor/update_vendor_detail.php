@@ -1,4 +1,26 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "testune";
+$vendor_id = $_GET['id'];
+$conn = new mysqli($servername, $username, $password, $dbname);
+$check="SELECT vendor_name,vendor_description,formation_year,permanent_address,vendor_icon FROM vendor WHERE vendor_id = '$vendor_id'";
 
+$result = $conn->query($check);
+
+    while($row = $result->fetch_array())
+    {
+     $vendor_name =$row['vendor_name'];
+     $vendor_description = $row['vendor_description'];
+     $formation_year =$row['formation_year'];
+     $permanent_address =$row['permanent_address'];
+     $vendor_icon =$row['vendor_icon'];
+    }
+
+
+$conn->close();
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -13,7 +35,7 @@
 <script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
 <script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script src="http://www.testune.com/spacedtimes/fancybox/jquery-ui.js" type="text/javascript"></script>
  <link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -44,7 +66,6 @@
 	padding: 5px;
 	margin-top: 10px;
 }
-
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -115,36 +136,7 @@ textarea {
 			</script>
 </head>
 <body>
-<!--top starts-->
-<div id="top">
-  <div class="container clearfix">
-    <div class="grid_12">
-      <p>Welcome to SpacedTimes!</p>
-      <p class="call">Admin Name <span class="color">Abhi    </span></p>
-    </div>
-  </div>
-</div>
-<!--top ends--> 
-<!--header starts-->
-<div id="header">
-  <div class="container  header_inner clearfix">
-    <div class="grid_12"> 
-        <!--logo here--> 
-         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
-       <!--menu / navigation starts-->
-      <ul class="sf-menu">
-         <li class="login_link"> 
-           <!--login_wrapper starts-->
-          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
-            </div>
-          <!--login_wrapper ends--> 
-         </li>
-      </ul>
-      <!--menu ends-->
-       <div class="clear"></div>
-    </div>
-  </div>
-</div>
+
 <!--header ends--> <!--section for intro text and button starts-->
 <div class="section">
   <div class="container clearfix">
@@ -154,7 +146,7 @@ textarea {
                                   <td style="padding: 0em 0em;">
 					<section class="wrapper special popup ">
                                                      <header class="mb-3">
-              <h2 class="text-grey " style=" line-height:1.25em;"><strong>NEW VENDOR</strong></h2>
+              <h2 class="text-grey " style=" line-height:1.25em;"><strong>UPDATE VENDOR</strong></h2>
               
               <p id="msg"></p>
 						      </header>
@@ -164,11 +156,11 @@ textarea {
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Name" name="vendor_name" id="vendor_name" class="padding-popup radius03" required="true">
+												<input type="text" placeholder="Name" value="<?php if(isset($vendor_name)){echo $vendor_name;unset($vendor_name);}else{echo 'No data';} ?>" name="vendor_name" id="vendor_name" class="padding-popup radius03" required="true">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-                      <input placeholder="Date of Formation" type="text" name="datepicker" id="datepicker"  required="true">									</div>
+                      <input placeholder="Date of Formation" type="text" value="<?php if(isset($formation_year)){echo $formation_year;unset($formation_year);}else{echo 'No data';} ?>" name="datepicker" id="datepicker"  required="true">									</div>
                       
                       
                      
@@ -427,24 +419,28 @@ textarea {
 </select>
 </div>
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Address" name="address" id="address" class="padding-popup radius03" required="true"></textarea>
+												<textarea type="text" placeholder="Address"  name="address" id="address" class="padding-popup radius03" required="true"><?php if(isset($permanent_address)){echo $permanent_address;unset($permanent_address);}else{echo 'No data';} ?></textarea>
 											</div> 
 
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="" name="desc" id="desc" class="padding-popup radius03" required="true"></textarea>
+												<textarea type="text" placeholder="Description" name="desc" id="desc" class="padding-popup radius03" required="true"><?php if(isset($vendor_description)){echo $vendor_description;unset($vendor_description);}else{echo 'No data';} ?></textarea>
 											</div> 
-                      <div class="10u -1u" style="padding: 20px 0 0 20px;">
+                                            <div class="10u -1u" style="padding: 20px 0 0 20px;">
+                                            <img src="../img/vendor/<?php if(isset($vendor_icon)){echo $vendor_icon;}else{echo 'asas';} ?>"  height="100px" width="100px">
+											</div>
 											
                       <div class="10u -1u" style="padding: 20px 0 0 20px;"> 
 											</div>
-                      Upload Icon: <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
-                                            <input name="fileToUpload" type="file" required="true" /><br>
+                                            Update  Icon: <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
+                                            <input  name="fileToUpload" type="file" required="true" /><br>
+                                            <input type="hidden" name="vendor_icon" value="<?php if(isset($vendor_icon)){echo $vendor_icon;unset($vendor_icon);}else{echo 'No data';} ?>">
 											</div>
 											
-                      
-                      <input type="hidden" name="action" value="add">
+                                            <input type="hidden" name="action" value="update"> 
+                                            <input type="hidden" name="vendor_id" value="<?php echo $vendor_id;?>"> 
+										 	
 											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
-												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
+												<input  style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()">
                                             </div><br>
                                             
                                             
@@ -547,28 +543,5 @@ function ajaxbackend(){
  
 </script>
 
-
-    </div>
-  </div>
-</div>
-<!--section for intro text and button ends--> 
-<!--section for features starts-->
-<div class="section colored">
-  <div class="container clearfix"> 
-     <!--features starts-->
-     
-</div> 
-
-<br /> <br /> 
-<!--copyright starts-->
-<div id="copyright">
-  <div class="container clearfix"> 
-      <!--copyright text and general links-->
-    <div class="grid_12">
-     Copyright 2018. All the respective rights reserved. SpacedTimes
-     </div>
-     <div class="clear"></div>
-  </div>
-</div><!--copyright ends--> 
 </body>
 </html>
