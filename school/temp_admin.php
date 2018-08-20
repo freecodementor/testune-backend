@@ -17,7 +17,7 @@
 <script src="http://www.testune.com/spacedtimes/fancybox/jquery-ui.js" type="text/javascript"></script>
  <link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
 <script type="text/javascript">
-		$(document).ready(function() {
+		$(document).ready(function() {  
 				$("a.pop2").fancybox({
 				'overlayColor'		: '#000',
 				'overlayOpacity'	: 0.9
