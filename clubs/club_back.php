@@ -1,13 +1,11 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "testune";
+include_once "../assets/Users.php";
+$conn = $database->getConnection();
+$database = new Database();
 $club_name = $_POST['club_name'];
 $desc = $_POST['desc'];
 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
 if(isset($_POST['action']))
 {
     if ($_POST['action']=='update'){

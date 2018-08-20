@@ -2,14 +2,16 @@
 
 
 include_once "../assets/Users.php";
+$conn = $database->getConnection();
+$database = new Database();
 
 $vendor_name = $_POST['vendor_name'];
 $vendor_description = $_POST['desc'];
 $formation_year = $_POST['datepicker'];
 $permanent_address = $_POST['address'];
-$database = new Database();
 
-$conn = $database->getConnection();
+
+
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')

@@ -1,4 +1,10 @@
 <?php
+include_once "../assets/Users.php";
+$conn = $database->getConnection();
+$database = new Database();
+
+
+
 $target_dir = "img/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
@@ -28,10 +34,7 @@ if ($uploadOk == 0) {
         echo "Sorry, there was an error uploading your file.";
     }
 }
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "testune";
+
 $name = $_POST['institute_name'];
 $qual = $_POST['qual'];
 $phone = $_POST['phone'];
@@ -47,7 +50,6 @@ $country = $_POST['country'];
  $result = "";
 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
 $check="SELECT * FROM content_manager WHERE email_id = '$email'";
 $result1 = $conn->query($check);
 $num_rows = mysqli_num_rows($result1);
