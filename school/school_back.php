@@ -1,9 +1,9 @@
 <?php
+include_once "../assets/Users.php";
+$conn = $database->getConnection();
+$database = new Database();
 
-$servername = "localhost";
-$username = "root";
-$dbpassword = "";
-$dbname = "testune";
+
 $name = $_POST['institute_name'];
 $phone = $_POST['phone'];
 $prom = $_POST['prom'];
@@ -11,7 +11,6 @@ $desc = $_POST['desc'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $address = $_POST['address'];
-$conn = new mysqli($servername, $username, $dbpassword, $dbname);
 $check="SELECT * FROM school WHERE email_id = '$email'";
 $result1 = $conn->query($check);
 $num_rows = mysqli_num_rows($result1);
