@@ -17,7 +17,7 @@
 <script src="http://www.testune.com/spacedtimes/fancybox/jquery-ui.js" type="text/javascript"></script>
  <link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
 <script type="text/javascript">
-		$(document).ready(function() {  
+		$(document).ready(function() { 
 				$("a.pop2").fancybox({
 				'overlayColor'		: '#000',
 				'overlayOpacity'	: 0.9
@@ -99,7 +99,7 @@
 <div class="section">
   <div class="container clearfix">
     <div class="grid_12 action3">
-      <h1>View/Update Vendor Detail</h1>
+      <h1>View School Detail</h1>
     </div>
   </div>
 </div>
@@ -108,42 +108,77 @@
 <!--section for features starts-->
 <div class="section colored">
   <div class="container clearfix"> 
-      <div class="table_wrapper table_red">
+ 
+	<div class="table_wrapper table_red">
         <table cellpadding="0" cellspacing="0">
           <thead>
             <tr>
               <th>Sno</th>
-              <th>Vendor Id</th>
-              <th>Vendor Name</th>
-              <th>Vendor Icon</th>
-              <th>Vendor Decription</th>
-              <th>Formation Year</th>
-              <th>Permanent Address </th>
-              <th>Country</th>
-              <th>Vendor Added Date</th>
+              <th>School Id</th>
+              <th>School Name</th>
+              <th>Details </th>
+              <th>Address </th>
+              <th>Email Id </th>
+              <th>Phone Number </th>
+              <th>Username </th>
+              <th>Status </th>
+              <th>Add Course</th>
+              <th>Update Course</th>
             </tr>
           </thead>
-          <tbody>
+		            <tbody>
             <tr>
               <td>1</td> 
-              <td>inst_1</td>
-              <td>wingXP</td>
-              <td>wingXP_2018-04-04_25.jpg</td>
-              <td></td>
-              <td>2018</td> 
-              <td>472-A
-Talwandi</td>
-              <td>in</td>
-              <td>0000-00-00 00:00:00</td>
-              <td><a href="update_activity_detail.php?id=inst_4" class="view_faculty_detail">Update</td>
+              <td>Institute_1200</td>
+              <td>Testune Technology pvt Ltd</td>
+              <td>Online Exam Based Platform</td>
+              <td>Kota</td>
+              <td>contact@domain-education.com</td>
+              <td>9460394714</td>
+              <td>ankush6789</td>
+              <td>true</td> 
+              <td><a href="add_course.php?id=Institute_1200" class="view_faculty_detail"> Add</td>
+              <td><a href="update_school_detail.php?id=inst_1" class="view_faculty_detail"> Update</td>
             </tr>
        	  </tbody>
+	          <tbody>
+            <tr>
+              <td>2</td> 
+              <td>Institute_1202</td>
+              <td>Testune Technology Pvt Ltd</td>
+              <td>Testing Platform</td>
+              <td>Kota</td>
+              <td>contact@domain-education.com</td>
+              <td>9460394714</td>
+              <td>testune</td>
+              <td>true</td> 
+              <td><a href="add_course.php?id=Institute_1202" class="view_faculty_detail"> Add</td>
+              <td><a href="update_school_detail.php?id=inst_2" class="view_faculty_detail"> Update</td>
+            </tr>
+       	  </tbody>
+	          <tbody>
+            <tr>
+              <td>3</td> 
+              <td>Institute_1203</td>
+              <td>domain E</td>
+              <td>domain Edutech Pvt Ltd</td>
+              <td></td>
+              <td>a</td>
+              <td>m</td>
+              <td>i</td>
+              <td>false</td> 
+              <td><a href="add_course.php?id=Institute_1203" class="view_faculty_detail"> Add</td>
+              <td><a href="update_school_detail.php?id=inst_3" class="view_faculty_detail"> Update</td>
+            </tr>
+       	  </tbody>
+           
 	        </table>
       </div>
     <!--features starts-->
   </div>
 </div>
 <!--section for features ends--> 
+ 
 
 <div class="section">
   <div class="container clearfix">

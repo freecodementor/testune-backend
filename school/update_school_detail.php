@@ -1,4 +1,29 @@
+<?php
+include_once "../assets/Users.php";
+$database = new Database();
+$conn = $database->getConnection();
 
+$institute_id = $_GET['id'];
+$check="SELECT institute_name, details,promoters, address, email_id, phone_no, password FROM school WHERE institute_id = '$institute_id'";
+
+$result = $conn->query($check);
+
+    while($row = $result->fetch_array())
+    {
+     $institute_name =$row['institute_name'];
+     $details = $row['details'];
+     $promoters =$row['promoters'];
+     $address =$row['address'];
+     $email_id =$row['email_id'];
+     $phone_no =$row['phone_no'];
+     $password =$row['password'];
+
+    
+    }
+
+
+$conn->close();
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -44,7 +69,6 @@
 	padding: 5px;
 	margin-top: 10px;
 }
-
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -115,36 +139,7 @@ textarea {
 			</script>
 </head>
 <body>
-<!--top starts-->
-<div id="top">
-  <div class="container clearfix">
-    <div class="grid_12">
-      <p>Welcome to SpacedTimes!</p>
-      <p class="call">Admin Name <span class="color">Abhi    </span></p>
-    </div>
-  </div>
-</div>
-<!--top ends--> 
-<!--header starts-->
-<div id="header">
-  <div class="container  header_inner clearfix">
-    <div class="grid_12"> 
-        <!--logo here--> 
-         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
-       <!--menu / navigation starts-->
-      <ul class="sf-menu">
-         <li class="login_link"> 
-           <!--login_wrapper starts-->
-          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
-            </div>
-          <!--login_wrapper ends--> 
-         </li>
-      </ul>
-      <!--menu ends-->
-       <div class="clear"></div>
-    </div>
-  </div>
-</div>
+
 <!--header ends--> <!--section for intro text and button starts-->
 <div class="section">
   <div class="container clearfix">
@@ -164,29 +159,29 @@ textarea {
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Name" name="institute_name" id="institute_name" class="padding-popup radius03" required="true">
+												<input type="text" placeholder="Name" value="<?php if(isset($institute_name)){echo $institute_name;unset($institute_name);}else{echo 'No data';} ?>" name="institute_name" id="institute_name" class="padding-popup radius03" required="true">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="email" placeholder="Email Id" name="email" id="email" class="padding-popup radius03" required="true">
+												<input type="email" placeholder="Email Id" value="<?php if(isset($email_id)){echo $email_id;unset($email_id);}else{echo 'No data';} ?>" name="email" id="email" class="padding-popup radius03" required="true">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="password" placeholder="password" name="password" id="password" class="padding-popup radius03" required="true">
+												<input type="password" placeholder="password" value="<?php if(isset($password)){echo $password;unset($password);}else{echo 'No data';} ?>" name="password" id="password" class="padding-popup radius03" required="true">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px; ">
-												<textarea type="text" placeholder="Details" name="desc" id="desc" class="padding-popup radius03" style="margin-bottom:10px;" required="true"></textarea>
+												<textarea type="text" placeholder="Details" name="desc" id="desc" class="padding-popup radius03" style="margin-bottom:10px;" required="true"><?php if(isset($details)){echo $details;unset($details);}else{echo 'No data';} ?></textarea>
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Promoters" name="prom" id="prom" class="padding-popup radius03" required="true">
+												<input type="text" placeholder="Promoters" value="<?php if(isset($promoters)){echo $promoters;unset($promoters);}else{echo 'No data';} ?>" name="prom" id="prom" class="padding-popup radius03" required="true">
 											</div>
                       
                       
                       
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Phone No" name="phone" id="phone" class="padding-popup radius03" required="true">
+												<input type="text" placeholder="Phone No" value="<?php if(isset($phone_no)){echo $phone_no;unset($phone_no);}else{echo 'No data';} ?>" name="phone" id="phone" class="padding-popup radius03" required="true">
 											</div>
                      
                       
@@ -195,12 +190,12 @@ textarea {
                                                                                        
 
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Address" name="address" id="address" class="padding-popup radius03" style="margin-bottom:10px;" required=""></textarea>
+												<textarea type="text" placeholder="Address" name="address" id="address" class="padding-popup radius03" style="margin-bottom:10px;" required=""><?php if(isset($address)){echo $address;unset($address);}else{echo 'No data';} ?></textarea>
 											</div> 
                   
 											
-                      <input type="hidden" name="action" value="add">
-
+                                            <input type="hidden" name="action" value="update">
+                                             <input type="hidden" name="institute_id" value="<?php echo $institute_id;?>">
 										 	
 											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
 												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
@@ -224,8 +219,6 @@ $("#password").keyup(function(event){
     }
 });
 });
-
-
 function validateEmail(email) {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   if(!emailReg.test(email)) {
@@ -234,25 +227,16 @@ function validateEmail(email) {
     return true;
   }
 }
-
 function check_form()
    {
-           var institute_name= $('#institute_name').val();    
-	   
-     var country= $('#country').val(); 
-     var qual= $('#qual').val(); 
-     var dob= $('#datepicker').val(); 
-
-	   var phone= $('#phone').val();  
-     var phone2= $('#phone2').val(); 
-     var address= $('#address').val(); 
-     var exp= $('#exp').val(); 
-      
-	   var email= $('#email').val();    
-     var secemail= $('#secemail').val(); 
+           var activity_name= $('#activity_name').val();    
+     var desc= $('#desc').val(); 
+                
+	    
+    
 	  
           
-           if(institute_name === '' || address === '' )
+           if(activity_name === '' || desc === '' )
                   {
 		        alert('Please make sure all fields are filled.');
 		  }
@@ -261,29 +245,21 @@ function check_form()
 	    else
 		 {          
            
-                 ajaxbackend();
+                  ajaxbackend();
                  } 
    }
-
-
 function ajaxbackend(){
   
-
     //stop submit the form, we will post it manually.
     event.preventDefault();
-
     // Get form
     var form = $('#fileUploadForm')[0];
-
     // Create an FormData object 
     var data = new FormData(form);
-
     // If you want to add an extra field for the FormData
     data.append("CustomField", "This is some extra data, testing");
-
     // disabled the submit button
     $("#sub").prop("disabled", true);
-
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
@@ -294,52 +270,22 @@ function ajaxbackend(){
         cache: false,
         timeout: 600000,
         success: function (data) {
-
             $("#result").text(data);
             document.getElementById('msg').innerHTML = data;
             $("#sub").prop("disabled", false);
-
         },
         error: function (e) {
-
             $("#result").text(e.responseText);
             document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
             $("#sub").prop("disabled", false);
-
         }
   
-
 });
-
 }
-
  
 </script>
-<script>
-   
-</script>
 
-    </div>
-  </div>
-</div>
-<!--section for intro text and button ends--> 
-<!--section for features starts-->
-<div class="section colored">
-  <div class="container clearfix"> 
-     <!--features starts-->
-     
-</div> 
 
-<br /> <br /> 
-<!--copyright starts-->
-<div id="copyright">
-  <div class="container clearfix"> 
-      <!--copyright text and general links-->
-    <div class="grid_12">
-     Copyright 2018. All the respective rights reserved. SpacedTimes
-     </div>
-     <div class="clear"></div>
-  </div>
-</div><!--copyright ends--> 
+
 </body>
 </html>
