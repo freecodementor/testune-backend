@@ -1,4 +1,32 @@
+<?php
+include_once "../assets/Users.php";
+$database = new Database();
+$conn = $database->getConnection();
 
+$content_manager_id = $_GET['id'];
+$check="SELECT name,dob,address,phone_number,email_id,nationality,qualification,experience,photo,phone_no2,sec_email_id,username FROM content_manager WHERE content_manager_id = '$content_manager_id'";
+
+$result = $conn->query($check);
+
+    while($row = $result->fetch_array())
+    {
+     $name =$row['name'];
+     $dob = $row['dob'];
+     $address =$row['address'];
+     $phone_number =$row['phone_number'];
+     $nationality =$row['nationality'];
+     $qualification =$row['qualification'];
+     $experience =$row['experience'];
+     $photo =$row['photo'];
+     $phone_no2 =$row['phone_no2'];
+     $sec_email_id =$row['sec_email_id'];
+     $username =$row['username'];
+     $email_id =$row['email_id'];
+    }
+
+
+$conn->close();
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -44,7 +72,6 @@
 	padding: 5px;
 	margin-top: 10px;
 }
-
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -115,36 +142,7 @@ textarea {
 			</script>
 </head>
 <body>
-<!--top starts-->
-<div id="top">
-  <div class="container clearfix">
-    <div class="grid_12">
-      <p>Welcome to SpacedTimes!</p>
-      <p class="call">Admin Name <span class="color">Abhi    </span></p>
-    </div>
-  </div>
-</div>
-<!--top ends--> 
-<!--header starts-->
-<div id="header">
-  <div class="container  header_inner clearfix">
-    <div class="grid_12"> 
-        <!--logo here--> 
-         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
-       <!--menu / navigation starts-->
-      <ul class="sf-menu">
-         <li class="login_link"> 
-           <!--login_wrapper starts-->
-          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
-            </div>
-          <!--login_wrapper ends--> 
-         </li>
-      </ul>
-      <!--menu ends-->
-       <div class="clear"></div>
-    </div>
-  </div>
-</div>
+
 <!--header ends--> <!--section for intro text and button starts-->
 <div class="section">
   <div class="container clearfix">
@@ -164,21 +162,21 @@ textarea {
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Name" name="institute_name" id="institute_name" class="padding-popup radius03" required="">
+												<input type="text" placeholder="Name"  value="<?php if(isset($name)){echo $name;unset($name);}else{echo 'No data';} ?>" name="institute_name" id="institute_name" class="padding-popup radius03" required="">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="email" placeholder="Email Id" name="email" id="email" class="padding-popup radius03" required="">
+												<input type="email" placeholder="Email Id" name="email"  value="<?php if(isset($email_id)){echo $email_id;unset($email_id);}else{echo 'No data';} ?>" id="email" class="padding-popup radius03" required="">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="email" placeholder="Secondary Email Id" name="secemail" id="secemail" class="padding-popup radius03" required="">
+												<input type="email" placeholder="Secondary Email Id" name="secemail"  value="<?php if(isset($sec_email_id)){echo $sec_email_id;unset($sec_email_id);}else{echo 'No data';} ?>" id="secemail" class="padding-popup radius03" required="">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-                      <input placeholder="DOB" type="text" name="datepicker" id="datepicker">									</div>
+                      <input placeholder="DOB"  value="<?php if(isset($dob)){echo $dob;unset($dob);}else{echo 'No data';} ?>" type="text" name="datepicker" id="datepicker">									</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                                                                         <select style="min-height:30px;" name="qual" id="qual" required="" placeholder="Country *" autocomplete="off" onchange="change_country()">
+                                                                                         <select style="min-height:30px;"  value="<?php if(isset($qualification)){echo $qualification;unset($qualification);}else{echo 'No data';} ?>" name="qual" id="qual" required="" placeholder="Country *" autocomplete="off" onchange="change_country()">
   
     <option value="ae">Post Graduate</option>
     <option value="ad">Graduate</option>
@@ -188,11 +186,11 @@ textarea {
                       
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Phone No 1" name="phone" id="phone" class="padding-popup radius03" required="">
+												<input type="text" placeholder="Phone No 1" value="<?php if(isset($phone_number)){echo $phone_number;unset($phone_number);}else{echo 'No data';} ?>" name="phone" id="phone" class="padding-popup radius03" required="">
 											</div>
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                         
-												<input type="text" placeholder="Phone No 2" name="phone2" id="phone2" class="padding-popup radius03" required="">
+												<input type="text" placeholder="Phone No 2" name="phone2" id="phone2" value="<?php if(isset($phone_no2)){echo $phone_no2;unset($phone_no2);}else{echo 'No data';} ?>" class="padding-popup radius03" required="">
 											</div>
                       
                        
@@ -449,22 +447,25 @@ textarea {
 </select>
 </div>
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Experience" name="exp" id="exp" class="padding-popup radius03" required=""></textarea>
+												<textarea type="text" placeholder="Experience" name="exp" id="exp" class="padding-popup radius03" required=""><?php if(isset($experience)){echo $experience;unset($experience);}else{echo 'No data';} ?></textarea>
 											</div> 
 
 <div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Address" name="address" id="address" class="padding-popup radius03" required=""></textarea>
+												<textarea type="text" placeholder="Address" name="address" id="address" class="padding-popup radius03" required=""><?php if(isset($address)){echo $address;unset($address);}else{echo 'No data';} ?></textarea>
 											</div> 
                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
-											
+											<div class="10u -1u" style="padding: 20px 0 0 20px;">
+                                            <img src="../img/cont_mgr/<?php if(isset($photo)){echo $photo;}else{echo 'No Icon';} ?>"  height="100px" width="100px">
+											</div>
    
                       Upload Photo: <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
                                             <input name="fileToUpload" type="file" /><br>
+                                            <input type="hidden" name="photo" value="<?php if(isset($photo)){echo $photo;unset($photo);}else{echo 'No data';} ?>">
 											</div>
 											
                       
-                      <input type="hidden" name="action" value="add">
-
+                      <input type="hidden" name="action" value="update">
+                                             <input type="hidden" name="content_manager_id" value="<?php echo $content_manager_id;?>">
 											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
 												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
                                             </div><br>
@@ -480,44 +481,6 @@ textarea {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script language="javascript">
-$(function(){
-$("#password").keyup(function(event){
-    if(event.keyCode == 13){
-        login();
-    }
-});
-});
-
-function login()
-    {
-          var user=$.trim($('#username').val());
-  	  var pass=$.trim($('#password').val());
-           if(user == '' || pass == '')
-           { 
-               alert('Please enter the username & password'); 
-           }
-           else
-           {  
-               // alert(user+pass);
-                  $.ajax({
-			  type: 'POST',
-			  url: '../Home/login_check.php',
-			  data: { username:user, password:pass, logintype:'institute' },
-			  beforeSend: function() {
-			  },
-			  success: function(response){   
-                                 if(response == 'institute')
-				 {
-				    parent.window.location="../dummy_page.php#cta";
-				 }
-				 else
-				 {
-				    alert("Incorrect username & password");
-				 }  
-			  }
-			 }); 
-}  }
-
 
 function validateEmail(email) {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -530,22 +493,21 @@ function validateEmail(email) {
 
 function check_form()
    {
-           var institute_name= $('#institute_name').val();    
+           var vendor_name= $('#institute_name').val();    
 	   
      var country= $('#country').val(); 
-     var qual= $('#qual').val(); 
+     
      var dob= $('#datepicker').val(); 
 
-	   var phone= $('#phone').val();  
-     var phone2= $('#phone2').val(); 
+	  
      var address= $('#address').val(); 
-     var exp= $('#exp').val(); 
-           var username=$('#username').val();      
-	   var email= $('#email').val();    
-     var secemail= $('#secemail').val(); 
+     var desc= $('#desc').val(); 
+                
+	    
+    
 	  
           
-           if(institute_name === '' || address === '' )
+           if(vendor_name === '' || address === '' || desc === '' || country === '' || dob === '' )
                   {
 		        alert('Please make sure all fields are filled.');
 		  }
@@ -554,16 +516,10 @@ function check_form()
 	    else
 		 {          
            
-                  ajaxbackend();
+                 ajaxbackend();
                  } 
    }
 
-function close_popup(p)
-{
-     alert('Thankyou for registering with Testune. We have sent you verification link to your registered email id. Kindly verify your account.');
-     parent.$.fancybox.close();
-    //window.location.href='Home/select_exam.php?id='+p;
-} 
 function ajaxbackend(){
   
 
@@ -613,31 +569,6 @@ function ajaxbackend(){
 
  
 </script>
-<script>
-   
-</script>
 
-    </div>
-  </div>
-</div>
-<!--section for intro text and button ends--> 
-<!--section for features starts-->
-<div class="section colored">
-  <div class="container clearfix"> 
-     <!--features starts-->
-     
-</div> 
-
-<br /> <br /> 
-<!--copyright starts-->
-<div id="copyright">
-  <div class="container clearfix"> 
-      <!--copyright text and general links-->
-    <div class="grid_12">
-     Copyright 2018. All the respective rights reserved. SpacedTimes
-     </div>
-     <div class="clear"></div>
-  </div>
-</div><!--copyright ends--> 
 </body>
 </html>
