@@ -3,7 +3,7 @@ include_once "../assets/Users.php";
 $conn = $database->getConnection();
 $database = new Database();
 $activity_name = $_POST['activity_name'];
-$desc = $_POST['desc'];
+$desc = $_POST['desc']; 
 
 
 if(isset($_POST['action']))
