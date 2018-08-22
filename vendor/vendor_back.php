@@ -2,8 +2,9 @@
 
 
 include_once "../assets/Users.php";
-$conn = $database->getConnection();
 $database = new Database();
+$conn = $database->getConnection();
+
 
 $vendor_name = $_POST['vendor_name'];
 $vendor_description = $_POST['desc'];
