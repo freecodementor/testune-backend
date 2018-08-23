@@ -7,8 +7,8 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $ebk_up = "SELECT name, description, duration, author, price, ebook_file from ebook where book_id= '$id'";
-    $result = $conn->query($ebk_up);
+    $art_up = "SELECT name, description, duration, author, price, article_file from article where article_id= '$id'";
+    $result = $conn->query($art_up);
 
     while($row = $result->fetch_array())
     {
@@ -17,7 +17,7 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $author = $row['author'];
      $price =$row['price'];
-     $ebook_file=$row['ebook_file'];
+     $article_file=$row['article_file'];
     }
 }
 else{
@@ -56,26 +56,28 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-            <form id="fileUploadForm" enctype="multipart/form-data" >
-                <input type="text" value="<?php if(isset($name)){echo $name;}else{}?>" name="course" id="" placeholder="EBOOK" class="course__field">
+                 <form id="fileUploadForm" enctype="multipart/form-data" >
+                <input type="text" value="<?php if(isset($name)){echo $name;}else{}?>" name="course" id="course" placeholder="ARTICLE" class="course__field">
             </div>
             <a href="#" class="change-course">Change</a>
         </div>
 
         <div class="title-section">
             <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;">Title</h1>
-            <textarea name="editor1" class="description_textarea"><?php if(isset($description)){echo $description;}else{}?></textarea>
+            <textarea name="editor1" id="editor1" class="description_textarea"><?php if(isset($description)){echo $description;}else{}?></textarea>
         </div>
 
         <div class="text-section">
-            <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Duration" class="field__1">
-            <input type="text" value="<?php if(isset($author)){echo $author;}else{}?>" name="author" id="author" placeholder="Author" class="field__2">
+        <input type="text" value="<?php if(isset($author)){echo $author;}else{}?>" name="author" id="author" placeholder="Author" class="field__2">
         </div>
         <div class="info-section">
             <p class="section-para">Choose a topic that interests you enough to focus on it for at least a week or two. If
                 your topic is broad, narrow it. Instead of writing about how to decorate your home, try covering how to.</p>
         </div>
-        <br>
+        <div class="duration">
+            <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Duration" class="duration_field">
+
+        </div><br>
         <div class="row headPage justify-content-end">
             <div class='col-sm-4  hi' style="margin:0;font-weight: 900">EVENING CLUB</div>
         </div>
@@ -212,7 +214,7 @@ $conn->close();
                     <div class="modal-content">
                         <div class="modal-header">
                         <input id="fileToUpload" type="file" name="fileToUpload">
-                        <input type="hidden" name="ebk_file" value="<?php if(isset($ebook_file)){echo $ebook_file;unset($ebook_file);}else{} ?>">   
+                        <input type="hidden" name="art_file" value="<?php if(isset($article_file)){echo $article_file;unset($article_file);}else{} ?>"> 
                         </div>
                         <div class="modal-body">
 
@@ -222,7 +224,7 @@ $conn->close();
             </div>
         </div>
         <div class="price-wrapper">
-            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="" placeholder="Price" class="price_field">
+        <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="Price" class="price_field">
         </div><br>
         <div class="deploy-wrapper">
         <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
@@ -231,7 +233,6 @@ $conn->close();
         </div>              <p id="msg"></p>
         </form>
     </div>
-    
  
   <div class="footer">
         <div class="footerInner">
@@ -261,8 +262,13 @@ function ajaxbackend(){
     var author= $('#author').val(); 
     var editor1= $('#editor1').val(); 
     var price= $('#price').val(); 
-     
-    if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' )
+   
+                
+	    
+    
+    
+          
+           if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' )
                   {
 		        alert('Please make sure all fields are filled.');
 		  } else {
@@ -284,7 +290,7 @@ $("#sub").prop("disabled", true);
 $.ajax({
     type: "POST",
     enctype: 'multipart/form-data',
-    url: "ebook_back.php",
+    url: "article_back.php",
     data: data,
     processData: false,
     contentType: false,
