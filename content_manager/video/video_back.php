@@ -4,8 +4,9 @@ $database = new Database();
 $conn = $database->getConnection();
 
 
+
 $title = $_POST['course'];
-$description_detail = $_POST['editor1'];
+$description_line = $_POST['editor1'];
 $duration = $_POST['duration'];
 $learning = $_POST['editor2'];
 $vendor_id = $_POST['vendor'];
@@ -17,7 +18,7 @@ $price = $_POST['price'];
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
-    {
+    { $tmp_name='';
         //New Img with new name upload
         $target_dir = "/cont_mgr/video/";
         
@@ -29,10 +30,10 @@ if(isset($_POST['action']))
             
                 
                             if ($_FILES["fileToUpload"]["name"]==''){
-                                $tmp_name=$_POST['photo']; 
+                                $tmp_name=$_POST['fileToUpload']; 
                             }
                             else {
-                                $tmp_name = $_POST['institute_name']."_".$_POST['datepicker']."_".rand(1,100).$FileType; 
+                                $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType; 
                                    }
                             
                             
@@ -44,18 +45,19 @@ if(isset($_POST['action']))
                         }
         //Data update
                
-                $video_id=$_POST['video_id'];
+                $video_id=$_POST['id'];
+                
                 
                 if ($_FILES["fileToUpload"]["name"]=""){
-                    $tmp_name=$_POST['photo'];
+                    $tmp_name=$_POST['fileToUpload'];
                     
                     
                 }
                 else {
                    
                 }
-                
-                $vid_up = "UPDATE  video SET title = '$title', description_detail='$description_detail',duration='$duration',learning='$learning',photo='$tmp_name',vendor_id='$vendor_id',price='$price' where video_id= '$video_id'";
+                echo $vendor_id;
+                $vid_up = "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',video_file='lala',vendor_id='$vendor_id',price='$price' where video_id= '$video_id'";
                 $conn->query($vid_up);
                 echo "Published";
         
@@ -87,10 +89,10 @@ if(isset($_POST['action']))
                            
                            
                             
-                                $tmp_name = $_POST['course']."_".rand(1,100).$FileType;     
+                                $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType;     
                                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {        
                                 } else {
-                            echo "Sorry, there was an error uploading your file.";
+                            echo "No video file uploaded.";
                         }
                      
                             //Data Upload
@@ -100,7 +102,7 @@ if(isset($_POST['action']))
                             if ($conn->multi_query($sql))
                             {      
                                 do {
-                                    echo "Yes !";
+                                    
                                             if ($result = $conn->store_result()) 
                                             {
                                                 while ($row = $result->fetch_row()) 

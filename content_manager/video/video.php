@@ -1,5 +1,30 @@
 
+<?php
+include_once "../../assets/Users.php";
+$database = new Database();
+$conn = $database->getConnection();
 
+
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price from video where video_id= '$id'";
+    $result = $conn->query($vid_up);
+
+    while($row = $result->fetch_array())
+    {
+     $title =$row['title'];
+     $description_line = $row['description_line'];
+     $duration =$row['duration'];
+     $learning = $row['learning'];
+     $vendor_id =$row['vendor_id'];
+     $price =$row['price'];
+    }
+}
+else{
+
+}
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +57,7 @@
         <div class="course-section">
             <div class="course__input">
             <form id="fileUploadForm" enctype="multipart/form-data" >
-                <input type="text" name="course" id="" placeholder="VIDEO" class="course__field">
+                <input type="text" value="<?php if(isset($title)){echo $title;}else{}?>" name="course" id="course" placeholder="VIDEO" class="course__field">
             </div>
             <a href="#" class="change-course">Change</a>
         </div>
@@ -42,17 +67,17 @@
                 </h4>
             </div>
             <div class="second-section">
-                <textarea name="editor1"  class="description_textarea"></textarea>
+                <textarea name="editor1" id="editor1" class="description_textarea"> <?php if(isset($description_line)){echo $description_line;}else{}?></textarea>
             </div>
         </div>
         <div class="duration">
-            <input type="text" name="duration" id="" placeholder="Duration" class="duration_field">
+            <input type="text" id="duration" name="duration" value="<?php if(isset($duration)){echo $duration;}else{}?>" id="" placeholder="Duration" class="duration_field">
         </div>
         <div class="select-section">
             <h5>What Will I Get?
             </h5>
             <div class="second-section">
-                <textarea name="editor2" class="description_textarea"></textarea>
+                <textarea name="editor2" id="editor2" class="description_textarea"> <?php if(isset($learning)){echo $learning;}else{}?></textarea>
             </div>
         </div>
         <div class="upload-wrapper">
@@ -64,7 +89,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                                <input type="file" name="fileToUpload">                            
+                                <input id="fileToUpload" type="file" name="fileToUpload">                            
                         </div>
                         <div class="modal-body">
 
@@ -74,17 +99,17 @@
             </div>
         </div>
         <div class="vendor_wrapper">
-            <select name="vendor" class="vendor__select">
-                <option value="">Vendor</option>
-                <option value="inst_1">TEST 1</option>
-                <option value="2">TEST 2</option>
+            <select name="vendor" class="vendor__select" required>                
+                <option value="inst_1">Ven 1</option>
+                <option value="inst_2">Ven 2</option>
             </select>
         </div>
         <div class="price-wrapper">
-            <input type="text" name="price" id="" placeholder="Price" class="price_field">
+            <input type="text" name="price" value="<?php if(isset($price)){echo $price;}else{}?>" id="price" placeholder="Price" class="price_field">
         </div>
         <div class="deploy-wrapper">
-            <input type="hidden" name="action" value="publish">
+            <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>"> 
+            <input type="hidden" name="action" <?php if(isset($id)){echo 'value="update"';}else{echo 'value="publish"';}?>>
             <button type="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
         </div>              <p id="msg"></p>
         </form>
@@ -107,60 +132,78 @@
         crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         
-    
+   
 <script language="javascript">
 
 
 
 function ajaxbackend(){
-  
     for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
+    var course= $('#course').val(); 
+    var duration= $('#duration').val(); 
+    var editor1= $('#editor1').val(); 
+    var editor2= $('#editor2').val(); 
+    var vendor= $('#vendor').val(); 
+                
+	    
+    
+    
+          
+           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' )
+                  {
+		        alert('Please make sure all fields are filled.');
+		  } else {
+               //stop submit the form, we will post it manually.
+   
+               event.preventDefault();
+// Get form
+var form = $('#fileUploadForm')[0];
 
-    //stop submit the form, we will post it manually.
-    event.preventDefault();
+// Create an FormData object 
+var data = new FormData(form);
 
-    // Get form
-    var form = $('#fileUploadForm')[0];
+// If you want to add an extra field for the FormData
+data.append("CustomField", "This is some extra data, testing");
 
-    // Create an FormData object 
-    var data = new FormData(form);
+// disabled the submit button
+$("#sub").prop("disabled", true);
 
-    // If you want to add an extra field for the FormData
-    data.append("CustomField", "This is some extra data, testing");
+$.ajax({
+    type: "POST",
+    enctype: 'multipart/form-data',
+    url: "video_back.php",
+    data: data,
+    processData: false,
+    contentType: false,
+    cache: false,
+    timeout: 600000,
+    success: function (data) {
 
-    // disabled the submit button
-    $("#sub").prop("disabled", true);
+        
+        console.log(data);
+        $("#sub").prop("disabled", false);
 
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "video_back.php",
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
+    },
+    error: function (e) {
 
-            
-            console.log(data);
-            $("#sub").prop("disabled", false);
+        $("#result").text(e.responseText);
+        document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
+        $("#sub").prop("disabled", false);
 
-        },
-        error: function (e) {
+    }
 
-            $("#result").text(e.responseText);
-            document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
-            $("#sub").prop("disabled", false);
-
-        }
-  
 
 });
 
 }
 
- 
+
+
+          }
+  
+    
+
+   
 </script>
     <script>
         function openNav() {
