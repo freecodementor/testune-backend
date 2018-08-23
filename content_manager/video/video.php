@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price from video where video_id= '$id'";
+    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price, video_file from video where video_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
@@ -18,6 +18,7 @@ if(isset($_GET['id'])){
      $learning = $row['learning'];
      $vendor_id =$row['vendor_id'];
      $price =$row['price'];
+     $video_file =$row['video_file'];
     }
 }
 else{
@@ -89,7 +90,8 @@ $conn->close();
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                                <input id="fileToUpload" type="file" name="fileToUpload">                            
+                                <input id="fileToUpload" type="file" name="fileToUpload">
+                                <input type="hidden" name="vid_file" value="<?php if(isset($video_file)){echo $video_file;unset($video_file);}else{} ?>">                            
                         </div>
                         <div class="modal-body">
 
@@ -110,7 +112,7 @@ $conn->close();
         <div class="deploy-wrapper">
             <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>"> 
             <input type="hidden" name="action" <?php if(isset($id)){echo 'value="update"';}else{echo 'value="publish"';}?>>
-            <button type="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
+            <button name="submit" value="submit" type="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
         </div>              <p id="msg"></p>
         </form>
     </div>

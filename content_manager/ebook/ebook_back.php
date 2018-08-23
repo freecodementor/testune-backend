@@ -5,11 +5,10 @@ $conn = $database->getConnection();
 
 
 
-$title = $_POST['course'];
-$description_line = $_POST['editor1'];
+$name = $_POST['course'];
+$description = $_POST['editor1'];
 $duration = $_POST['duration'];
-$learning = $_POST['editor2'];
-$vendor_id = $_POST['vendor'];
+$author = $_POST['editor2'];
 $price = $_POST['price'];
 
 
@@ -18,39 +17,54 @@ $price = $_POST['price'];
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
-    {  
+    { $tmp_name='';
         //New Img with new name upload
-      
-        $target_dir = "";        
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);        
+        $target_dir = "";
+        
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
         $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-                            $vid_file=$_POST['vid_file'];
-                            echo $vid_file;
+        if(isset($_POST["submit"])) {
+            
+            
+                
                             if ($_FILES["fileToUpload"]["name"]==''){
-                                $tmp_name=$vid_file; 
+                                $tmp_name=$_POST['fileToUpload']; 
                             }
                             else {
-                                $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType; 
-                                   }                            
+                                $tmp_name = $name."_".rand(1,100).".".$FileType; 
+                                   }
+                            
+                            
                             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {
-                                echo 'File Uploaded\n';
+                                
                             } else {
-                                echo 'File not Uploaded\n';
+                                echo "";
                             }
-                        
+                        }
         //Data update
                
-                $video_id=$_POST['id'];                                   
-                $vid_up = "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',video_file='$tmp_name',vendor_id='$vendor_id',price='$price' where video_id= '$video_id'";
-                $conn->query($vid_up);
+                $video_id=$_POST['id'];
+                
+                
+                if ($_FILES["fileToUpload"]["name"]=""){
+                    $tmp_name=$_POST['fileToUpload'];
+                    
+                    
+                }
+                else {
+                   
+                }
+               
+                $ebk_up = "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',ebook_file='$ebook_file',price='$price' where video_id= '$video_id'";
+                $conn->query($ebk_up);
                 echo "Published";
         
      }
 
 
     else if ($_POST['action']=='publish')
-    {   $tmp_name='';
+    {  
         $title = $_POST['course']; //check for existing vendor
         $check="SELECT * FROM video WHERE title = '$title'";
         $result1 = $conn->query($check);
@@ -66,15 +80,22 @@ if(isset($_POST['action']))
                                 //File upload
                             $target_dir = "";
                             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                            $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));             
-                            $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType;     
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {        
+
+                            $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+                           
+
+                           
+                           
+                            
+                                $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType;     
+                                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {        
                                 } else {
                             echo "No video file uploaded.";
-                            }
+                        }
                      
                             //Data Upload
-                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,video_file) VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id','$tmp_name');";
+                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,video_file) VALUES ('$title','$description_detail','$duration','$price','$learning','$vendor_id','$tmp_name');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
