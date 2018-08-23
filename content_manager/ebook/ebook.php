@@ -7,17 +7,17 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price from video where video_id= '$id'";
-    $result = $conn->query($vid_up);
+    $ebk_up = "SELECT name, description, duration, author, price, ebook_file from ebook where book_id= '$id'";
+    $result = $conn->query($ebk_up);
 
     while($row = $result->fetch_array())
     {
-     $title =$row['title'];
-     $description_line = $row['description_line'];
+     $name =$row['name'];
+     $description = $row['description'];
      $duration =$row['duration'];
-     $learning = $row['learning'];
-     $vendor_id =$row['vendor_id'];
+     $author = $row['author'];
      $price =$row['price'];
+     $ebook_file=$row['ebook_file'];
     }
 }
 else{
@@ -56,19 +56,20 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <input type="text" name="course" id="" placeholder="EBOOK" class="course__field">
+            <form id="fileUploadForm" enctype="multipart/form-data" >
+                <input type="text" value="<?php if(isset($name)){echo $name;}else{}?>" name="course" id="" placeholder="EBOOK" class="course__field">
             </div>
             <a href="#" class="change-course">Change</a>
         </div>
 
         <div class="title-section">
             <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;">Title</h1>
-            <textarea name="editor1" class="description_textarea"></textarea>
+            <textarea name="editor1" class="description_textarea"><?php if(isset($description)){echo $description;}else{}?></textarea>
         </div>
 
         <div class="text-section">
-            <input type="text" name="" id="" placeholder="Duration" class="field__1">
-            <input type="text" name="" id="" placeholder="Author" class="field__2">
+            <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Duration" class="field__1">
+            <input type="text" value="<?php if(isset($author)){echo $author;}else{}?>" name="author" id="author" placeholder="Author" class="field__2">
         </div>
         <div class="info-section">
             <p class="section-para">Choose a topic that interests you enough to focus on it for at least a week or two. If
@@ -210,10 +211,8 @@ $conn->close();
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Upload Your File</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <input id="fileToUpload" type="file" name="fileToUpload">
+                        <input type="hidden" name="ebk_file" value="<?php if(isset($ebook_file)){echo $ebook_file;unset($ebook_file);}else{} ?>">   
                         </div>
                         <div class="modal-body">
 
@@ -223,11 +222,14 @@ $conn->close();
             </div>
         </div>
         <div class="price-wrapper">
-            <input type="text" name="course" id="" placeholder="Price" class="price_field">
+            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="" placeholder="Price" class="price_field">
         </div><br>
         <div class="deploy-wrapper">
-            <button class="p__btn">Publish</button>
-        </div>
+        <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
+            <input type="hidden" name="action" <?php if(isset($id)){echo 'value="update"';}else{echo 'value="publish"';}?>>
+            <button name="submit" value="submit" type="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
+        </div>              <p id="msg"></p>
+        </form>
     </div>
     
  
@@ -256,15 +258,16 @@ function ajaxbackend(){
     for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
     var course= $('#course').val(); 
     var duration= $('#duration').val(); 
+    var author= $('#author').val(); 
     var editor1= $('#editor1').val(); 
-    var editor2= $('#editor2').val(); 
-    var vendor= $('#vendor').val(); 
+    var price= $('#price').val(); 
+   
                 
 	    
     
     
           
-           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' )
+           if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' )
                   {
 		        alert('Please make sure all fields are filled.');
 		  } else {
@@ -286,7 +289,7 @@ $("#sub").prop("disabled", true);
 $.ajax({
     type: "POST",
     enctype: 'multipart/form-data',
-    url: "video_back.php",
+    url: "ebook_back.php",
     data: data,
     processData: false,
     contentType: false,
@@ -297,19 +300,16 @@ $.ajax({
         
         console.log(data);
         $("#sub").prop("disabled", false);
-
+        
+        
     },
     error: function (e) {
 
         $("#result").text(e.responseText);
         document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
         $("#sub").prop("disabled", false);
-
     }
-
-
 });
-
 }
 
 
@@ -332,6 +332,4 @@ $.ajax({
 <script>
         CKEDITOR.replace('editor1');
     </script>
-    <script>
-        CKEDITOR.replace('editor2');
-    </script>		
+    

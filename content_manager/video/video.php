@@ -155,12 +155,10 @@ function ajaxbackend(){
                   {
 		        alert('Please make sure all fields are filled.');
 		  } else {
-               //stop submit the form, we will post it manually.
-   
+               //stop submit the form, we will post it manually.   
                event.preventDefault();
-// Get form
-var form = $('#fileUploadForm')[0];
-
+            // Get form
+            var form = $('#fileUploadForm')[0];
 // Create an FormData object 
 var data = new FormData(form);
 

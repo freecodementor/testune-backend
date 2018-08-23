@@ -24,8 +24,7 @@ if(isset($_POST['action']))
         $target_dir = "";        
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);        
         $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-                            $vid_file=$_POST['vid_file'];
+        $vid_file=$_POST['vid_file'];
                             echo $vid_file;
                             if ($_FILES["fileToUpload"]["name"]==''){
                                 $tmp_name=$vid_file; 
