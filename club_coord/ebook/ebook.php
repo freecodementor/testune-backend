@@ -7,18 +7,17 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price, video_file from video where video_id= '$id'";
+    $vid_up = "SELECT name, author, duration, description, price from ebook where book_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
     {
-     $title =$row['title'];
-     $description_line = $row['description_line'];
+     $name =$row['name'];
+     $author = $row['author'];
      $duration =$row['duration'];
-     $learning = $row['learning'];
-     $vendor_id =$row['vendor_id'];
+     $description = $row['description'];
      $price =$row['price'];
-     $video_file =$row['video_file'];
+     
     }
 }
 else{
@@ -35,7 +34,15 @@ $conn->close();
     <link rel="stylesheet" href="http://www.testune.com/spacedtimes/club_coordinator/main.css">
     <link href="http://www.testune.com/spacedtimes/content_manager/css/main.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
-    
+    <!--ADDED BELOW-->
+    <style>
+
+    #ebookfile{
+        width:700px;
+        height:500px;
+    }
+    </style>
+   <!--ADDED ABOVE--> 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"        crossorigin="anonymous"> 
 </head>
 <body>
@@ -57,21 +64,13 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($title)){echo $title;}else{}?></h1>
+                <h1 style="font-size:24px;color:#777;margin-top: 5px;">EBook</h1>
             </div>
             <a href="#" class="change-course">Change</a>
         </div>
-        <div class="description__section">
-            <div class="first-section">
-                <img src="http://www.testune.com/spacedtimes/club_coordinator/assets/Images/language.png" alt="">
-            </div>
-            <div class="second-section">
-                <p class="section-para"><?php if(isset($description_line)){echo $description_line;}else{}?></p>
-            </div>
-        </div>
         <div class="text-section">
-            <div class="inner_text-sub">
-                <h1>Duration :<?php
+            <div class="inner_text">
+            <h1>Duration :<?php
 function minutes($duration){
 $time = explode(':', $duration);
 return ($time[0]*60) + ($time[1]);
@@ -79,32 +78,24 @@ return ($time[0]*60) + ($time[1]);
 echo ' '.minutes($duration).' ';
 ?>Mins</h1>
             </div>
+            <div class="inner_text-sub">
+                <h1>Author : <?php if(isset($author)){echo $author;}else{}?></h1>
+            </div>
         </div>
-        <div class="select-section">
-            <h1 class="select__header">What Will I Get?</h1>
-            <p class="section-para"><?php if(isset($learning)){echo $learning;}else{}?></p>
-        </div>
+        <div class="info-section">
+            <h1 class="description-header">Book Description</h1>
+            <p class="section-para"><?php if(isset($description)){echo $description;}else{}?></div>
         <div class="test-section">
-        <video width="400" controls>
-            <source src="<?php if(isset($video_file)){echo '../../content_manager/video/'.$video_file;unset($video_file);}else{} ?>" type="video/mp4">
-        </video>
-        </div>
-        <div class="vendor_wrapper">
-            <select class="vendor__select">
-                <option value="0">Vendor</option>
-                <option value="1">TEST 1</option>
-                <option value="2">TEST 2</option>
-            </select>
+            <h1 class="test-header"><?php if(isset($name)){echo $name;}else{}?></h1>
+                <div id="ebookfile"></div>        
         </div>
         <div class="price-wrapper">
-            <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo ' '.$price;}else{}?></h1>
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
         </div>
-        <br>
         <div class="deploy-wrapper">
             <button class="p__btn">DEPLOY</button>
         </div>
     </div>
-    
  
   <div class="footer">
         <div class="footerInner">
@@ -121,8 +112,10 @@ echo ' '.minutes($duration).' ';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        
-   
+<!--ADDED BELOW-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.0.201604172/pdfobject.min.js"></script>
+        <script>PDFObject.embed("../../assets/ebook/sample.pdf", "#ebookfile");</script>
+ <!--ADDED ABOVE-->  
 <script language="javascript">
 
 

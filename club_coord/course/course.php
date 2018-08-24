@@ -7,18 +7,18 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price, video_file from video where video_id= '$id'";
+    $vid_up = "SELECT description_line,description, duration, learning, vendor_id, price from live_course where course_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
-    {
-     $title =$row['title'];
+    {    
      $description_line = $row['description_line'];
+     $description = $row['description'];
      $duration =$row['duration'];
      $learning = $row['learning'];
      $vendor_id =$row['vendor_id'];
      $price =$row['price'];
-     $video_file =$row['video_file'];
+    
     }
 }
 else{
@@ -57,21 +57,22 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($title)){echo $title;}else{}?></h1>
+                <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($description_line)){echo $description_line;}else{}?>  </h1>
             </div>
-            <a href="#" class="change-course">Change</a>
+            <a href="#" class="change-course">Change Course</a>
         </div>
         <div class="description__section">
             <div class="first-section">
-                <img src="http://www.testune.com/spacedtimes/club_coordinator/assets/Images/language.png" alt="">
+                <img src="assets/Images/language.png" alt="">
             </div>
             <div class="second-section">
-                <p class="section-para"><?php if(isset($description_line)){echo $description_line;}else{}?></p>
+                <p style="border:1px solid #000;padding:10px;"><?php if(isset($description)){echo $description;}else{}?>
+                </p>
             </div>
-        </div>
+        </div><br>
         <div class="text-section">
             <div class="inner_text-sub">
-                <h1>Duration :<?php
+            <h1>Duration :<?php
 function minutes($duration){
 $time = explode(':', $duration);
 return ($time[0]*60) + ($time[1]);
@@ -83,11 +84,7 @@ echo ' '.minutes($duration).' ';
         <div class="select-section">
             <h1 class="select__header">What Will I Get?</h1>
             <p class="section-para"><?php if(isset($learning)){echo $learning;}else{}?></p>
-        </div>
-        <div class="test-section">
-        <video width="400" controls>
-            <source src="<?php if(isset($video_file)){echo '../../content_manager/video/'.$video_file;unset($video_file);}else{} ?>" type="video/mp4">
-        </video>
+
         </div>
         <div class="vendor_wrapper">
             <select class="vendor__select">
@@ -97,14 +94,12 @@ echo ' '.minutes($duration).' ';
             </select>
         </div>
         <div class="price-wrapper">
-            <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo ' '.$price;}else{}?></h1>
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
         </div>
-        <br>
         <div class="deploy-wrapper">
             <button class="p__btn">DEPLOY</button>
         </div>
     </div>
-    
  
   <div class="footer">
         <div class="footerInner">
