@@ -6,18 +6,19 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price, video_file from video where video_id= '$id'";
-    $result = $conn->query($vid_up);
+    $web_up = "SELECT title,speaker,description,duration,date,time,price,vendor_id from webinar where webinar_id= '$id'";
+    $result = $conn->query($web_up);
 
     while($row = $result->fetch_array())
     {
      $title =$row['title'];
-     $description_line = $row['description_line'];
-     $duration =$row['duration'];
-     $learning = $row['learning'];
-     $vendor_id =$row['vendor_id'];
+     $speaker = $row['speaker'];
+     $description =$row['description'];
+     $duration = $row['duration'];
+     $date =$row['date'];
+     $time =$row['time'];
      $price =$row['price'];
-     $video_file =$row['video_file'];
+     $vendor_id =$row['vendor_id'];
     }
 }
 else{
@@ -58,14 +59,12 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <input type="text" name="course" id="" placeholder="Webinar" class="course__field">
+                <input type="text"  value="<?php if(isset($title)){echo $title;}else{}?>" name="course" id="" placeholder="Title" class="course__field">
             </div>
             <a href="#" class="change-course">Change</a>
         </div><br>
         <div class="course-section">
-            <div class="course__input">
-                <input type="text" name="course" id="" placeholder="Title" class="course__field">
-            </div>
+            
 
         </div>
         <div class="description__section">
