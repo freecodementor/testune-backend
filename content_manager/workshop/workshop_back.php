@@ -3,81 +3,79 @@ include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 
-
-
-$title = $_POST['course'];
-$description_line = $_POST['editor1'];
-$duration = $_POST['duration'];
-$learning = $_POST['editor2'];
-$vendor_id = $_POST['vendor'];
+$course = $_POST['course'];
+$editor1 = $_POST['editor1'];
+$editor2 = $_POST['editor2'];
+$editor3 = $_POST['editor3'];
+$classes = $_POST['classes'];
 $price = $_POST['price'];
-
-
-
+$vendor = $_POST['vendor'];
+$sub_lvl = $_POST['sub_lvl'];
+$cls_lvl = $_POST['cls_lvl'];
 
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
-    {  
-        //New Img with new name upload
-      
-        $target_dir = "";        
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);        
-        $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $vid_file=$_POST['vid_file'];
-                            echo $vid_file;
-                            if ($_FILES["fileToUpload"]["name"]==''){
-                                $tmp_name=$vid_file; 
+    {                            //File update
+                                    $target_dir = "";                    
+                                    $primaryf = $target_dir . basename($_FILES["primary"]["name"]);
+                                    $filetype = strtolower(pathinfo($primaryf,PATHINFO_EXTENSION));
+                                    $p = $course."_".rand(1,100).".".$filetype;
+                                    $s = $course."_".rand(1,100).".".$filetype;
+                                    $i = $course."_".rand(1,100).".".$filetype;
+                                    if (move_uploaded_file($_FILES["primary"]["tmp_name"], $target_dir . $p) AND
+                                    move_uploaded_file($_FILES["secondary"]["tmp_name"], $target_dir . $s) AND
+                                    move_uploaded_file($_FILES["icon"]["tmp_name"], $target_dir . $i) ) 
+                                    {
+                                        echo 'All files saved';
+                                    }
+                                    else {
+                                        echo 'Error uploading some files';
+                                    }                
+                             //Data update
+                            $workshop_id=$_POST['id'];                                   
+                            $work_up = "UPDATE  workshop SET title = '$course', description_line='$editor1',no_of_classes='$classes',price='$price',class_applicable_for='$cls_lvl',subscription_level='$sub_lvl',learning='$editor3',primary_image='$p',secondary_image='$s',course_icon='$i',prerequisites='$editor3',vendor_id='$vendor' where workshop_id= '$workshop_id'";
+                            $conn->query($work_up);
+                            echo "Data Updated";
                             }
-                            else {
-                                $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType; 
-                                   }                            
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {
-                                echo 'File Uploaded\n';
-                            } else {
-                                echo 'File not Uploaded\n';
-                            }
-                        
-        //Data update
-               
-                $video_id=$_POST['id'];                                   
-                $vid_up = "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',video_file='$tmp_name',vendor_id='$vendor_id',price='$price' where video_id= '$video_id'";
-                $conn->query($vid_up);
-                echo "Published";
-        
-     }
-
 
     else if ($_POST['action']=='publish')
-    {   $tmp_name='';
-        $title = $_POST['course']; //check for existing vendor
-        $check="SELECT * FROM video WHERE title = '$title'";
+    {  
+        
+        $check="SELECT * FROM workshop WHERE title = '$course'";
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
     
         if ($num_rows>=1) 
         {        
-        echo "Video Already Exists";        
+        echo "Workshop Already Exists";        
          } 
     
         else 
         {
-                                //File upload
-                            $target_dir = "";
-                            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                            $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));             
-                            $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType;     
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {        
-                                } else {
-                            echo "No video file uploaded.";
+                             //File upload
+                            $target_dir = "";                    
+                            $primaryf = $target_dir . basename($_FILES["primary"]["name"]);
+                            $filetype = strtolower(pathinfo($primaryf,PATHINFO_EXTENSION));
+                            $p = $course."_".rand(1,100).".".$filetype;
+                            $s = $course."_".rand(1,100).".".$filetype;
+                            $i = $course."_".rand(1,100).".".$filetype;
+                            if (move_uploaded_file($_FILES["primary"]["tmp_name"], $target_dir . $p) AND
+                            move_uploaded_file($_FILES["secondary"]["tmp_name"], $target_dir . $s) AND
+                            move_uploaded_file($_FILES["icon"]["tmp_name"], $target_dir . $i) ) 
+                            {
+                                echo 'All files saved';
                             }
-                     
-                            //Data Upload
-                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,video_file) VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id','$tmp_name');";
+                            else {
+                                echo 'Error uploading some files';
+                            }                           
+                            //Data Upload 
+                            echo $p.' '.$s.' '.$i;
+                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,price,class_applicable_for,subscription_level,learning, primary_image,secondary_image, course_icon, prerequisites,vendor_id) VALUES ('$course','$editor1','$classes','$price','$cls_lvl','$sub_lvl','$editor2','$p','$s','$i','$editor3','$vendor');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
-                            {      
+                            {     
                                 do {
                                     
                                             if ($result = $conn->store_result()) 
@@ -87,8 +85,8 @@ if(isset($_POST['action']))
                                                 $var = (string) $row[0];
                                                 }
                                                 
-                                                $video_id = "vid_".$var."";
-                                                $sqli = "UPDATE  video SET video_id = '$video_id' where sno= $var";         
+                                                $workshop_id = "work_".$var."";
+                                                $sqli = "UPDATE  workshop SET workshop_id = '$workshop_id' where sno= $var";         
                                                 $conn->query($sqli);
                                                 echo "Data Saved";
                                                 $result->free();
@@ -97,8 +95,8 @@ if(isset($_POST['action']))
                                     }
                                     while ($conn->next_result());
                             }
-                            else{
-                                
+                            else{ 
+                                echo "Data Not Saved";
                             }
 
        }
