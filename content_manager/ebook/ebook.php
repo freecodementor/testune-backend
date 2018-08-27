@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $ebk_up = "SELECT name, description, duration, author, price, ebook_file from ebook where book_id= '$id'";
+    $ebk_up = "SELECT name, description, duration, author, price from ebook where book_id= '$id'";
     $result = $conn->query($ebk_up);
 
     while($row = $result->fetch_array())
@@ -17,7 +17,7 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $author = $row['author'];
      $price =$row['price'];
-     $ebook_file=$row['ebook_file'];
+     
     }
 }
 else{
@@ -212,7 +212,6 @@ $conn->close();
                     <div class="modal-content">
                         <div class="modal-header">
                         <input id="fileToUpload" type="file" name="fileToUpload">
-                        <input type="hidden" name="ebk_file" value="<?php if(isset($ebook_file)){echo $ebook_file;unset($ebook_file);}else{} ?>">   
                         </div>
                         <div class="modal-body">
 
@@ -265,6 +264,7 @@ function ajaxbackend(){
     if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' )
                   {
 		        alert('Please make sure all fields are filled.');
+                event.preventDefault();
 		  } else {
                //stop submit the form, we will post it manually.
    

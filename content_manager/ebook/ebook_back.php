@@ -19,26 +19,22 @@ if(isset($_POST['action']))
     if ($_POST['action']=='update')
     { 
         //New Img with new name upload
-        $target_dir = "";        
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);        
-        $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $ebk_file=$_POST['ebk_file'];            
-                            if ($_FILES["fileToUpload"]["name"]==''){
-                                $tmp_name=$ebk_file; 
-                            }
-                            else {
-                                $tmp_name = $name."_".rand(1,100).".".$FileType; 
-                                   }
-                            
-                            
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {
-                                echo 'File Uploaded\n';
-                            } else {
-                                echo 'File not Uploaded\n';
-                            }
+        function ren_save( $id='fileToUpload' ){
+            $target_dir = "";
+            $f = $target_dir . basename($_FILES[$id]["name"]);
+            $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+            $file = $_POST['course']."_".rand(1,100).".".$filetype;
+            move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
+            return $file;      
+            unset($f);                               
+            }
+        $f=ren_save();
                       
                 $book_id=$_POST['id'];
-                $ebk_up = "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',ebook_file='$tmp_name',price='$price' where book_id= '$book_id'";
+                $ebk_up = "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',";
+                if($_FILES['fileToUpload']['name']==''){}else{$ebk_up .= "ebook_file='$f',";}
+                $ebk_up .= "price='$price' where book_id= '$book_id'";
+                echo $ebk_up;
                 $conn->query($ebk_up);
                 echo "Published";
         
@@ -47,7 +43,7 @@ if(isset($_POST['action']))
 
     else if ($_POST['action']=='publish')
     {  
-        $name = $_POST['course']; //check for existing vendor
+         //check for existing vendor
         $check="SELECT * FROM ebook WHERE name = '$name'";
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
@@ -60,23 +56,27 @@ if(isset($_POST['action']))
         else 
         {
                                 //File upload
-                            $target_dir = "";
-                            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                            $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));                   
-                            $tmp_name = $name."_".rand(1,100).".".$FileType;     
-                                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {  
-                                    echo "file uploaded <br>";      
-                                } else {
-                            echo "No ebook file uploaded.<br>";
-                                }
+                                function ren_save( $id='fileToUpload' ){
+                                    $target_dir = "";
+                                    $f = $target_dir . basename($_FILES[$id]["name"]);
+                                    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+                                    $file = $_POST['course']."_".rand(1,100).".".$filetype;
+                                    move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
+                                    return $file;                                     
+                                    }
+                                $f=ren_save();
                      
                             //Data Upload
                             
-                            $sql = "INSERT INTO ebook  (name,description,duration,author,ebook_file,price) VALUES ('$name','$description','$duration','$author','$tmp_name','$price');";
-                            $sql .= "SELECT LAST_INSERT_ID()"; 
-                            echo "hello1";
+                            $sql = "INSERT INTO ebook  (name,description,duration,author,";
+                            if($_FILES['fileToUpload']['name']==''){}else{$sql .= "ebook_file,";}
+                            $sql .= "price) VALUES ('$name','$description','$duration','$author',";
+                            if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
+                            $sql .= "'$price');";
+                            $sql .= "SELECT LAST_INSERT_ID()";       
+                            echo $sql;                     
                             if ($conn->multi_query($sql))
-                            {       echo "hello2";
+                            {       
                                 do {
                                     
                                             if ($result = $conn->store_result()) 
@@ -96,9 +96,8 @@ if(isset($_POST['action']))
                                     }
                                     while ($conn->next_result());
                             }
-                            else{
-                                echo "hello1";
-                                
+                            else{               
+                                echo 'failed !';             
                             }
 
        }
@@ -108,6 +107,7 @@ if(isset($_POST['action']))
 
 
 $conn->close();
+
 
 ?>
 
