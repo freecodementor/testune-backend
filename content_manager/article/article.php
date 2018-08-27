@@ -270,6 +270,7 @@ function ajaxbackend(){
            if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' )
                   {
 		        alert('Please make sure all fields are filled.');
+                event.preventDefault();
 		  } else {
                //stop submit the form, we will post it manually.
    
