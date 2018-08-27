@@ -21,27 +21,22 @@ if(isset($_POST['action']))
     {  
         //New Img with new name upload
       
-        $target_dir = "";        
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);        
-        $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $vid_file=$_POST['vid_file'];
-                            echo $vid_file;
-                            if ($_FILES["fileToUpload"]["name"]==''){
-                                $tmp_name=$vid_file; 
-                            }
-                            else {
-                                $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType; 
-                                   }                            
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {
-                                echo 'File Uploaded\n';
-                            } else {
-                                echo 'File not Uploaded\n';
-                            }
+        function ren_save(){
+            $target_dir = "";
+            $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+            $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+            $file = $_POST['course']."_".rand(1,100).".".$filetype;
+            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $file);  
+            return $file;                                     
+        }
+        $f=ren_save();
                         
         //Data update
                
                 $video_id=$_POST['id'];                                   
-                $vid_up = "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',video_file='$tmp_name',vendor_id='$vendor_id',price='$price' where video_id= '$video_id'";
+                $vid_up = "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',";
+                if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
+                $vid_up .= "vendor_id='$vendor_id',price='$price' where video_id= '$video_id'";
                 $conn->query($vid_up);
                 echo "Published";
         
@@ -49,8 +44,8 @@ if(isset($_POST['action']))
 
 
     else if ($_POST['action']=='publish')
-    {   $tmp_name='';
-        $title = $_POST['course']; //check for existing vendor
+    {  
+        //check for existing vendor
         $check="SELECT * FROM video WHERE title = '$title'";
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
@@ -63,19 +58,24 @@ if(isset($_POST['action']))
         else 
         {
                                 //File upload
-                            $target_dir = "";
-                            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                            $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));             
-                            $tmp_name = $_POST['course']."_".rand(1,100).".".$FileType;     
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {        
-                                } else {
-                            echo "No video file uploaded.";
-                            }
+                                function ren_save(){
+                                    $target_dir = "";
+                                    $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+                                    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+                                    $file = $_POST['course']."_".rand(1,100).".".$filetype;
+                                    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir.$file);  
+                                    return $file;                                     
+                                    }
+                                $f=ren_save();
                      
                             //Data Upload
-                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,video_file) VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id','$tmp_name');";
-                            $sql .= "SELECT LAST_INSERT_ID()"; 
-                            
+                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id";
+                            if($_FILES['fileToUpload']['name']==''){}else{$sql .= ",video_file";}
+                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id'";
+                            if($_FILES['fileToUpload']['name']==''){}else{ $sql .= " ,'$f'";}
+                            $sql .= ");";
+                            $sql .= "SELECT LAST_INSERT_ID()";                          
+                            echo $sql;
                             if ($conn->multi_query($sql))
                             {      
                                 do {

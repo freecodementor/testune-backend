@@ -90,8 +90,7 @@ $conn->close();
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                                <input id="fileToUpload" type="file" name="fileToUpload">
-                                <input type="hidden" name="vid_file" value="<?php if(isset($video_file)){echo $video_file;unset($video_file);}else{} ?>">                            
+                                <input id="fileToUpload" type="file" name="fileToUpload">                                               
                         </div>
                         <div class="modal-body">
 
@@ -154,6 +153,7 @@ function ajaxbackend(){
            if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' )
                   {
 		        alert('Please make sure all fields are filled.');
+                event.preventDefault();
 		  } else {
                //stop submit the form, we will post it manually.   
                event.preventDefault();
