@@ -19,9 +19,7 @@ if(isset($_GET['id'])){
      $sub_lvl =$row['subscription_level'];
      $editor2 =$row['learning'];
      $editor3 =$row['prerequisites'];
-     $p =$row['primary_image'];
-     $s =$row['secondary_image'];
-     $i =$row['course_icon'];
+
      $vendor =$row['vendor_id'];
      
     }
@@ -131,15 +129,11 @@ $conn->close();
                         <div class="modal-body">
                             
                                 <label for="">Upload Primary Image</label>
-                                <input type="file" name="primary" id="primary"><br><br>
-                                <input type="hidden" name="p" value="<?php if(isset($p)){echo $p;unset($p);}else{} ?>"> 
+                                <input type="file" name="primary" id="primary"><br><br>                                 
                                 <label for="">Upload Secondary Image</label>
-                                <input type="file" name="secondary" id="secondary"><br><br>
-                                <input type="hidden" name="s" value="<?php if(isset($s)){echo $s;unset($s);}else{} ?>">
+                                <input type="file" name="secondary" id="secondary"><br><br>                                
                                 <label for="">Upload Icon</label><br>
-                                <input type="file" name="icon" id="icon">
-                                <input type="hidden" name="i" value="<?php if(isset($i)){echo $i;unset($i);}else{} ?>">
-                            
+                                <input type="file" name="icon" id="icon">              
                         </div>
                     </div>
                 </div>

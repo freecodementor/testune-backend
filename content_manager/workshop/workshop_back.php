@@ -17,24 +17,31 @@ if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     {                            //File update
-                                    $target_dir = "";                    
-                                    $primaryf = $target_dir . basename($_FILES["primary"]["name"]);
-                                    $filetype = strtolower(pathinfo($primaryf,PATHINFO_EXTENSION));
-                                    $p = $course."_".rand(1,100).".".$filetype;
-                                    $s = $course."_".rand(1,100).".".$filetype;
-                                    $i = $course."_".rand(1,100).".".$filetype;
-                                    if (move_uploaded_file($_FILES["primary"]["tmp_name"], $target_dir . $p) AND
-                                    move_uploaded_file($_FILES["secondary"]["tmp_name"], $target_dir . $s) AND
-                                    move_uploaded_file($_FILES["icon"]["tmp_name"], $target_dir . $i) ) 
-                                    {
-                                        echo 'All files saved';
+                                    
+                                    $str_p='primary';
+                                    $srt_s='secondary';
+                                    $str_i='icon';                    
+                                    function ren_save($id){
+                                        $target_dir = "";
+                                        $f = $target_dir . basename($_FILES[$id]["name"]);
+                                        $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+                                        $file = $_POST['course']."_".rand(1,100).".".$filetype;
+                                        move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
+                                        return $file;                                     
                                     }
-                                    else {
-                                        echo 'Error uploading some files';
-                                    }                
+                                    $p=ren_save($str_p);
+                                    $s=ren_save($srt_s);
+                                    $i=ren_save($str_i);
+
+                                                 
                              //Data update
                             $workshop_id=$_POST['id'];                                   
-                            $work_up = "UPDATE  workshop SET title = '$course', description_line='$editor1',no_of_classes='$classes',price='$price',class_applicable_for='$cls_lvl',subscription_level='$sub_lvl',learning='$editor3',primary_image='$p',secondary_image='$s',course_icon='$i',prerequisites='$editor3',vendor_id='$vendor' where workshop_id= '$workshop_id'";
+                            $work_up = "UPDATE  workshop SET title = '$course', description_line='$editor1',no_of_classes='$classes',price='$price',class_applicable_for='$cls_lvl',subscription_level='$sub_lvl',learning='$editor3',";
+                            if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
+                            if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
+                            if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
+                            $work_up .= "prerequisites='$editor3',vendor_id='$vendor' where workshop_id= '$workshop_id'";
+                            echo $work_up;
                             $conn->query($work_up);
                             echo "Data Updated";
                             }
@@ -54,26 +61,32 @@ if(isset($_POST['action']))
         else 
         {
                              //File upload
-                            $target_dir = "";                    
-                            $primaryf = $target_dir . basename($_FILES["primary"]["name"]);
-                            $filetype = strtolower(pathinfo($primaryf,PATHINFO_EXTENSION));
-                            $p = $course."_".rand(1,100).".".$filetype;
-                            $s = $course."_".rand(1,100).".".$filetype;
-                            $i = $course."_".rand(1,100).".".$filetype;
-                            if (move_uploaded_file($_FILES["primary"]["tmp_name"], $target_dir . $p) AND
-                            move_uploaded_file($_FILES["secondary"]["tmp_name"], $target_dir . $s) AND
-                            move_uploaded_file($_FILES["icon"]["tmp_name"], $target_dir . $i) ) 
-                            {
-                                echo 'All files saved';
-                            }
-                            else {
-                                echo 'Error uploading some files';
-                            }                           
-                            //Data Upload 
-                            echo $p.' '.$s.' '.$i;
-                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,price,class_applicable_for,subscription_level,learning, primary_image,secondary_image, course_icon, prerequisites,vendor_id) VALUES ('$course','$editor1','$classes','$price','$cls_lvl','$sub_lvl','$editor2','$p','$s','$i','$editor3','$vendor');";
+                             $str_p='primary';
+                             $srt_s='secondary';
+                             $str_i='icon';                    
+                             function ren_save($id){
+                                 $target_dir = "";
+                                 $f = $target_dir . basename($_FILES[$id]["name"]);
+                                 $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+                                 $file = $_POST['course']."_".rand(1,100).".".$filetype;
+                                 move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
+                                 return $file;                                     
+                             }
+                             $p=ren_save($str_p);
+                             $s=ren_save($srt_s);
+                             $i=ren_save($str_i);
+                            //Data Upload                             
+                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,price,class_applicable_for,subscription_level,learning,";
+                            if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}
+                            if ($_FILES['secondary']['name']==''){}else{ $sql .= "secondary_image,";}
+                            if ($_FILES['icon']['name']==''){}else{ $sql .= "course_icon,";}
+                             $sql .= "prerequisites,vendor_id) VALUES ('$course','$editor1','$classes','$price','$cls_lvl','$sub_lvl','$editor2',";
+                             if ($_FILES['primary']['name']==''){}else{ $sql .= "'$p',";}
+                             if ($_FILES['secondary']['name']==''){}else{ $sql .= "'$s',";}
+                             if ($_FILES['icon']['name']==''){}else{ $sql .= "'$i',";} 
+                             $sql .= "'$editor3','$vendor');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
-                            
+                            echo $sql;
                             if ($conn->multi_query($sql))
                             {     
                                 do {
