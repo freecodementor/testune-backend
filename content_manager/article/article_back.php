@@ -19,26 +19,21 @@ if(isset($_POST['action']))
     if ($_POST['action']=='update')
     { 
         //New Img with new name upload
-        $target_dir = "";        
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);        
-        $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $art_file=$_POST['art_file'];            
-                            if ($_FILES["fileToUpload"]["name"]==''){
-                                $tmp_name=$art_file; 
-                            }
-                            else {
-                                $tmp_name = $name."_".rand(1,100).".".$FileType; 
-                                   }
-                            
-                            
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {
-                                echo 'File Uploaded\n';
-                            } else {
-                                echo 'File not Uploaded\n';
-                            }
-                      
+        function ren_save($id = 'fileToUpload'){
+            $target_dir = "";
+            $f = $target_dir . basename($_FILES[$id]["name"]);
+            $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+            $file = $_POST['course']."_".rand(1,100).".".$filetype;
+            move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
+            return $file;                                     
+        }
+        $f=ren_save();
+          
+        //Data Upload
                 $article_id=$_POST['id'];
-                $art_up = "UPDATE  article SET name = '$name', description='$description',duration='$duration',author='$author',article_file='$tmp_name',price='$price' where article_id= '$article_id'";
+                $art_up = "UPDATE  article SET name = '$name', description='$description',duration='$duration',author='$author',";
+                if($_FILES['fileToUpload']['name']==''){}else{$art_up .= "article_file='$f',";}
+                $art_up .= "price='$price' where article_id= '$article_id'";
                 $conn->query($art_up);
                 echo "Published";
         
@@ -46,8 +41,7 @@ if(isset($_POST['action']))
 
 
     else if ($_POST['action']=='publish')
-    {  
-        
+    {        
         $check="SELECT * FROM article WHERE name = '$name'";
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
@@ -59,20 +53,24 @@ if(isset($_POST['action']))
     
         else 
         {
-                                //File upload
-                            $target_dir = "";
-                            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                            $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));                   
-                            $tmp_name = $name."_".rand(1,100).".".$FileType;     
-                                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {  
-                                    echo "file uploaded <br>";      
-                                } else {
-                            echo "No article file uploaded.<br>";
-                                }
+               //File upload
+                function ren_save( $id='fileToUpload' ){
+                    $target_dir = "";
+                    $f = $target_dir . basename($_FILES[$id]["name"]);
+                    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+                    $file = $_POST['course']."_".rand(1,100).".".$filetype;
+                    move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
+                    return $file;                                     
+                    }
+                $f=ren_save();
                      
                             //Data Upload
                             
-                            $sql = "INSERT INTO article  (name,description,duration,author,article_file,price) VALUES ('$name','$description','$duration','$author','$tmp_name','$price');";
+                            $sql = "INSERT INTO article  (name,description,duration,author,";
+                            if($_FILES['fileToUpload']['name']==''){}else{$sql .= "article_file,";}
+                            $sql .= "price) VALUES ('$name','$description','$duration','$author',";
+                            if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
+                            $sql .= "'$price');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))

@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT name, description, duration, author, price, article_file from article where article_id= '$id'";
+    $art_up = "SELECT name, description, duration, author, price from article where article_id= '$id'";
     $result = $conn->query($art_up);
 
     while($row = $result->fetch_array())
@@ -17,7 +17,7 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $author = $row['author'];
      $price =$row['price'];
-     $article_file=$row['article_file'];
+     
     }
 }
 else{
@@ -213,8 +213,7 @@ $conn->close();
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <input id="fileToUpload" type="file" name="fileToUpload">
-                        <input type="hidden" name="art_file" value="<?php if(isset($article_file)){echo $article_file;unset($article_file);}else{} ?>"> 
+                        <input id="fileToUpload" type="file" name="fileToUpload">                         
                         </div>
                         <div class="modal-body">
 
