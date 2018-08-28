@@ -30,87 +30,88 @@
         </div>
     </div>
     <h1 class="header-main">Deployment Controls</h1><br>
+    <form id="dep_form">
     <div class="body__wrapper">
         <div class="my-container">
             <h1 class="body-header">Class</h1>
             <div class="first-half-wrapper">
                 <h1 class="first-half__header">Primary</h1>
-                <input type="checkbox" name="check" id="primary" class="first-half__check primary_master">
+                <input type="checkbox" id="primary" class="first-half__check primary_master">
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" id='class1' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class1"  id='class1' class="demo_check primary"> <br>
                     <label for='class1'>Class 1</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class2' id="class2" class="demo_check primary"> <br>
+                    <input type="checkbox" name="class2"  id="class2" class="demo_check primary"> <br>
                     <label for='class2'>Class 2</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class3' id='class3' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class3"  id='class3' class="demo_check primary"> <br>
                     <label for='class3'>Class 3</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class4' id='class4' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class4"  id='class4' class="demo_check primary"> <br>
                     <label for='class4'>Class 4</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class5' id='class5' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class5"  id='class5' class="demo_check primary"> <br>
                     <label for='class5'>Class 5</label>
                 </div>
             </div><br>
             <div class="first-half-wrapper">
                 <h1 class="first-half__header">Secondary</h1>
-                <input type="checkbox" name="check" id="secondary" class="first-half__check secondary_master">
+                <input type="checkbox"  id="secondary" class="first-half__check secondary_master">
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" id='class6' class="demo_check secondary secondary"> <br>
+                    <input type="checkbox" name="class6" id='class6' class="demo_check secondary secondary"> <br>
                     <label for='class1'>Class 6</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class2' id="class7" class="demo_check secondary"> <br>
+                    <input type="checkbox" name="class7"  id="class7" class="demo_check secondary"> <br>
                     <label for='class2'>Class 7</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class3' id='class8' class="demo_check secondary"> <br>
+                    <input type="checkbox" name="class8"  id='class8' class="demo_check secondary"> <br>
                     <label for='class3'>Class 8</label>
                 </div>
             </div><br>
             <div class="first-half-wrapper">
                 <h1 class="first-half__header">Senior Secondary</h1>
-                <input type="checkbox" name="check" id="sen_secondary" class="first-half__check sen_secondary_master">
+                <input type="checkbox"  id="sen_secondary" class="first-half__check sen_secondary_master">
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" id='class9' class="demo_check sen_secondary"> <br>
+                    <input type="checkbox" name="class9" id='class9' class="demo_check sen_secondary"> <br>
                     <label for='class1'>Class 9</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class2' id="class10" class="demo_check sen_secondary"> <br>
+                    <input type="checkbox" name="class10"  id="class10" class="demo_check sen_secondary"> <br>
                     <label for='class2'>Class 10</label>
                 </div>
             </div><br>
             <div class="first-half-wrapper">
                 <h1 class="first-half__header">Senior</h1>
-                <input type="checkbox" name="check" id="senior" class="first-half__check senior_master">
+                <input type="checkbox"  id="senior" class="first-half__check senior_master">
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" id='class11' class="demo_check senior"> <br>
+                    <input type="checkbox" name="class11" id='class11' class="demo_check senior"> <br>
                     <label for='class1'>Class 11</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class" value='class2' id="class12" class="demo_check senior"> <br>
+                    <input type="checkbox" name="class12"  id="class12" class="demo_check senior"> <br>
                     <label for='class2'>Class 12</label>
                 </div>
             </div><br>
             <h1 class="body-header">Gender</h1>
             <div class="first-half-wrapper">
                 <h1 class="first-header">Boy</h1>
-                <input type="radio" name="check" id="" class="first-radio">
+                <input type="radio" name="gender" value="boy"  id="" class="first-radio">
                 <h1 class="first-header">Girl</h1>
-                <input type="radio" name="check" id="" class="first-radio">
+                <input type="radio" name="gender" id=""  value="girl" class="first-radio">
             </div><br>
             <h1 class="body-header">Open Time</h1>
             <h1 class="row-header">Weekly</h1>
@@ -119,13 +120,13 @@
                     Monday
                 </div>
                 <div class="col-1">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="mon" id="">
                 </div>
                 <div class="col-3">
-                    <input type="text" class="datepicker" placeholder="Pick Relevant Date">
+                    <input type="text" name="start" class="datepicker" id="start" value="" placeholder="Pick Relevant Date" required>
                 </div>
                 <div class="col-3">
-                    <input type="text" class="datepicker" placeholder="Pick Relevant Date">
+                    <input type="text" name="end" class="datepicker" id="end" value="" placeholder="Pick Relevant Date" required>
                 </div>
             </div>
             <div class="gap"></div>
@@ -134,7 +135,7 @@
                     Tuesday
                 </div>
                 <div class="col-1">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="tue" id="">
                 </div>
                 <div class="col-3">
                     <input type="text" class="datepicker" placeholder="Pick Relevant Date">
@@ -150,7 +151,7 @@
                     Wednesday
                 </div>
                 <div class="col-1">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="wed" id="">
                 </div>
                 <div class="col-3">
                     <input type="text" class="datepicker" placeholder="Pick Relevant Date">
@@ -166,7 +167,7 @@
                     Thursday
                 </div>
                 <div class="col-1">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="thu" id="">
                 </div>
                 <div class="col-3">
                     <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
@@ -182,7 +183,7 @@
                     Friday
                 </div>
                 <div class="col-1">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="fri" id="">
                 </div>
                 <div class="col-3">
                     <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
@@ -198,7 +199,7 @@
                     Saturday
                 </div>
                 <div class="col-1">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="sat" id="">
                 </div>
                 <div class="col-3">
                     <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
@@ -213,7 +214,7 @@
                     Sunday
                 </div>
                 <div class="col-1">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="sun" id="">
                 </div>
                 <div class="col-3">
                     <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
@@ -240,16 +241,22 @@
                 </div>
             </div>
             <div class="button-wrap">
-                <button class="submit__btn">Submit</button>
+                <button class="submit__btn" onclick="ajaxbackend()">Submit</button>
             </div>
         </div>
     </div>
+    </form>
     <div class="footer ">
         <div class="footerInner ">
             <h1>&copy; SPACEDTIMES</h1>
         </div>
     </div>
-
+    <script>  
+    $( "#start,#end" ).datepicker({
+  dateFormat: "yy-mm-dd"
+});
+   
+  </script>
     <script>
         var primary_master = $('.primary_master');
         var secondary_master = $('.secondary_master');
@@ -273,6 +280,42 @@
         });
 
     </script>
+    <script language="javascript">
+
+
+
+function ajaxbackend(){  
+    var start =  $('#start').val();
+    var end =  $('#end').val(); 
+    if (start === '' || end === '' ){alert ("fill necessary fields !");}
+    else {
+//stop submit the form, we will post it manually.   
+event.preventDefault();
+// Get form
+var form = $('#dep_form')[0];
+// Create an FormData object 
+var data = new FormData(form);
+// If you want to add an extra field for the FormData
+data.append("CustomField", "This is some extra data, testing");
+// disabled the submit button
+$("#sub").prop("disabled", true);
+$.ajax({
+    type: "POST",
+    enctype: 'multipart/form-data',
+    url: "dep_back.php",
+    data: data,
+    processData: false,
+    contentType: false,
+    cache: false,
+    timeout: 600000,
+    success: function (data) {       
+        console.log(data);
+        $("#sub").prop("disabled", false);},
+    error: function (e) {
+        $("#result").text(e.responseText);
+        document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
+        $("#sub").prop("disabled", false);}});}}
+</script>
     <link rel="stylesheet " href="https://use.fontawesome.com/releases/v5.0.10/css/all.css " integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg "
         crossorigin="anonymous ">
     <script>
