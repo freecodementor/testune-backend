@@ -2,6 +2,7 @@
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
+$page = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
 
 if(isset($_SESSION['club'])){
     $club = $_SESSION["club"];}
