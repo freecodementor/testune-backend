@@ -90,7 +90,8 @@
             <a href="#" class="academic_header_link">ADD DELETE MODIFY BATCHES AND COURSES</a>
               <form action="#" method="post">
                <select name="" class="academic_course"  id="course" name="course" onchange="change_course()">
-                             <option  disabled="disabled" selected>No Course Assigned</option>     
+                             <option  disabled="disabled" selected>Select Club</option>
+                             <option  disabled="disabled" selected>App Development</option>     
                   </select></a>
          </div>
 </div>
@@ -100,7 +101,7 @@
             <table class="table table-hover academic_table table-bordered">
                  <thead class="thead-dark academic-table-header">
                     <tr>
-                        <th scope="col">CLASS
+                        <th scope="col">Club
                           <a href="add_class.php" class="pop">  <span style="float: right;font-size: 10px;text-align: center;margin:0;">+
                                 <br> ADD
                             </span> </a>
