@@ -1,4 +1,6 @@
 <?php
+session_start();
+$_SESSION['club_id']="app";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -113,7 +115,7 @@ $conn->close();
             </div>
         </div>
         <div class="vendor_wrapper">
-            <select id="vendor" name="vendor"class="vendor__select">
+            <select id="vendor" name="vendor" class="vendor__select">
                 <option value="0">Vendor</option>
                 <option value="inst_1">TEST 1</option>
                 <option value="inst_2">TEST 2</option>

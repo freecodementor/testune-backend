@@ -71,13 +71,13 @@ if(isset($_POST['action']))
                                 $f=ren_save();
                      
                             //Data Upload
-                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id";
+                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,club_id";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= ",video_file";}
-                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id'";
+                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id','$club_id'";
                             if($_FILES['fileToUpload']['name']==''){}else{ $sql .= " ,'$f'";}
                             $sql .= ");";
                             $sql .= "SELECT LAST_INSERT_ID()";                          
-                            echo $sql;
+                            
                             if ($conn->multi_query($sql))
                             {      
                                 do {

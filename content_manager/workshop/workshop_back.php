@@ -1,4 +1,6 @@
 <?php 
+session_start();
+$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -40,7 +42,7 @@ if(isset($_POST['action']))
                             if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
-                            $work_up .= "prerequisites='$editor3',vendor_id='$vendor' where workshop_id= '$workshop_id'";
+                            $work_up .= "prerequisites='$editor3',vendor_id='$vendor',club_id='$club_id' where workshop_id= '$workshop_id'";
                             echo $work_up;
                             $conn->query($work_up);
                             echo "Data Updated";
@@ -80,13 +82,13 @@ if(isset($_POST['action']))
                             if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}
                             if ($_FILES['secondary']['name']==''){}else{ $sql .= "secondary_image,";}
                             if ($_FILES['icon']['name']==''){}else{ $sql .= "course_icon,";}
-                             $sql .= "prerequisites,vendor_id) VALUES ('$course','$editor1','$classes','$price','$cls_lvl','$sub_lvl','$editor2',";
+                             $sql .= "prerequisites,vendor_id,club_id) VALUES ('$course','$editor1','$classes','$price','$cls_lvl','$sub_lvl','$editor2',";
                              if ($_FILES['primary']['name']==''){}else{ $sql .= "'$p',";}
                              if ($_FILES['secondary']['name']==''){}else{ $sql .= "'$s',";}
                              if ($_FILES['icon']['name']==''){}else{ $sql .= "'$i',";} 
-                             $sql .= "'$editor3','$vendor');";
+                             $sql .= "'$editor3','$vendor','$club_id');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
-                            echo $sql;
+                            
                             if ($conn->multi_query($sql))
                             {     
                                 do {
@@ -121,14 +123,6 @@ if(isset($_POST['action']))
 $conn->close();
 
 ?>
-
-
-
-
-
-
-
-
 
 
 

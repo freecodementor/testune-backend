@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-$_SESSION['club_id']="app";
+$_SESSION['club_id']="web";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();

@@ -1,4 +1,6 @@
 <?php 
+session_start();
+$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -29,7 +31,7 @@ if(isset($_POST['action']))
         //Data update
                
                 $webinar_id=$_POST['id'];                                   
-                $web_up = "UPDATE  webinar SET title = '$title', speaker = '$speaker',description='$description',duration='$duration',learning='$learning',vendor_id='$vendor_id',price='$price',date='$date',time='$time' where webinar_id= '$webinar_id'";
+                $web_up = "UPDATE  webinar SET title = '$title', speaker = '$speaker',description='$description',duration='$duration',learning='$learning',vendor_id='$vendor_id',price='$price',date='$date',time='$time',club_id='$club_id' where webinar_id= '$webinar_id'";
                 $conn->query($web_up);
                 echo "Published";
         
@@ -52,7 +54,7 @@ if(isset($_POST['action']))
                                 //File upload
                            
                             //Data Upload
-                            $sql = "INSERT INTO webinar  (title,description,duration,price,learning,vendor_id,date, time, speaker) VALUES ('$title','$description','$duration','$price','$learning','$vendor_id','$date','$time','$speaker');";
+                            $sql = "INSERT INTO webinar  (title,description,duration,price,learning,vendor_id,date, time, speaker,club_id) VALUES ('$title','$description','$duration','$price','$learning','$vendor_id','$date','$time','$speaker','$club_id');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
