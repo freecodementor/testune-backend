@@ -1,5 +1,7 @@
 
 <?php
+session_start();
+$_SESSION['club_id']="app";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -130,7 +132,7 @@ function ajaxbackend(){
 
 		            } else {
                //stop submit the form, we will post it manually.
-   
+               event.preventDefault();
 // Get form
 var form = $('#fileUploadForm')[0];
 

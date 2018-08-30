@@ -1,5 +1,7 @@
 
 <?php
+session_start();
+$_SESSION['club_id']="app";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();

@@ -1,4 +1,6 @@
 <?php 
+session_start();
+$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -36,7 +38,7 @@ if(isset($_POST['action']))
                 $video_id=$_POST['id'];                                   
                 $vid_up = "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
-                $vid_up .= "vendor_id='$vendor_id',price='$price' where video_id= '$video_id'";
+                $vid_up .= "vendor_id='$vendor_id',price='$price',club_id='$club_id' where video_id= '$video_id'";
                 $conn->query($vid_up);
                 echo "Published";
         

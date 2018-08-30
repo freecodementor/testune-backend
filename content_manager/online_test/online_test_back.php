@@ -1,4 +1,6 @@
 <?php 
+session_start();
+$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -18,28 +20,9 @@ if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     { 
-        //New Img with new name upload
-       /* $target_dir = "";        
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);        
-        $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $ebk_file=$_POST['ebk_file'];            
-                            if ($_FILES["fileToUpload"]["name"]==''){
-                                $tmp_name=$ebk_file; 
-                            }
-                            else {
-                                $tmp_name = $test_name."_".rand(1,100).".".$FileType; 
-                                   }
-                            
-                            
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {
-                                echo 'File Uploaded\n';
-                            } else {
-                                echo 'File not Uploaded\n';
-                            }*/
-                      
+    
                 $test_id=$_POST['id'];
-                /*$ebk_up = "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',ebook_file='$tmp_name',price='$price' where book_id= '$book_id'";*/
-                $test_up = "UPDATE  online_test SET test_name = '$test_name', test_data='$test_data',duration='$duration',test_creator='$test_creator',price='$price' where test_id= '$test_id'";
+                $test_up = "UPDATE  online_test SET test_name = '$test_name', test_data='$test_data',duration='$duration',test_creator='$test_creator',price='$price',club_id='$club_id' where test_id= '$test_id'";
 
                 $conn->query($test_up);
                 echo "Published";
@@ -61,24 +44,13 @@ if(isset($_POST['action']))
     
         else 
         {
-                                //File upload
-                            /*$target_dir = "";
-                            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                            $FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));                   
-                            $tmp_name = $name."_".rand(1,100).".".$FileType;     
-                                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $tmp_name)) {  
-                                    echo "file uploaded <br>";      
-                                } else {
-                            echo "No ebook file uploaded.<br>";
-                                }
-                                */
-                            //Data Upload
-                            echo $test_name.$test_data.$duration.$test_creator.$price;
-                            $sql = "INSERT INTO online_test  (test_name,test_data,duration,test_creator,price) VALUES ('$test_name','$test_data','$duration','$test_creator','$price');";
+         
+                            
+                            $sql = "INSERT INTO online_test  (test_name,test_data,duration,test_creator,price,club_id) VALUES ('$test_name','$test_data','$duration','$test_creator','$price','$club_id');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
-                            {       echo "helloa";
+                            {       
                                 do {
                                     
                                             if ($result = $conn->store_result()) 

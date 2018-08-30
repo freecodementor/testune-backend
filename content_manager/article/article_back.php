@@ -1,4 +1,6 @@
 <?php 
+session_start();
+$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -33,7 +35,7 @@ if(isset($_POST['action']))
                 $article_id=$_POST['id'];
                 $art_up = "UPDATE  article SET name = '$name', description='$description',duration='$duration',author='$author',";
                 if($_FILES['fileToUpload']['name']==''){}else{$art_up .= "article_file='$f',";}
-                $art_up .= "price='$price' where article_id= '$article_id'";
+                $art_up .= "price='$price', club_id='$club_id' where article_id= '$article_id'";
                 $conn->query($art_up);
                 echo "Published";
         
@@ -68,9 +70,9 @@ if(isset($_POST['action']))
                             
                             $sql = "INSERT INTO article  (name,description,duration,author,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "article_file,";}
-                            $sql .= "price) VALUES ('$name','$description','$duration','$author',";
+                            $sql .= "price,club_id) VALUES ('$name','$description','$duration','$author',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
-                            $sql .= "'$price');";
+                            $sql .= "'$price','$club_id');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
