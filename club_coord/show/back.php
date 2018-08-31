@@ -14,7 +14,7 @@ else{
 
 switch ($id) {
     case 'article':
-        $display= "CALL `show_courses`('$club_id');";
+        $display= "CALL `show_summary`('$club_id');";
         break;
     case 'course':
     $display= "CALL `show_courses`('$club_id');";
