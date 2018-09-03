@@ -1,3 +1,39 @@
+
+<?php
+include_once "../../assets/Users.php";
+$database = new Database();
+$conn = $database->getConnection();
+
+
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+    $art_up = "SELECT title,description,no_of_classes,class_applicable_for,subscription_level,learning,vendor_id,prerequisites,price,primary_image,secondary_image,course_icon from workshop where workshop_id= '$id'";
+    $result = $conn->query($art_up);
+
+    while($row = $result->fetch_array())
+    {
+     $title =$row['title'];
+     $class_applicable_for = $row['class_applicable_for'];
+     $description =$row['description'];
+     $no_of_classes = $row['no_of_classes'];
+     $learning =$row['learning'];
+     $subscription_level=$row['subscription_level'];
+     $prerequisites =$row['prerequisites'];
+     $vendor_id = $row['vendor_id'];
+     $price =$row['price'];
+     $primary_image =$row['primary_image'];
+     $secondary_image =$row['secondary_image'];    
+     $course_icon =$row['course_icon'];
+
+
+  
+    }
+}
+else{
+
+}
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,13 +41,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="http://www.testune.com/spacedtimes/club_coordinator/main.css">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
 </head>
-
+<style>
+.work_img{
+    margin:1em; height:10em;
+}
+</style>
 <body>
 
     <div class="navigationBar">
@@ -31,7 +71,7 @@
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <input type="text" name="course" id="" placeholder="Course Name" class="course__field">
+                <input type="text"  value="<?php if(isset($title)){echo $title;}else{}?>" name="course" id="" placeholder="Course Name" class="course__field">
             </div>
             <a href="#" class="change-course">Change</a>
         </div>
@@ -40,15 +80,15 @@
 
             </div> -->
             <div class="second-section">
-                <textarea name="editor1" class="description_textarea"></textarea>
+                <textarea name="editor1" class="description_textarea"><?php if(isset($description)){echo $description;}else{}?></textarea>
             </div>
         </div>
         <div class="text-section">
             <div class="inner_text" style="margin:10px">
-                <input type="text" name="" id="" placeholder="No Of Classes" class="course__field">
+                <input type="text"   value="<?php if(isset($no_of_classes)){echo $no_of_classes;}else{}?>" name="no_of_classes" id="" placeholder="No Of Classes" class="course__field">
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text" name="" id="" placeholder="Price" class="course__field">
+                <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="" placeholder="Price" class="course__field">
             </div>
         </div>
         <div class="vendor_wrapper">
@@ -73,14 +113,29 @@
             <h5>What Will I Get ?
             </h5>
             <div class="second-section">
-                <textarea name="editor2" class="description_textarea"></textarea>
+                <textarea name="editor2" class="description_textarea"><?php if(isset($learning)){echo $learning;}else{}?></textarea>
             </div>
         </div><br>
         <h5>Prerequisite
         </h5>
         <div class="second-section">
-            <textarea name="editor3" class=""></textarea>
+            <textarea name="editor3" class=""><?php if(isset($prerequisites)){echo $prerequisites;}else{}?></textarea>
         </div>
+        <div class="vendor_wrapper">
+        <div>
+            <h6>Primary Image</h6>
+            <img class="work_img" src="<?php if(isset($primary_image)){echo '../../assets/workshop/'.$primary_image;}else{}?>" alt="" >
+        </div>
+        <div >
+            <h6>Secondary Image</h6>
+                <img class="work_img" src="<?php if(isset($secondary_image)){echo '../../assets/workshop/'.$secondary_image;}else{}?>" alt="" >
+                    </div>
+                    <div >
+            <h6>Course Icon</h6>
+                    <img class="work_img" src="<?php if(isset($course_icon)){echo '../../assets/workshop/'.$course_icon;}else{}?>" alt="" >
+                    </div>
+        </div>
+
         <div class="upload-wrapper">
             <button type="button" class="upload__btn" data-toggle="modal" data-target="#exampleModal">
                 UPLOAD FILE <i class="fas fa-cloud-upload-alt"></i>

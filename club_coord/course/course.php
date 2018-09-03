@@ -62,11 +62,9 @@ $conn->close();
             <a href="#" class="change-course">Change Course</a>
         </div>
         <div class="description__section">
-            <div class="first-section">
-                <img src="assets/Images/language.png" alt="">
-            </div>
+            
             <div class="second-section">
-                <p style="border:1px solid #000;padding:10px;"><?php if(isset($description)){echo $description;}else{}?>
+                <p ><?php if(isset($description)){echo $description;}else{}?>
                 </p>
             </div>
         </div><br>

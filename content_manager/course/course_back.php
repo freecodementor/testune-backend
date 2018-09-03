@@ -5,15 +5,12 @@ include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 
-$course = $_POST['course'];
-$editor1 = $_POST['editor1'];
-$editor2 = $_POST['editor2'];
-$editor3 = $_POST['editor3'];
-$classes = $_POST['classes'];
+$description_line = $_POST['course'];
+$description = $_POST['editor1'];
+$learning = $_POST['editor2'];
 $price = $_POST['price'];
 $vendor = $_POST['vendor'];
-$sub_lvl = $_POST['sub_lvl'];
-$cls_lvl = $_POST['cls_lvl'];
+$duration = $_POST['duration'];
 
 if(isset($_POST['action']))
 {   
@@ -24,7 +21,7 @@ if(isset($_POST['action']))
                                     $srt_s='secondary';
                                     $str_i='icon';                    
                                     function ren_save($id){
-                                        $target_dir = "../../assets/workshop/";
+                                        $target_dir = "../../assets/course/";
                                         $f =basename($_FILES[$id]["name"]);
                                         $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
                                         $file = $_POST['course']."_".rand(1,100).".".$filetype;
@@ -37,13 +34,13 @@ if(isset($_POST['action']))
 
                                                  
                              //Data update
-                            $workshop_id=$_POST['id'];                                   
-                            $work_up = "UPDATE  workshop SET title = '$course', description_line='$editor1',
-                            no_of_classes='$classes',price='$price',class_applicable_for='$cls_lvl',subscription_level='$sub_lvl',learning='$editor3',";
+                            $course_id=$_POST['id'];                                   
+                            $work_up = "UPDATE  live_course SET description_line = '$description_line', description='$description',
+                            price='$price',duration='$duration',learning='$learning',";
                             if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
-                            $work_up .= "prerequisites='$editor3',vendor_id='$vendor',club_id='$club_id' where workshop_id= '$workshop_id'";
+                            $work_up .= "vendor_id='$vendor',club_id='$club_id' where course_id= '$course_id'";
                             echo $work_up;
                             $conn->query($work_up);
                             echo "Data Updated";
@@ -52,13 +49,13 @@ if(isset($_POST['action']))
     else if ($_POST['action']=='publish')
     {  
         
-        $check="SELECT * FROM workshop WHERE title = '$course'";
+        $check="SELECT * FROM live_course WHERE description_line = '$description_line'";
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
     
         if ($num_rows>=1) 
         {        
-        echo "Workshop Already Exists";        
+        echo "Course Already Exists";        
          } 
     
         else 
@@ -68,7 +65,7 @@ if(isset($_POST['action']))
                              $srt_s='secondary';
                              $str_i='icon';                    
                              function ren_save($id){
-                                 $target_dir = "../../assets/workshop/";
+                                 $target_dir = "../../assets/course/";
                                  $f = basename($_FILES[$id]["name"]);
                                  $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
                                  $file = $_POST['course']."_".rand(1,100).".".$filetype;
@@ -79,15 +76,15 @@ if(isset($_POST['action']))
                              $s=ren_save($srt_s);
                              $i=ren_save($str_i);
                             //Data Upload                             
-                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,price,class_applicable_for,subscription_level,learning,";
+                            $sql = "INSERT INTO live_course  (description_line,description,price,duration,learning,";
                             if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}
                             if ($_FILES['secondary']['name']==''){}else{ $sql .= "secondary_image,";}
                             if ($_FILES['icon']['name']==''){}else{ $sql .= "course_icon,";}
-                             $sql .= "prerequisites,vendor_id,club_id) VALUES ('$course','$editor1','$classes','$price','$cls_lvl','$sub_lvl','$editor2',";
+                             $sql .= "vendor_id,club_id) VALUES ('$description_line','$description','$price','$duration','$learning',";
                              if ($_FILES['primary']['name']==''){}else{ $sql .= "'$p',";}
                              if ($_FILES['secondary']['name']==''){}else{ $sql .= "'$s',";}
                              if ($_FILES['icon']['name']==''){}else{ $sql .= "'$i',";} 
-                             $sql .= "'$editor3','$vendor','$club_id');";
+                             $sql .= "'$vendor','$club_id');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
@@ -101,8 +98,8 @@ if(isset($_POST['action']))
                                                 $var = (string) $row[0];
                                                 }
                                                 
-                                                $workshop_id = "work_".$var."";
-                                                $sqli = "UPDATE  workshop SET workshop_id = '$workshop_id' where sno= $var";         
+                                                $course_id = "course_".$var."";
+                                                $sqli = "UPDATE  live_course SET course_id = '$course_id' where sno= $var";         
                                                 $conn->query($sqli);
                                                 echo "Data Saved";
                                                 $result->free();

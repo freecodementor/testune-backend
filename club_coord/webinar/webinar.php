@@ -1,3 +1,34 @@
+
+<?php
+include_once "../../assets/Users.php";
+$database = new Database();
+$conn = $database->getConnection();
+
+
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+    $art_up = "SELECT title,speaker,description,duration,learning,date,time,vendor_id,price from webinar where webinar_id= '$id'";
+    $result = $conn->query($art_up);
+
+    while($row = $result->fetch_array())
+    {
+     $title =$row['title'];
+     $speaker = $row['speaker'];
+     $description =$row['description'];
+     $duration = $row['duration'];
+     $learning =$row['learning'];
+     $date=$row['date'];
+     $time =$row['time'];
+     $vendor_id = $row['vendor_id'];
+     $price =$row['price'];
+  
+    }
+}
+else{
+
+}
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +36,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="http://www.testune.com/spacedtimes/club_coordinator/main.css">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
@@ -31,45 +62,40 @@
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <input type="text" name="course" id="" placeholder="Webinar" class="course__field">
+                <input type="text"  value="<?php if(isset($title)){echo $title;}else{}?>" name="course" id="" placeholder="Webinar" class="course__field">
             </div>
             <a href="#" class="change-course">Change</a>
         </div><br>
-        <div class="course-section">
-            <div class="course__input">
-                <input type="text" name="course" id="" placeholder="Title" class="course__field">
-            </div>
-
-        </div>
+        
         <div class="description__section">
             <!--  <div class="first-section">
                 <h4 style="color: #000">First Section
                 </h4>
             </div> -->
             <div class="second-section">
-                <textarea name="editor1" class="description_textarea"></textarea>
+                <textarea name="editor1" class="description_textarea"><?php if(isset($description)){echo $description;}else{}?></textarea>
             </div>
         </div>
         <div class="text-section">
             <div class="inner_text" style="margin:10px">
-                <input type="text" name="" id="" placeholder="Speaker" class="course__field">
+                <input type="text"  value="<?php if(isset($speaker)){echo $speaker;}else{}?>" name="speaker" id="" placeholder="Speaker" class="course__field">
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text" name="" id="" placeholder="Duration" class="course__field">
+                <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="" placeholder="Duration" class="course__field">
             </div>
         </div>
         <div class="select-section">
             <h5>What Will I Get?</h5>
             <div class="second-section">
-                <textarea name="editor2" class="description_textarea"></textarea>
+                <textarea name="editor2" class="description_textarea"><?php if(isset($learning)){echo $learning;}else{}?></textarea>
             </div>
         </div>
         <div class="text-section">
             <div class="inner_text" style="margin:10px">
-                <input type="text" name="" id="" placeholder="Date" class="course__field">
+                <input type="text" value="<?php if(isset($date)){echo $date;}else{}?>" name="date" id="" placeholder="Date" class="course__field">
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text" name="" id="" placeholder="Time in Hrs" class="course__field">
+                <input type="text" value="<?php if(isset($time)){echo $time;}else{}?>" name="time" id="" placeholder="Time in Hrs" class="course__field">
             </div>
         </div>
         <div class="vendor_wrapper">
@@ -80,7 +106,7 @@
             </select>
         </div>
         <div class="price-wrapper">
-            <input type="text" name="course" id="" placeholder="Price" class="price_field">
+            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="" placeholder="Price" class="price_field">
         </div>
         <div class="deploy-wrapper">
             <button class="p__btn">Publish</button>
