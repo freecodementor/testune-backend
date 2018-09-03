@@ -6,6 +6,7 @@ class database {
         $password = "";
         $dbname = "testune"; 
         return  mysqli_connect($servername, $username, $password,$dbname);
+        
     }
 
 
