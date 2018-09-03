@@ -1,3 +1,7 @@
+*.png
+*.jpg
+*.pdf
+*.bmp
 /img
 /img/vendor
 /img/cont_mgr
