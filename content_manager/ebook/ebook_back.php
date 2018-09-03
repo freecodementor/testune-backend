@@ -12,6 +12,7 @@ $description = $_POST['editor1'];
 $duration = $_POST['duration'];
 $author = $_POST['author'];
 $price = $_POST['price'];
+$vendor_id =$_POST['vendor'];
 
 
 
@@ -35,7 +36,7 @@ if(isset($_POST['action']))
                 $book_id=$_POST['id'];
                 $ebk_up = "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',";
                 if($_FILES['fileToUpload']['name']==''){}else{$ebk_up .= "ebook_file='$f',";}
-                $ebk_up .= "price='$price', club_id='$club_id' where book_id= '$book_id'";                
+                $ebk_up .= "price='$price', club_id='$club_id',vendor_id='$vendor_id' where book_id= '$book_id'";                
                 $conn->query($ebk_up);
                 echo "Published";
         
@@ -71,9 +72,9 @@ if(isset($_POST['action']))
                             
                             $sql = "INSERT INTO ebook  (name,description,duration,author,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "ebook_file,";}
-                            $sql .= "price,club_id) VALUES ('$name','$description','$duration','$author',";
+                            $sql .= "price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
-                            $sql .= "'$price','$club_id');";
+                            $sql .= "'$price','$club_id','$vendor_id');";
                             $sql .= "SELECT LAST_INSERT_ID()";                                              
                             if ($conn->multi_query($sql))
                             {       

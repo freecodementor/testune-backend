@@ -9,7 +9,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $test_up = "SELECT test_name, test_data, duration, test_creator, price from online_test where test_id= '$id'";
+    $test_up = "SELECT test_name, test_data, duration, test_creator, price, vendor_id from online_test where test_id= '$id'";
     $result = $conn->query($test_up);
 
     while($row = $result->fetch_array())
@@ -19,6 +19,7 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $author = $row['test_creator'];
      $price =$row['price'];
+     $vendor_id =$row['vendor_id'];
      
     }
 }
@@ -80,7 +81,13 @@ $conn->close();
                 your home in country style on a shoestring budget. That’s more specific and, as such, easier to tackle.</p>
         </div>
         <br>
-        
+        <div class="vendor_wrapper">
+            <select class="vendor__select" name="vendor" id="vendor" style="width:auto;margin:20px 35px;">
+                <option value="">Vendor </option>
+                <option value="inst_1">Vendor 1</option>
+                <option value="inst_2">Vendor 2</option>
+            </select>
+        </div>
         <div class="test-section">
             <h1 class="test-header">Start Test</h1>
             <i class="fas fa-play secondary-icons"></i>
