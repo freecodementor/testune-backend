@@ -7,7 +7,12 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT description_line,description, duration, learning, vendor_id, price from live_course where course_id= '$id'";
+    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, live_course.vendor_id, live_course.price,vendor.vendor_icon,activities.icon
+     from live_course  INNER JOIN vendor ON 
+    live_course.vendor_id =   vendor.vendor_id  
+    INNER JOIN activities ON
+     activities.page_name LIKE 'live_course.php' 
+      where course_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
@@ -18,7 +23,8 @@ if(isset($_GET['id'])){
      $learning = $row['learning'];
      $vendor_id =$row['vendor_id'];
      $price =$row['price'];
-    
+     $ven_icon = $row['vendor_icon'];
+     $act_icon = $row['icon'];
     }
 }
 else{
@@ -56,10 +62,17 @@ $conn->close();
 	 
     <div class="page">
         <div class="course-section">
-            <div class="course__input">
-                <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($description_line)){echo $description_line;}else{}?>  </h1>
+        <div class="course__input">
+                <h2>Course</h2>
             </div>
-            <a href="#" class="change-course">Change Course</a>
+            <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
+        </div>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px; margin-top:-80px;">
+        <div class="course-section">
+            <div class="course__input">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($description_line)){echo $description_line;}else{}?>  </h1>
+            </div>
+
         </div>
         <div class="description__section">
             
@@ -85,11 +98,7 @@ echo ' '.minutes($duration).' ';
 
         </div>
         <div class="vendor_wrapper">
-            <select class="vendor__select">
-                <option value="0">Vendor</option>
-                <option value="1">TEST 1</option>
-                <option value="2">TEST 2</option>
-            </select>
+        <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
         </div>
         <div class="price-wrapper">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>

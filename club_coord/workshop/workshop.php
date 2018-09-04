@@ -7,7 +7,13 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT title,description,no_of_classes,class_applicable_for,subscription_level,learning,vendor_id,prerequisites,price,primary_image,secondary_image,course_icon from workshop where workshop_id= '$id'";
+    $art_up = "SELECT workshop.title,workshop.description,workshop.no_of_classes,workshop.class_applicable_for,
+    workshop.subscription_level,workshop.learning,workshop.vendor_id,workshop.prerequisites,workshop.price,
+    workshop.primary_image,workshop.secondary_image,workshop.course_icon,vendor.vendor_icon,activities.icon
+     from workshop 
+     INNER JOIN vendor ON 
+    workshop.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+     activities.page_name LIKE 'workshop.php' where workshop_id= '$id'";
     $result = $conn->query($art_up);
 
     while($row = $result->fetch_array())
@@ -24,6 +30,8 @@ if(isset($_GET['id'])){
      $primary_image =$row['primary_image'];
      $secondary_image =$row['secondary_image'];    
      $course_icon =$row['course_icon'];
+     $ven_icon = $row['vendor_icon'];
+     $act_icon = $row['icon'];
 
 
   
@@ -69,57 +77,49 @@ $conn->close();
         </div>
     </div>
     <div class="page">
+    <div class="course-section">
+            <div class="course__input">
+                <h2>Workshop</h2>
+            </div>
+            <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
+        </div>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px; margin-top:-80px;">
         <div class="course-section">
             <div class="course__input">
-                <input type="text"  value="<?php if(isset($title)){echo $title;}else{}?>" name="course" id="" placeholder="Course Name" class="course__field">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($title)){echo $title;}else{}?>  </h1>
             </div>
-            <a href="#" class="change-course">Change</a>
+
         </div>
         <div class="description__section">
             <!-- <div class="first-section">
 
             </div> -->
             <div class="second-section">
-                <textarea name="editor1" class="description_textarea"><?php if(isset($description)){echo $description;}else{}?></textarea>
+            <p><?php if(isset($description)){echo $description;}else{}?></p>
             </div>
         </div>
         <div class="text-section">
             <div class="inner_text" style="margin:10px">
-                <input type="text"   value="<?php if(isset($no_of_classes)){echo $no_of_classes;}else{}?>" name="no_of_classes" id="" placeholder="No Of Classes" class="course__field">
-            </div>
+            <h1>No of Classes : <?php if(isset($no_of_classes)){echo $no_of_classes;}else{}?></h1>            </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="" placeholder="Price" class="course__field">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>
         <div class="vendor_wrapper">
-            <select class="vendor__select" style="width:auto;margin:20px 35px;">
-                <option value="0">Class Is Applicable For</option>
-                <option value="1">Class 6 <sup>th</sup></option>
-                <option value="1">Class 7 <sup>th</sup></option>
-                <option value="1">Class 8 <sup>th</sup></option>
-                <option value="1">Class 9 <sup>th</sup></option>
-                <option value="1">Class 10 <sup>th</sup></option>
-                <option value="1">Class 11 <sup>th</sup></option>
-                <option value="1">Class 12 <sup>th</sup></option>
-            </select>
-            <select class="vendor__select" style="width:auto;">
-                <option value="0">Subscription Level</option>
-                <option value="1">SILVER</option>
-                <option value="1">GOLD</option>
-                <option value="1">PLATINUM</option>
-            </select>
+        <h5>Class Applicable for: <?php if(isset($class_applicable_for)){echo $class_applicable_for;}else{}?></h5> &nbsp;
+            <h5>Subscription Level: <?php if(isset($subscription_level)){echo $subscription_level;}else{}?></h5>
         </div>
         <div class="select-section">
             <h5>What Will I Get ?
             </h5>
             <div class="second-section">
-                <textarea name="editor2" class="description_textarea"><?php if(isset($learning)){echo $learning;}else{}?></textarea>
+            <p><?php if(isset($learning)){echo $learning;}else{}?></p>
             </div>
         </div><br>
         <h5>Prerequisite
         </h5>
         <div class="second-section">
-            <textarea name="editor3" class=""><?php if(isset($prerequisites)){echo $prerequisites;}else{}?></textarea>
+        <p><?php if(isset($prerequisites)){echo $prerequisites;}else{}?></p>
         </div>
         <div class="vendor_wrapper">
         <div>
@@ -136,40 +136,8 @@ $conn->close();
                     </div>
         </div>
 
-        <div class="upload-wrapper">
-            <button type="button" class="upload__btn" data-toggle="modal" data-target="#exampleModal">
-                UPLOAD FILE <i class="fas fa-cloud-upload-alt"></i>
-            </button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Upload Your File</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="#">
-                                <label for="">Upload Primary Image</label>
-                                <input type="file" name="" id=""><br><br>
-                                <label for="">Upload Secondary Image</label>
-                                <input type="file" name="" id=""><br><br>
-                                <label for="">Upload Icon</label><br>
-                                <input type="file" name="" id="">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="vendor_wrapper">
-            <select class="vendor__select" style="width:auto;margin:20px 35px;">
-                <option value="0">Vendor </option>
-                <option value="1">Vendor 1</option>
-                <option value="1">Vendor 2</option>
-            </select>
-        </div>
+        
+        
         <div class="deploy-wrapper">
             <button class="p__btn">Publish</button>
         </div>

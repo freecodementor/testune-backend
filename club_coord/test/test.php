@@ -7,7 +7,11 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT test_name, test_creator, duration, test_type, price,test_data from online_test where test_id= '$id'";
+    $vid_up = "SELECT online_test.test_name, online_test.test_creator, online_test.duration, online_test.test_type, 
+    online_test.price,online_test.test_data,online_test.vendor_id,vendor.vendor_icon,activities.icon from online_test 
+    INNER JOIN vendor ON 
+    online_test.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+     activities.page_name LIKE 'online_test.php' where test_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
@@ -16,7 +20,10 @@ if(isset($_GET['id'])){
      $test_creator = $row['test_creator'];
      $duration =$row['duration'];
      $test_type = $row['test_type'];
+     $vendor_id = $row['vendor_id'];
      $price =$row['price'];
+     $ven_icon = $row['vendor_icon'];
+     $act_icon = $row['icon'];
      $test_data =$row['test_data'];
     
     }
@@ -56,13 +63,17 @@ $conn->close();
 	 
     <div class="page">
         <div class="course-section">
-            <div class="course__input">
-                <h1 style="font-size:24px;color:#777;margin-top: 5px;">Test</h1>
+        <div class="course__input">
+                <h1>Test</h1>
             </div>
-            <a href="#" class="change-course">Change</a>
+            <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
         </div>
-        <div class="title-section">
-            <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;"><?php if(isset($test_name)){echo $test_name;}else{}?></h1>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px; margin-top:-80px;">
+        <div class="course-section">
+            <div class="course__input">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($test_name)){echo $test_name;}else{}?>  </h1>
+            </div>
+
         </div>
         <div class="text-section">
             <div class="inner_text">

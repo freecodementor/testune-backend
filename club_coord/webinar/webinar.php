@@ -67,13 +67,19 @@ $conn->close();
         </div>
     </div>
     <div class="page">
-        <div class="course-section">
+    <div class="course-section">
             <div class="course__input">
-            <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;"><?php if(isset($title)){echo $title;}else{}?></h1>
+                <h2>Webinar</h2>
             </div>
             <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
-        </div><br>
-        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px;">
+        </div>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px; margin-top:-80px;">
+        <div class="course-section">
+            <div class="course__input">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($title)){echo $title;}else{}?>  </h1>
+            </div>
+
+        </div>
         <div class="description__section">
             <!--  <div class="first-section">
                 <h4 style="color: #000">First Section

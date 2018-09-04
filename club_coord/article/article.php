@@ -59,13 +59,18 @@ $conn->close();
 	 
     <div class="page">
         <div class="course-section">
-            <div class="course__input">
-            <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;"><?php if(isset($name)){echo $name;}else{}?></h1>
+        <div class="course__input">
+                <h2>Article</h2>
             </div>
             <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
-        </div><br>
-        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px;">
-                  
+        </div>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px; margin-top:-80px;">
+        <div class="course-section">
+            <div class="course__input">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($name)){echo $name;}else{}?>  </h1>
+            </div>
+
+        </div>
         <div class="text-section">
             <div class="inner_text-sub">
                 <h1>Author : <?php if(isset($author)){echo $author;}else{}?></h1>
@@ -84,6 +89,9 @@ return ($time[0]*60) + ($time[1]);
 echo ' '.minutes($duration).' ';
 ?>Mins</h1>
             </div>
+        </div>
+        <div class="vendor_wrapper">
+        <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
         </div>
         <div class="price-wrapper">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>

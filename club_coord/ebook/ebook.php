@@ -70,12 +70,18 @@ $conn->close();
 	 
     <div class="page">
         <div class="course-section">
-            <div class="course__input">
-                <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($name)){echo $name;}else{}?></h1>
+        <div class="course__input">
+                <h2>Ebook</h2>
             </div>
             <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
-        </div><br>
-        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px;">
+        </div>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px; margin-top:-80px;">
+        <div class="course-section">
+            <div class="course__input">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($title)){echo $title;}else{}?>  </h1>
+            </div>
+
+        </div>
         <div class="text-section">
             <div class="inner_text">
             <h1>Duration :<?php
