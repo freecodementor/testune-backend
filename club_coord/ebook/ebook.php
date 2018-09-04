@@ -33,8 +33,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="http://www.testune.com/spacedtimes/club_coordinator/main.css">
-    <link href="http://www.testune.com/spacedtimes/content_manager/css/main.css" rel="stylesheet">
-    <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
     <!--ADDED BELOW-->
     <style>
 
@@ -106,7 +105,22 @@ echo ' '.minutes($duration).' ';
 
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"  crossorigin="anonymous">
 
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+<script>
+        CKEDITOR.replace('editor1');
+    </script>
+    <script>
+        CKEDITOR.replace('editor2');
+    </script>		
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
@@ -187,18 +201,4 @@ $.ajax({
 
    
 </script>
-    <script>
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-        }
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-        }
-    </script>
-
-<script>
-        CKEDITOR.replace('editor1');
-    </script>
-    <script>
-        CKEDITOR.replace('editor2');
-    </script>		
+ 

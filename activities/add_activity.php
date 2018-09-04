@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -5,17 +6,15 @@
 <title>Admin Panel - SpacedTimes</title>
 <!--style sheet-->
 <script language="javascript" src="http://www.testune.com/spacedtimes/fancybox/ckeditor/ckeditor.js"></script>
-<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/style.css"/>
-<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/navigation.css"/>
-<link href="http://www.testune.com/spacedtimes/faculty/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/main.css"/>
 <script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.min.js"></script>
 <script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-<script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.pack.js "></script>
 <link rel="stylesheet" type="text/css" href="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.css" />
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script src="http://www.testune.com/spacedtimes/fancybox/jquery-ui.js" type="text/javascript"></script>
- <link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>var $j = jQuery.noConflict(true);</script>
   <script>
@@ -27,44 +26,7 @@
   } );
   </script>
 
- <style>
-                       select {
-	-moz-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-webkit-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-ms-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	border: 1px solid #00897B;
-	display: block;
-	text-decoration: none;
-	width: 100%;
-	outline: 0;
-	font-size: 15px;
-	border-radius: 5px;
-	padding: 5px;
-	margin-top: 10px;
-}
-input[type="text"],
-input[type="password"],
-input[type="email"],
-textarea {
-	-moz-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-webkit-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-ms-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	-ms-appearance: none;
-	appearance: none;
-	color: black;
-	display: block;
-	text-decoration: none;
-	width: 100%;
-	outline: 0;
-	border: 1px solid #00897B;
-	font-size: 15px;
-	margin-top: 10px;
-}
- </style>  <script type="text/javascript">
+<script type="text/javascript">
 		$(document).ready(function() {
 				$("a.pop2").fancybox({
 				'overlayColor'		: '#000',
@@ -111,90 +73,37 @@ textarea {
 				});     
 			});
 			</script>
+      <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
+
+<!DOCTYPE html>
+<html lang="en">
 <body>
-<!--top starts-->
-<div id="top">
-  <div class="container clearfix">
-    <div class="grid_12">
-      <p>Welcome to SpacedTimes!</p>
-      <p class="call">Admin Name <span class="color">Abhi    </span></p>
+   <nav>
+        <ul class="nav__main">
+            <li class="logo-list"><a href="index.php" style="text-decoration:none;color:#fff;"> SPACEDTIMES </a></li>
+            <li><a href="?q=logout" class="logout-link">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="page-description-header">
+        <div class="page-container">
+            <h1 class="page-description-text">NEW ACTIVITY</h1><p id="msg"></p>
+        </div>
     </div>
-  </div>
-</div>
-<!--top ends--> 
-<!--header starts-->
-<div id="header">
-  <div class="container  header_inner clearfix">
-    <div class="grid_12"> 
-        <!--logo here--> 
-         <h1 class="logoBox-header"><a href="index.php" style="color: #ffb400;">SPACED<span>TIMES</span></a></h1> 
-       <!--menu / navigation starts-->
-      <ul class="sf-menu">
-         <li class="login_link"> 
-           <!--login_wrapper starts-->
-          <div class="login_wrapper"> <a href="?q=logout" class="login_out"><span>Log Out</span></a>
-            </div>
-          <!--login_wrapper ends--> 
-         </li>
-      </ul>
-      <!--menu ends-->
-       <div class="clear"></div>
+    <div class="page-middle-wrapper">
+        <form action="#" class="page-form" id="fileUploadForm" enctype="multipart/form-data">
+            <input type="text" name="activity_name" id="activity_name" placeholder="Activity Name" class="form-field" required="true"><br>  <input type="hidden" name="action" value="add">
+            <textarea  name="desc" id="desc" cols="30" rows="10" placeholder="Activity Description" class="form-textarea" required="true"></textarea><br>
+             <input type="text" name="page_name" id="page_name" placeholder="Page Name" class="form-field" required="true"> <br />  
+             <label>Choose Icon: </label><input id="icon" type="file" name="icon"><br /> 
+             
+              <input type="hidden" name="activity_id" value="<?php if(isset($id)){echo $id;}else{}?>">
+            <input type="button" name="submit" value="SUBMIT" id="sub" name="sub" onclick="check_form()" class="submit__btn">
+            
+        </form>
     </div>
-  </div>
-</div>
-<!--header ends--> <!--section for intro text and button starts-->
-<div class="section">
-  <div class="container clearfix">
-    <div class="grid_12 action3">
-    <table>
-                                <tbody><tr>  
-                                  <td style="padding: 0em 0em;">
-					<section class="wrapper special popup ">
-                                                     <header class="mb-3">
-              <h2 class="text-grey " style=" line-height:1.25em;"><strong>NEW ACTIVITY</strong></h2>
-              
-              <p id="msg"></p>
-						      </header>
-							    <div class="content">
-                                                                  <div class="container">
-                                                                  
-                                                                  <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
-                                                                                        <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                        
-												<input type="text" placeholder="Activity Name" name="activity_name" id="activity_name" class="padding-popup radius03" required="true">
-											</div>
-                      
-                      
-                      
-                     
-                      
-                       
-										 	
-                                                                                        
-<div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Description" style="margin-bottom:10px; min-height:100px;"name="desc" id="desc" class="padding-popup radius03" required="true"></textarea>
-											</div> 
-
-
-
-											
-                      
-										 	<input type="hidden" name="action" value="add">
-											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
-												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
-                                            </div><br>
-                                            
-                                            
-                                        </form>
-										</div>  
-                                      	 </div>
-                 </section> </td></tr>
-</tbody></table>
        
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 <script language="javascript">
 $(function(){
 $("#password").keyup(function(event){
@@ -203,6 +112,7 @@ $("#password").keyup(function(event){
     }
 });
 });
+
 function validateEmail(email) {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   if(!emailReg.test(email)) {
@@ -211,37 +121,30 @@ function validateEmail(email) {
     return true;
   }
 }
+
 function check_form()
    {
            var activity_name= $('#activity_name').val();    
-     var desc= $('#desc').val(); 
-                
-	    
-    
-	  
-          
+           var desc= $('#desc').val(); 
            if(activity_name === '' || desc === '' )
                   {
 		        alert('Please make sure all fields are filled.');
 		  }
-           
-           
-	    else
+             else
 		 {          
-           
-                  ajaxbackend();
+                    add_image();
                  } 
    }
-function ajaxbackend(){
-  
+
+function add_image(){
     //stop submit the form, we will post it manually.
     event.preventDefault();
     // Get form
     var form = $('#fileUploadForm')[0];
-    // Create an FormData object 
+     // Create an FormData object 
     var data = new FormData(form);
-    // If you want to add an extra field for the FormData
-    data.append("CustomField", "This is some extra data, testing");
+     // If you want to add an extra field for the FormData
+    data.append("action", "add");
     // disabled the submit button
     $("#sub").prop("disabled", true);
     $.ajax({
@@ -253,46 +156,38 @@ function ajaxbackend(){
         contentType: false,
         cache: false,
         timeout: 600000,
-        success: function (data) {
+        success: function (data) { alert(data);
             $("#result").text(data);
             document.getElementById('msg').innerHTML = data;
             $("#sub").prop("disabled", false);
+
         },
         error: function (e) {
             $("#result").text(e.responseText);
             document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
             $("#sub").prop("disabled", false);
         }
-  
 });
 }
- 
 </script>
-<script>
-   
-</script>
-
-    </div>
+  </div>
   </div>
 </div>
 <!--section for intro text and button ends--> 
 <!--section for features starts-->
 <div class="section colored">
-  <div class="container clearfix"> 
-     <!--features starts-->
-     
+<div class="container clearfix"> 
+     <!--features starts-->    
 </div> 
-
 <br /> <br /> 
-<!--copyright starts-->
-<div id="copyright">
-  <div class="container clearfix"> 
-      <!--copyright text and general links-->
-    <div class="grid_12">
-     Copyright 2018. All the respective rights reserved. SpacedTimes
-     </div>
-     <div class="clear"></div>
-  </div>
-</div><!--copyright ends--> 
+  <div class="footer ">
+            <div class="footerInner ">
+                <h1>&copy; 2018. All the respective rights reserved. SPACEDTIMES  </h1>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
 </body>
+
 </html>

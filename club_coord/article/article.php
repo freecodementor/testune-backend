@@ -60,11 +60,11 @@ $conn->close();
             </div>
             <a href="#" class="change-course">Change</a>
         </div>
-
+        
         <div class="title-section">
             <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;"><?php if(isset($name)){echo $name;}else{}?></h1>
         </div>
-
+                
         <div class="text-section">
             <div class="inner_text-sub">
                 <h1>Author : <?php if(isset($author)){echo $author;}else{}?></h1>

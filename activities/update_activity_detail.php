@@ -5,20 +5,22 @@ $password = "";
 $dbname = "testune";
 $activity_id = $_GET['id'];
 $conn = new mysqli($servername, $username, $password, $dbname);
-$check="SELECT activities_name,activities_description FROM activities WHERE activities_id = '$activity_id'";
+$check="SELECT page_name,activities_description,icon FROM activities WHERE activities_id = '$activity_id'";
 
 $result = $conn->query($check);
 
     while($row = $result->fetch_array())
     {
-     $name =$row['activities_name'];
+     $page_name =$row['page_name'];
      $desc = $row['activities_description'];
+     $icon =$row['icon'];
     
     }
 
 
 $conn->close();
 ?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -26,17 +28,15 @@ $conn->close();
 <title>Admin Panel - SpacedTimes</title>
 <!--style sheet-->
 <script language="javascript" src="http://www.testune.com/spacedtimes/fancybox/ckeditor/ckeditor.js"></script>
-<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/style.css"/>
-<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/navigation.css"/>
-<link href="http://www.testune.com/spacedtimes/faculty/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/main.css"/>
 <script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.min.js"></script>
 <script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-<script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.pack.js "></script>
 <link rel="stylesheet" type="text/css" href="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.css" />
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script src="http://www.testune.com/spacedtimes/fancybox/jquery-ui.js" type="text/javascript"></script>
- <link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>var $j = jQuery.noConflict(true);</script>
   <script>
@@ -48,44 +48,7 @@ $conn->close();
   } );
   </script>
 
- <style>
-                       select {
-	-moz-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-webkit-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-ms-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	border: 1px solid #00897B;
-	display: block;
-	text-decoration: none;
-	width: 100%;
-	outline: 0;
-	font-size: 15px;
-	border-radius: 5px;
-	padding: 5px;
-	margin-top: 10px;
-}
-input[type="text"],
-input[type="password"],
-input[type="email"],
-textarea {
-	-moz-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-webkit-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-ms-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	-ms-appearance: none;
-	appearance: none;
-	color: black;
-	display: block;
-	text-decoration: none;
-	width: 100%;
-	outline: 0;
-	border: 1px solid #00897B;
-	font-size: 15px;
-	margin-top: 10px;
-}
- </style>  <script type="text/javascript">
+<script type="text/javascript">
 		$(document).ready(function() {
 				$("a.pop2").fancybox({
 				'overlayColor'		: '#000',
@@ -132,10 +95,18 @@ textarea {
 				});     
 			});
 			</script>
+      <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
+<!DOCTYPE html>
+<html lang="en">
 <body>
-
-<!--header ends--> <!--section for intro text and button starts-->
+   <nav>
+        <ul class="nav__main">
+            <li class="logo-list"><a href="index.php" style="text-decoration:none;color:#fff;"> SPACEDTIMES </a></li>
+            <li><a href="?q=logout" class="logout-link">Logout</a></li>
+        </ul>
+    </nav>
+ 
 <div class="section">
   <div class="container clearfix">
     <div class="grid_12 action3">
@@ -153,27 +124,24 @@ textarea {
                                                                   
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                        
-												<input type="text" placeholder="Activity Name" value="<?php if(isset($name)){echo $name;unset($name);}else{echo 'No data';} ?>" name="activity_name" id="activity_name" class="padding-popup radius03" required="true">
+                                                                                                <input type="text" placeholder="Activity Name" value="<?php if(isset($page_name)){echo $page_name;}else{}?>" name="page_name" id="activity_name" class="padding-popup radius03" required="true">
 											</div>
                       
-                      
-                      
-                     
-                      
-                       
-										 	
-                                                                                        
-<div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Description" style="margin-bottom:10px; min-height:100px;"name="desc" id="desc" class="padding-popup radius03" required="true"><?php if(isset($desc)){echo $desc;unset($desc);}else{echo 'No data';} ?></textarea>
+                                                                                       <div class="10u -1u" style="padding: 20px 0 0 20px;">
+												<textarea type="text" placeholder="Description" style="margin-bottom:10px; min-height:100px;"name="desc" id="desc" class="padding-popup radius03" required="true"><?php if(isset($desc)){echo $desc;}else{}?></textarea>
 											</div> 
 
+                                                                                   
 
-
+                                        <div class="10u -1u" style="padding: 20px 0 0 20px;">
+                                        <img src="../assets/activity/<?php if(isset($icon)){echo $icon;}else{}?>" style="height:100px;width:100px;">
+											</div>
+                                            <div class="10u -1u" style="padding: 20px 0 0 20px;">
+                                            <label>Update Icon: </label><input id="icon" type="file" name="icon"><br /> 
+                                            </div>    
 											
-                      
-										 	<input type="hidden" name="action" value="update">
-                                             <input type="hidden" name="activity_id" value="<?php echo $activity_id;?>">
+                                                                 <input type="hidden" name="action" value="update">
+                                             <input type="hidden" name="activity_id" value="<?php if(isset($activity_id)){echo $activity_id;}else{}?>">
 											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
 												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
                                             </div><br>
@@ -207,26 +175,17 @@ function validateEmail(email) {
 function check_form()
    {
            var activity_name= $('#activity_name').val();    
-     var desc= $('#desc').val(); 
-                
-	    
-    
-	  
-          
-           if(activity_name === '' || desc === '' )
-                  {
-		        alert('Please make sure all fields are filled.');
-		  }
-           
-           
-	    else
+           var desc= $('#desc').val(); 
+            if(activity_name === '' || desc === '' )
+                 {
+		     alert('Please make sure all fields are filled.');
+		 }
+             else
 		 {          
-           
-                  ajaxbackend();
+                     ajaxbackend();
                  } 
    }
 function ajaxbackend(){
-  
     //stop submit the form, we will post it manually.
     event.preventDefault();
     // Get form
@@ -234,7 +193,7 @@ function ajaxbackend(){
     // Create an FormData object 
     var data = new FormData(form);
     // If you want to add an extra field for the FormData
-    data.append("CustomField", "This is some extra data, testing");
+    data.append("action", "update");
     // disabled the submit button
     $("#sub").prop("disabled", true);
     $.ajax({
@@ -256,13 +215,18 @@ function ajaxbackend(){
             document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
             $("#sub").prop("disabled", false);
         }
-  
-});
+ });
 }
- 
 </script>
 
-
-
+  <div class="footer ">
+            <div class="footerInner ">
+                <h1>&copy; 2018. All the respective rights reserved. SPACEDTIMES  </h1>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
 </body>
+
 </html>

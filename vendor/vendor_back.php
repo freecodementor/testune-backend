@@ -18,7 +18,7 @@ if(isset($_POST['action']))
     if ($_POST['action']=='update')
     {
         //New Img with new name upload
-        $target_dir = "../img/vendor/";
+        $target_dir = "../assets/vendor/";
         
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;

@@ -7,7 +7,8 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT title,speaker,description,duration,learning,date,time,vendor_id,price from webinar where webinar_id= '$id'";
+    $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,
+    webinar.time,webinar.vendor_id,webinar.price,vendor.vendor_icon,activities.icon from webinar INNER JOIN vendor ON webinar.vendor_id =   vendor.vendor_id  INNER JOIN activities ON activities.page_name LIKE 'webinar' where webinar_id= '$id'";
     $result = $conn->query($art_up);
 
     while($row = $result->fetch_array())
@@ -21,6 +22,9 @@ if(isset($_GET['id'])){
      $time =$row['time'];
      $vendor_id = $row['vendor_id'];
      $price =$row['price'];
+     $ven_icon = $row['vendor_icon'];
+     $act_icon = $row['icon'];
+     
   
     }
 }
@@ -62,51 +66,53 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <input type="text"  value="<?php if(isset($title)){echo $title;}else{}?>" name="course" id="" placeholder="Webinar" class="course__field">
+            <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;"><?php if(isset($title)){echo $title;}else{}?></h1>
             </div>
-            <a href="#" class="change-course">Change</a>
+            <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
         </div><br>
-        
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px;">
         <div class="description__section">
             <!--  <div class="first-section">
                 <h4 style="color: #000">First Section
                 </h4>
             </div> -->
             <div class="second-section">
-                <textarea name="editor1" class="description_textarea"><?php if(isset($description)){echo $description;}else{}?></textarea>
+                <p><?php if(isset($description)){echo $description;}else{}?></p>
             </div>
         </div>
         <div class="text-section">
             <div class="inner_text" style="margin:10px">
-                <input type="text"  value="<?php if(isset($speaker)){echo $speaker;}else{}?>" name="speaker" id="" placeholder="Speaker" class="course__field">
+            <h1>Speaker : <?php if(isset($speaker)){echo $speaker;}else{}?></h1>
             </div>
-            <div class="inner_text-sub" style="margin:10px ">
-                <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="" placeholder="Duration" class="course__field">
+            <div class="inner_text-sub">
+            <h1>Duration :<?php
+function minutes($duration){
+$time = explode(':', $duration);
+return ($time[0]*60) + ($time[1]);
+}
+echo ' '.minutes($duration).' ';
+?>Mins</h1>
             </div>
         </div>
         <div class="select-section">
             <h5>What Will I Get?</h5>
             <div class="second-section">
-                <textarea name="editor2" class="description_textarea"><?php if(isset($learning)){echo $learning;}else{}?></textarea>
+            <p class="section-para"><?php if(isset($learning)){echo $learning;}else{}?></p>
             </div>
         </div>
         <div class="text-section">
             <div class="inner_text" style="margin:10px">
-                <input type="text" value="<?php if(isset($date)){echo $date;}else{}?>" name="date" id="" placeholder="Date" class="course__field">
+                <h1><?php if(isset($date)){echo $date;}else{}?></h1>
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text" value="<?php if(isset($time)){echo $time;}else{}?>" name="time" id="" placeholder="Time in Hrs" class="course__field">
+                <h1><?php if(isset($time)){echo $time;}else{}?></h1>
             </div>
         </div>
         <div class="vendor_wrapper">
-            <select class="vendor__select">
-                <option value="0">Vendor</option>
-                <option value="1">TEST 1</option>
-                <option value="2">TEST 2</option>
-            </select>
+        <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
         </div>
         <div class="price-wrapper">
-            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="" placeholder="Price" class="price_field">
+        <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
         </div>
         <div class="deploy-wrapper">
             <button class="p__btn">Publish</button>
