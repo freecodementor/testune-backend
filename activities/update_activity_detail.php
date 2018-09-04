@@ -5,7 +5,7 @@ $password = "";
 $dbname = "testune";
 $activity_id = $_GET['id'];
 $conn = new mysqli($servername, $username, $password, $dbname);
-$check="SELECT page_name,activities_description,icon FROM activities WHERE activities_id = '$activity_id'";
+$check="SELECT activity_name,page_name,activities_description,icon FROM activities WHERE activities_id = '$activity_id'";
 
 $result = $conn->query($check);
 
@@ -14,6 +14,7 @@ $result = $conn->query($check);
      $page_name =$row['page_name'];
      $desc = $row['activities_description'];
      $icon =$row['icon'];
+     $activity_name =$row['activity_name'];
     
     }
 
@@ -124,7 +125,10 @@ $conn->close();
                                                                   
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                                         <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                                                                                <input type="text" placeholder="Activity Name" value="<?php if(isset($page_name)){echo $page_name;}else{}?>" name="page_name" id="activity_name" class="padding-popup radius03" required="true">
+                                                                                                <input type="text" placeholder="Activity Name" value="<?php if(isset($activity_name)){echo $activity_name;}else{}?>" name="activity_name" id="activity_name" class="padding-popup radius03" required="true">
+                                            </div>
+                                            <div class="10u -1u" style="padding: 20px 0 0 20px;">
+                                                                                                <input type="text" placeholder="Page Name" value="<?php if(isset($page_name)){echo $page_name;}else{}?>" name="page_name" id="page_name" class="padding-popup radius03" required="true">
 											</div>
                       
                                                                                        <div class="10u -1u" style="padding: 20px 0 0 20px;">

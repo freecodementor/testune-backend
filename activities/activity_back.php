@@ -3,7 +3,7 @@ include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 
-
+$activity_name = $_POST['activity_name']; 
 $desc = $_POST['desc']; 
 $page_name = $_POST['page_name'];  
 
@@ -11,7 +11,7 @@ function ren_save($id = 'icon'){
     $target_dir = "../assets/activity/";
     $f = $target_dir.basename($_FILES[$id]["name"]);
     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-    $file = $_POST['page_name'].'.'.$filetype;
+    $file = $_POST['activity_name'].'.'.$filetype;
     move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
     return $file;                                     
 }
@@ -24,7 +24,7 @@ if(isset($_POST['action']))
     if ($_POST['action']=='update'){
         $f=ren_save();
         $activity_id=$_POST['activity_id'];
-        $activity_up = "UPDATE  activities SET page_name = '$page_name', activities_description='$desc'";
+        $activity_up = "UPDATE  activities SET activity_name='$activity_name', page_name = '$page_name', activities_description='$desc'";
          if($_FILES['icon']['name']==''){}else{$activity_up .= ",icon='$f'";}
         $activity_up .= " where activities_id= '$activity_id'";        
         $conn->query($activity_up);
@@ -32,7 +32,7 @@ if(isset($_POST['action']))
         
     }
     else if ($_POST['action']=='add'){
-        $check="SELECT * FROM activities WHERE page_name = '$page_name'";
+        $check="SELECT * FROM activities WHERE activity_name = '$activity_name'";
     $result1 = $conn->query($check);
     $num_rows = mysqli_num_rows($result1);
     
@@ -48,11 +48,12 @@ if(isset($_POST['action']))
         $f=ren_save();
        
        
-        $sql = "INSERT INTO activities (page_name, activities_description";
+        $sql = "INSERT INTO activities (activity_name,page_name, activities_description";
         if($_FILES['icon']['name']==''){}else{$sql .= ",icon";} 
-        $sql .= ")  VALUES ('$page_name','$desc'";
-        if($_FILES['icon']['name']==''){}else{$sql .= ",'$f');";}
-     $sql .= "SELECT LAST_INSERT_ID()"; 
+        $sql .= ")  VALUES ('$activity_name','$page_name','$desc'";
+        if($_FILES['icon']['name']==''){}else{$sql .= ",'$f'";}
+     $sql .= "); SELECT LAST_INSERT_ID()"; 
+     
      
      if ($conn->multi_query($sql)) {
         do {

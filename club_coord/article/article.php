@@ -7,7 +7,9 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT name, description, duration, author, price, article_file from article where article_id= '$id'";
+    $art_up = "SELECT article.name, article.description, article.duration, article.author, article.price, article.article_file,article.vendor_id,
+    vendor.vendor_icon,activities.icon from article  INNER JOIN vendor ON 
+    article.vendor_id =   vendor.vendor_id  INNER JOIN activities ON activities.page_name LIKE 'article.php' where article_id= '$id'";
     $result = $conn->query($art_up);
 
     while($row = $result->fetch_array())
@@ -18,10 +20,12 @@ if(isset($_GET['id'])){
      $author = $row['author'];
      $price =$row['price'];
      $article_file=$row['article_file'];
+     $vendor_id = $row['vendor_id'];
+     $ven_icon = $row['vendor_icon'];
+     $act_icon = $row['icon'];
     }
 }
 else{
-
 }
 $conn->close();
 ?>
@@ -56,15 +60,12 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <h1 style="font-size:24px;color:#777;margin-top: 5px;">Article</h1>
-            </div>
-            <a href="#" class="change-course">Change</a>
-        </div>
-        
-        <div class="title-section">
             <h1 style="margin:5px;font-size: 26px;letter-spacing: 1px;color: #363636;"><?php if(isset($name)){echo $name;}else{}?></h1>
-        </div>
-                
+            </div>
+            <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
+        </div><br>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px;">
+                  
         <div class="text-section">
             <div class="inner_text-sub">
                 <h1>Author : <?php if(isset($author)){echo $author;}else{}?></h1>

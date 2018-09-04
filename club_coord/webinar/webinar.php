@@ -8,7 +8,10 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,
-    webinar.time,webinar.vendor_id,webinar.price,vendor.vendor_icon,activities.icon from webinar INNER JOIN vendor ON webinar.vendor_id =   vendor.vendor_id  INNER JOIN activities ON activities.page_name LIKE 'webinar' where webinar_id= '$id'";
+    webinar.time,webinar.vendor_id,webinar.price,vendor.vendor_icon,activities.icon
+     from webinar INNER JOIN vendor ON 
+    webinar.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+     activities.page_name LIKE 'webinar.php' where webinar_id= '$id'";
     $result = $conn->query($art_up);
 
     while($row = $result->fetch_array())

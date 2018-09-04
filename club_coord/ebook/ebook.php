@@ -7,7 +7,12 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT name, author, duration, description, price,ebook_file from ebook where book_id= '$id'";
+    $vid_up = "SELECT ebook.name, ebook.author, ebook.duration, 
+    ebook.description, ebook.price,ebook.ebook_file,
+    ebook.vendor_id,vendor.vendor_icon,activities.icon 
+     from ebook INNER JOIN vendor ON    ebook.vendor_id 
+     =   vendor.vendor_id  INNER JOIN activities ON
+     activities.page_name LIKE 'ebook.php' where book_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
@@ -17,6 +22,8 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $description = $row['description'];
      $price =$row['price'];
+     $ven_icon = $row['vendor_icon'];
+     $act_icon = $row['icon'];
      $ebook_file =$row['ebook_file'];
      
     }
@@ -64,10 +71,11 @@ $conn->close();
     <div class="page">
         <div class="course-section">
             <div class="course__input">
-                <h1 style="font-size:24px;color:#777;margin-top: 5px;">EBook</h1>
+                <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($name)){echo $name;}else{}?></h1>
             </div>
-            <a href="#" class="change-course">Change</a>
-        </div>
+            <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
+        </div><br>
+        <img src="../../assets/activity/<?php if(isset($act_icon)){echo $act_icon;}else{}?>" style="height:100px;width:100px;">
         <div class="text-section">
             <div class="inner_text">
             <h1>Duration :<?php
