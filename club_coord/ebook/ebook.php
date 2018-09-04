@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT name, author, duration, description, price from ebook where book_id= '$id'";
+    $vid_up = "SELECT name, author, duration, description, price,ebook_file from ebook where book_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
@@ -17,6 +17,7 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $description = $row['description'];
      $price =$row['price'];
+     $ebook_file =$row['ebook_file'];
      
     }
 }
@@ -114,7 +115,7 @@ echo ' '.minutes($duration).' ';
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--ADDED BELOW-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.0.201604172/pdfobject.min.js"></script>
-        <script>PDFObject.embed("../../assets/ebook/sample.pdf", "#ebookfile");</script>
+        <script>PDFObject.embed("../../assets/ebook/<?php if(isset($ebook_file)){echo $ebook_file;}else{}?>", "#ebookfile");</script>
  <!--ADDED ABOVE-->  
 <script language="javascript">
 
