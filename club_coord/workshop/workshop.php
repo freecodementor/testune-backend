@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $art_up = "SELECT workshop.title,workshop.description,workshop.no_of_classes,workshop.class_applicable_for,
-    workshop.subscription_level,workshop.learning,workshop.vendor_id,workshop.prerequisites,workshop.price,
+    workshop.subscription_level,workshop.learning,vendor.vendor_name,workshop.prerequisites,workshop.price,
     workshop.primary_image,workshop.secondary_image,workshop.course_icon,vendor.vendor_icon,activities.icon
      from workshop 
      INNER JOIN vendor ON 
@@ -25,7 +25,7 @@ if(isset($_GET['id'])){
      $learning =$row['learning'];
      $subscription_level=$row['subscription_level'];
      $prerequisites =$row['prerequisites'];
-     $vendor_id = $row['vendor_id'];
+     $vendor_id = $row['vendor_name'];
      $price =$row['price'];
      $primary_image =$row['primary_image'];
      $secondary_image =$row['secondary_image'];    

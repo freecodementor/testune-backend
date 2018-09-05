@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,
-    webinar.time,webinar.vendor_id,webinar.price,vendor.vendor_icon,activities.icon
+    webinar.time,vendor.vendor_name,webinar.price,vendor.vendor_icon,activities.icon
      from webinar INNER JOIN vendor ON 
     webinar.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
      activities.page_name LIKE 'webinar.php' where webinar_id= '$id'";
@@ -23,7 +23,7 @@ if(isset($_GET['id'])){
      $learning =$row['learning'];
      $date=$row['date'];
      $time =$row['time'];
-     $vendor_id = $row['vendor_id'];
+     $vendor_id = $row['vendor_name'];
      $price =$row['price'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];

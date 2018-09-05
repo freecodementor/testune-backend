@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $vid_up = "SELECT online_test.test_name, online_test.test_creator, online_test.duration, online_test.test_type, 
-    online_test.price,online_test.test_data,online_test.vendor_id,vendor.vendor_icon,activities.icon from online_test 
+    online_test.price,online_test.test_data,vendor.vendor_name,vendor.vendor_icon,activities.icon from online_test 
     INNER JOIN vendor ON 
     online_test.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
      activities.page_name LIKE 'online_test.php' where test_id= '$id'";
@@ -20,8 +20,8 @@ if(isset($_GET['id'])){
      $test_creator = $row['test_creator'];
      $duration =$row['duration'];
      $test_type = $row['test_type'];
-     $vendor_id = $row['vendor_id'];
      $price =$row['price'];
+     $vendor=$row['vendor_name'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];
      $test_data =$row['test_data'];

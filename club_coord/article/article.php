@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT article.name, article.description, article.duration, article.author, article.price, article.article_file,article.vendor_id,
+    $art_up = "SELECT article.name, article.description, article.duration, article.author, article.price, article.article_file,vendor.vendor_name,
     vendor.vendor_icon,activities.icon from article  INNER JOIN vendor ON 
     article.vendor_id =   vendor.vendor_id  INNER JOIN activities ON activities.page_name LIKE 'article.php' where article_id= '$id'";
     $result = $conn->query($art_up);
@@ -20,7 +20,7 @@ if(isset($_GET['id'])){
      $author = $row['author'];
      $price =$row['price'];
      $article_file=$row['article_file'];
-     $vendor_id = $row['vendor_id'];
+     $vendor_id = $row['vendor_name'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];
     }

@@ -9,7 +9,7 @@ if(isset($_GET['id'])){
     $id = $_GET['id'];
     $vid_up = "SELECT ebook.name, ebook.author, ebook.duration, 
     ebook.description, ebook.price,ebook.ebook_file,
-    ebook.vendor_id,vendor.vendor_icon,activities.icon 
+    vendor.vendor_name,vendor.vendor_icon,activities.icon 
      from ebook INNER JOIN vendor ON    ebook.vendor_id 
      =   vendor.vendor_id  INNER JOIN activities ON
      activities.page_name LIKE 'ebook.php' where book_id= '$id'";
@@ -23,7 +23,7 @@ if(isset($_GET['id'])){
      $description = $row['description'];
      $price =$row['price'];
      $ven_icon = $row['vendor_icon'];
-     $vendor = $row['vendor_id'];
+     $vendor = $row['vendor_name'];
      $act_icon = $row['icon'];
      $ebook_file =$row['ebook_file'];
      

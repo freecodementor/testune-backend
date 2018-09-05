@@ -7,7 +7,8 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, live_course.vendor_id, live_course.price,vendor.vendor_icon,activities.icon
+    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, 
+    vendor.vendor_name, live_course.price,vendor.vendor_icon,activities.icon
      from live_course  INNER JOIN vendor ON 
     live_course.vendor_id =   vendor.vendor_id  
     INNER JOIN activities ON
@@ -21,7 +22,7 @@ if(isset($_GET['id'])){
      $description = $row['description'];
      $duration =$row['duration'];
      $learning = $row['learning'];
-     $vendor_id =$row['vendor_id'];
+     $vendor_id =$row['vendor_name'];
      $price =$row['price'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];
