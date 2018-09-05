@@ -24,7 +24,7 @@ if(isset($_POST['action']))
         //New Img with new name upload
       
         function ren_save(){
-            $target_dir = "";
+            $target_dir = "../../assets/video/";
             $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
             $file = $_POST['course']."_".rand(1,100).".".$filetype;
@@ -61,7 +61,7 @@ if(isset($_POST['action']))
         {
                                 //File upload
                                 function ren_save(){
-                                    $target_dir = "";
+                                    $target_dir = "../../assets/video/";
                                     $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
                                     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
                                     $file = $_POST['course']."_".rand(1,100).".".$filetype;
