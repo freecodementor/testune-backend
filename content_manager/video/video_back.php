@@ -13,6 +13,14 @@ $duration = $_POST['duration'];
 $learning = $_POST['editor2'];
 $vendor_id = $_POST['vendor'];
 $price = $_POST['price'];
+function ren_save(){
+    $target_dir = "../../assets/video/";
+    $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+    $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
+    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $file);  
+    return $file;                                     
+}
 
 
 
@@ -23,14 +31,6 @@ if(isset($_POST['action']))
     {  
         //New Img with new name upload
       
-        function ren_save(){
-            $target_dir = "../../assets/video/";
-            $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-            $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-            $file = $_POST['course']."_".rand(1,100).".".$filetype;
-            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $file);  
-            return $file;                                     
-        }
         $f=ren_save();
                         
         //Data update
@@ -60,14 +60,7 @@ if(isset($_POST['action']))
         else 
         {
                                 //File upload
-                                function ren_save(){
-                                    $target_dir = "../../assets/video/";
-                                    $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                                    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-                                    $file = $_POST['course']."_".rand(1,100).".".$filetype;
-                                    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir.$file);  
-                                    return $file;                                     
-                                    }
+                               
                                 $f=ren_save();
                      
                             //Data Upload

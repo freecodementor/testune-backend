@@ -23,7 +23,8 @@ function ren_save($id){
     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
     $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
     move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
-    return $file;                                     
+    return $file;  
+                                       
 }
 
 if(isset($_POST['action']))

@@ -11,23 +11,24 @@ $learning = $_POST['editor2'];
 $price = $_POST['price'];
 $vendor = $_POST['vendor'];
 $duration = $_POST['duration'];
+$str_p='primary';
+$srt_s='secondary';
+$str_i='icon';                    
+function ren_save($id){
+    $target_dir = "../../assets/course/";
+    $f =basename($_FILES[$id]["name"]);
+    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+    $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
+    move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
+    return $file;                                     
+}
 
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     {                            //File update
                                     
-                                    $str_p='primary';
-                                    $srt_s='secondary';
-                                    $str_i='icon';                    
-                                    function ren_save($id){
-                                        $target_dir = "../../assets/course/";
-                                        $f =basename($_FILES[$id]["name"]);
-                                        $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-                                        $file = $_POST['course']."_".rand(1,100).".".$filetype;
-                                        move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
-                                        return $file;                                     
-                                    }
+                                   
                                     $p=ren_save($str_p);
                                     $s=ren_save($srt_s);
                                     $i=ren_save($str_i);
@@ -61,17 +62,7 @@ if(isset($_POST['action']))
         else 
         {
                              //File upload
-                             $str_p='primary';
-                             $srt_s='secondary';
-                             $str_i='icon';                    
-                             function ren_save($id){
-                                 $target_dir = "../../assets/course/";
-                                 $f = basename($_FILES[$id]["name"]);
-                                 $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-                                 $file = $_POST['course']."_".rand(1,100).".".$filetype;
-                                 move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
-                                 return $file;                                     
-                             }
+                             
                              $p=ren_save($str_p);
                              $s=ren_save($srt_s);
                              $i=ren_save($str_i);

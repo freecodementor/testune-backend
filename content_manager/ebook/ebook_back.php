@@ -4,16 +4,21 @@ $club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-
-
 $name = $_POST['course'];
 $description = $_POST['editor1'];
 $duration = $_POST['duration'];
 $author = $_POST['author'];
 $price = $_POST['price'];
 $vendor = $_POST['vendor'];
-
+function ren_save( $id='fileToUpload' ){
+    $target_dir = "../../assets/ebook";
+    $f = $target_dir . basename($_FILES[$id]["name"]);
+    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+    $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
+    move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
+    return $file;      
+    unset($f);                               
+    }
 
 
 
@@ -22,15 +27,7 @@ if(isset($_POST['action']))
     if ($_POST['action']=='update')
     { 
         //New Img with new name upload
-        function ren_save( $id='fileToUpload' ){
-            $target_dir = "../../assets/ebook";
-            $f = $target_dir . basename($_FILES[$id]["name"]);
-            $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-            $file = $_POST['course']."_".rand(1,100).".".$filetype;
-            move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
-            return $file;      
-            unset($f);                               
-            }
+        
         $f=ren_save();
                       
                 $book_id=$_POST['id'];
@@ -78,14 +75,7 @@ if(isset($_POST['action']))
         else 
         {
                                 //File upload
-                                function ren_save( $id='fileToUpload' ){
-                                    $target_dir = "../../assets/ebook/";
-                                    $f = $target_dir . basename($_FILES[$id]["name"]);
-                                    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-                                    $file = $_POST['course']."_".rand(1,100).".".$filetype;
-                                    move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
-                                    return $file;                                     
-                                    }
+                               
                                 $f=ren_save();
                      
                             //Data Upload
