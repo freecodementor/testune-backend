@@ -23,6 +23,7 @@ if(isset($_GET['id'])){
      $description = $row['description'];
      $price =$row['price'];
      $ven_icon = $row['vendor_icon'];
+     $vendor = $row['vendor_id'];
      $act_icon = $row['icon'];
      $ebook_file =$row['ebook_file'];
      
@@ -102,6 +103,9 @@ echo ' '.minutes($duration).' ';
         <div class="test-section">
             <h1 class="test-header"><?php if(isset($name)){echo $name;}else{}?></h1>
                 <div id="ebookfile"></div>        
+        </div>
+        <div class="vendor_wrapper">
+        <h5>Vendor: <?php if(isset($vendor)){echo $vendor;}else{}?></h5>
         </div>
         <div class="price-wrapper">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>

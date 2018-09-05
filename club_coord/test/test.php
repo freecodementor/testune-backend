@@ -97,6 +97,9 @@ echo ' '.minutes($duration).' ';
             <h1 class="test-header">Start Test</h1>
             <i class="fas fa-play secondary-icons"></i>
         </div>
+        <div class="vendor_wrapper">
+        <h5>Vendor: <?php if(isset($vendor)){echo $vendor;}else{}?></h5>
+        </div>
         <div class="price-wrapper">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
         </div>
