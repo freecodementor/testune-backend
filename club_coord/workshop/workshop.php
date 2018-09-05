@@ -135,6 +135,9 @@ $conn->close();
                     <img class="work_img" src="<?php if(isset($course_icon)){echo '../../assets/workshop/'.$course_icon;}else{}?>" alt="" >
                     </div>
         </div>
+        <div class="vendor_wrapper">
+        <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
+        </div>
 
         
         

@@ -12,6 +12,7 @@ $description = $_POST['editor1'];
 $duration = $_POST['duration'];
 $author = $_POST['author'];
 $price = $_POST['price'];
+$vendor = $_POST['vendor'];
 
 
 
@@ -22,7 +23,7 @@ if(isset($_POST['action']))
     { 
         //New Img with new name upload
         function ren_save( $id='fileToUpload' ){
-            $target_dir = "";
+            $target_dir = "../../assets/ebook";
             $f = $target_dir . basename($_FILES[$id]["name"]);
             $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
             $file = $_POST['course']."_".rand(1,100).".".$filetype;
@@ -36,7 +37,7 @@ if(isset($_POST['action']))
                 $ebk_up = "SELECT ebook_file from ebook where book_id = '$book_id'; ";
                 $ebk_up .= "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',";
                 if($_FILES['fileToUpload']['name']==''){}else{$ebk_up .= "ebook_file='$f',";}
-                $ebk_up .= "price='$price', club_id='$club_id' where book_id= '$book_id';";                
+                $ebk_up .= "price='$price', club_id='$club_id',vendor_id='$vendor' where book_id= '$book_id';";                
                 if ($conn->multi_query($ebk_up))
                 {       
                     do {
@@ -56,7 +57,7 @@ if(isset($_POST['action']))
                         while ($conn->next_result());
                 }
                 else{               
-                    echo 'failed !';             
+                    echo 'update failed !';             
                 }
         
      }
@@ -78,7 +79,7 @@ if(isset($_POST['action']))
         {
                                 //File upload
                                 function ren_save( $id='fileToUpload' ){
-                                    $target_dir = "";
+                                    $target_dir = "../../assets/ebook/";
                                     $f = $target_dir . basename($_FILES[$id]["name"]);
                                     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
                                     $file = $_POST['course']."_".rand(1,100).".".$filetype;
@@ -91,9 +92,9 @@ if(isset($_POST['action']))
                             
                             $sql = "INSERT INTO ebook  (name,description,duration,author,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "ebook_file,";}
-                            $sql .= "price,club_id) VALUES ('$name','$description','$duration','$author',";
+                            $sql .= "price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
-                            $sql .= "'$price','$club_id');";
+                            $sql .= "'$price','$club_id','$vendor');";
                             $sql .= "SELECT LAST_INSERT_ID()";                                              
                             if ($conn->multi_query($sql))
                             {       

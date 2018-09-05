@@ -36,6 +36,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="http://www.testune.com/spacedtimes/club_coordinator/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link href="http://www.testune.com/spacedtimes/content_manager/css/main.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
     

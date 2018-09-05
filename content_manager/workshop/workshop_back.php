@@ -14,23 +14,22 @@ $price = $_POST['price'];
 $vendor = $_POST['vendor'];
 $sub_lvl = $_POST['sub_lvl'];
 $cls_lvl = $_POST['cls_lvl'];
+$str_p='primary';
+$srt_s='secondary';
+$str_i='icon';
+function ren_save($id){
+    $target_dir = "../../assets/workshop/";
+    $f = basename($_FILES[$id]["name"]);
+    $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
+    $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
+    move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
+    return $file;                                     
+}
 
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     {                            //File update
-                                    
-                                    $str_p='primary';
-                                    $srt_s='secondary';
-                                    $str_i='icon';                    
-                                    function ren_save($id){
-                                        $target_dir = "../../assets/workshop/";
-                                        $f =basename($_FILES[$id]["name"]);
-                                        $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-                                        $file = $_POST['course']."_".rand(1,100).".".$filetype;
-                                        move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir . $file);  
-                                        return $file;                                     
-                                    }
                                     $p=ren_save($str_p);
                                     $s=ren_save($srt_s);
                                     $i=ren_save($str_i);
@@ -44,7 +43,7 @@ if(isset($_POST['action']))
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
                             $work_up .= "prerequisites='$editor3',vendor_id='$vendor',club_id='$club_id' where workshop_id= '$workshop_id'";
-                            echo $work_up;
+                            
                             $conn->query($work_up);
                             echo "Data Updated";
                             }
@@ -64,17 +63,6 @@ if(isset($_POST['action']))
         else 
         {
                              //File upload
-                             $str_p='primary';
-                             $srt_s='secondary';
-                             $str_i='icon';                    
-                             function ren_save($id){
-                                 $target_dir = "../../assets/workshop/";
-                                 $f = basename($_FILES[$id]["name"]);
-                                 $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
-                                 $file = $_POST['course']."_".rand(1,100).".".$filetype;
-                                 move_uploaded_file($_FILES[$id]["tmp_name"], $target_dir.$file);  
-                                 return $file;                                     
-                             }
                              $p=ren_save($str_p);
                              $s=ren_save($srt_s);
                              $i=ren_save($str_i);
