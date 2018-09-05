@@ -37,16 +37,35 @@ if(isset($_POST['action']))
 
                                                  
                              //Data update
-                            $workshop_id=$_POST['id'];                                   
-                            $work_up = "UPDATE  workshop SET title = '$course', description_line='$editor1',
+                            $workshop_id=$_POST['id'];    
+                            $work_up = "SELECT primary_image,secondary_image,course_icon from workshop where workshop_id = '$workshop_id'; ";                               
+                            $work_up .= "UPDATE  workshop SET title = '$course', description_line='$editor1',
                             no_of_classes='$classes',price='$price',class_applicable_for='$cls_lvl',subscription_level='$sub_lvl',learning='$editor3',";
                             if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
                             $work_up .= "prerequisites='$editor3',vendor_id='$vendor',club_id='$club_id' where workshop_id= '$workshop_id'";
-                            
-                            $conn->query($work_up);
-                            echo "Data Updated";
+                            if ($conn->multi_query($work_up))
+                {       
+                    do {
+                        
+                                if ($result = $conn->store_result()) 
+                                { 
+                                    while ($row = $result->fetch_row()) 
+                                    {       
+                                        for ($i=0;$i<3;$i++){
+                                        $var = (string) $row[$i];
+                                        unlink('../../assets/workshop/'.$var);                                       
+                                        }                             
+                                    }    
+                                    echo 'Updated !';                       
+                                }  
+                        }
+                        while ($conn->next_result());
+                }
+                else{               
+                    echo 'update failed !';             
+                }
                             }
 
     else if ($_POST['action']=='publish')

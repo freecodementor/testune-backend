@@ -11,7 +11,7 @@ $author = $_POST['author'];
 $price = $_POST['price'];
 $vendor_id =$_POST['vendor'];
 function ren_save($id = 'fileToUpload'){
-    $target_dir = "";
+    $target_dir = "../../assets/article/";
     $f = $target_dir . basename($_FILES[$id]["name"]);
     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
     $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
@@ -31,11 +31,31 @@ if(isset($_POST['action']))
           
         //Data Upload
                 $article_id=$_POST['id'];
-                $art_up = "UPDATE  article SET name = '$name', description='$description',duration='$duration',author='$author',";
+                $art_up = "SELECT article_file from article where article_id = '$article_id'; ";
+                $art_up .= "UPDATE  article SET name = '$name', description='$description',duration='$duration',author='$author',";
                 if($_FILES['fileToUpload']['name']==''){}else{$art_up .= "article_file='$f',";}
                 $art_up .= "price='$price', club_id='$club_id',vendor_id='$vendor_id' where article_id= '$article_id'";
-                $conn->query($art_up);
-                echo "Published";
+                if ($conn->multi_query($art_up))
+                {       
+                    do {
+                        
+                                if ($result = $conn->store_result()) 
+                                { 
+                                    while ($row = $result->fetch_row()) 
+                                    {       
+                                        for ($i=0;$i<3;$i++){
+                                        $var = (string) $row[$i];
+                                        unlink('../../assets/article/'.$var);                                       
+                                        }                             
+                                    }    
+                                    echo 'Updated !';                       
+                                }  
+                        }
+                        while ($conn->next_result());
+                }
+                else{               
+                    echo 'update failed !';             
+                }
         
      }
 

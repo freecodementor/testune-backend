@@ -35,12 +35,37 @@ if(isset($_POST['action']))
                         
         //Data update
                
-                $video_id=$_POST['id'];                                   
-                $vid_up = "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',";
+                $video_id=$_POST['id'];
+                $vid_up = "SELECT video_file from video where video_id = '$video_id'; ";
+                $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
                 $vid_up .= "vendor_id='$vendor_id',price='$price',club_id='$club_id' where video_id= '$video_id'";
-                $conn->query($vid_up);
-                echo "Published";
+                if ($conn->multi_query($vid_up))
+                {       
+                    do {
+                        
+                                if ($result = $conn->store_result()) 
+                                {
+                                    while ($row = $result->fetch_row()) 
+                                    {               
+                                    $var = (string) $row[0];
+                                    unlink('../../assets/video/'.$var);
+                                    echo 'Updated !';
+                                    }                                    
+                                    
+
+                        
+                                }  
+                                
+                else{               
+                    echo 'update failed !';             
+                }
+                        }
+                        while ($conn->next_result());
+                }
+                else{               
+                    echo 'update failed !';             
+                }
         
      }
 

@@ -4,6 +4,7 @@
 *.bmp
 *.zip
 *.rar
+*.mp4
 /img
 /img/vendor
 /img/cont_mgr

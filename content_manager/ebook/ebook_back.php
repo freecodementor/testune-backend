@@ -44,12 +44,17 @@ if(isset($_POST['action']))
                                     while ($row = $result->fetch_row()) 
                                     {               
                                     $var = (string) $row[0];
-                                    }                                    
-                                    unlink($var);
+                                    unlink('../../assets/ebook/'.$var);
                                     echo 'Updated !';
+                                    }                                    
+                                    
 
                         
-                                }  
+                                }
+                                
+                else{               
+                    echo 'update failed !';             
+                }
                         }
                         while ($conn->next_result());
                 }
