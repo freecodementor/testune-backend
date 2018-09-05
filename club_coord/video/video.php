@@ -96,7 +96,7 @@ echo ' '.minutes($duration).' ';
         </div>
         <div class="test-section">
         <video width="400" controls>
-            <source src="<?php if(isset($video_file)){echo '../../content_manager/video/'.$video_file;unset($video_file);}else{} ?>" type="video/mp4">
+            <source src="<?php if(isset($video_file)){echo '../../assets/video/'.$video_file;unset($video_file);}else{} ?>" type="video/mp4">
         </video>
         </div>
         <div class="vendor_wrapper">
