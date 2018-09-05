@@ -63,7 +63,7 @@ $conn->close();
     <div class="page">
         <div class="course-section">
         <div class="course__input">
-                <h2>Webinar</h2>
+                <h2>Video</h2>
             </div>
             <img src="../../assets/vendor/<?php if(isset($ven_icon)){echo $ven_icon;}else{}?>" style="height:100px;width:100px;">
         </div>
