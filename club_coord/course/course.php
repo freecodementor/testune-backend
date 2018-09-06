@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, 
+    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.learning, 
     vendor.vendor_name, live_course.price,vendor.vendor_icon,activities.icon
      from live_course  INNER JOIN vendor ON 
     live_course.vendor_id =   vendor.vendor_id  
@@ -20,7 +20,7 @@ if(isset($_GET['id'])){
     {    
      $description_line = $row['description_line'];
      $description = $row['description'];
-     $duration =$row['duration'];
+     
      $learning = $row['learning'];
      $vendor_id =$row['vendor_name'];
      $price =$row['price'];
@@ -82,17 +82,7 @@ $conn->close();
                 </p>
             </div>
         </div><br>
-        <div class="text-section">
-            <div class="inner_text-sub">
-            <h1>Duration :<?php
-function minutes($duration){
-$time = explode(':', $duration);
-return ($time[0]*60) + ($time[1]);
-}
-echo ' '.minutes($duration).' ';
-?>Mins</h1>
-            </div>
-        </div>
+       
         <div class="select-section">
             <h1 class="select__header">What Will I Get?</h1>
             <p class="section-para"><?php if(isset($learning)){echo $learning;}else{}?></p>
