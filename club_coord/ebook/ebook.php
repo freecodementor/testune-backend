@@ -146,6 +146,7 @@ echo ' '.minutes($duration).' ';
         crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--ADDED BELOW-->
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.0.201604172/pdfobject.min.js"></script>
         <script>PDFObject.embed("../../assets/ebook/<?php if(isset($ebook_file)){echo $ebook_file;}else{}?>", "#ebookfile");</script>
  <!--ADDED ABOVE-->  

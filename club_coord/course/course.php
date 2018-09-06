@@ -7,8 +7,8 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.learning, 
-    vendor.vendor_name, live_course.price,vendor.vendor_icon,activities.icon
+    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, 
+    vendor.vendor_name, live_course.price,vendor.vendor_icon,activities.icon,live_course.primary_image,live_course.secondary_image,live_course.course_icon
      from live_course  INNER JOIN vendor ON 
     live_course.vendor_id =   vendor.vendor_id  
     INNER JOIN activities ON
@@ -20,12 +20,15 @@ if(isset($_GET['id'])){
     {    
      $description_line = $row['description_line'];
      $description = $row['description'];
-     
+     $duration =$row['duration'];
      $learning = $row['learning'];
      $vendor_id =$row['vendor_name'];
      $price =$row['price'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];
+     $primary_image = $row['primary_image'];
+     $secondary_image = $row['secondary_image'];
+     $course_icon = $row['course_icon'];
     }
 }
 else{
@@ -82,7 +85,11 @@ $conn->close();
                 </p>
             </div>
         </div><br>
-       
+        <div class="text-section">
+            <div class="inner_text-sub">
+            <h1>Duration :<?php if(isset($duration)){echo $duration;}else{}?> Days</h1>
+            </div>
+        </div>
         <div class="select-section">
             <h1 class="select__header">What Will I Get?</h1>
             <p class="section-para"><?php if(isset($learning)){echo $learning;}else{}?></p>
@@ -90,6 +97,20 @@ $conn->close();
         </div>
         <div class="vendor_wrapper">
         <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
+        </div>
+        <div class="vendor_wrapper">
+        <div>
+            <h6>Primary Image</h6>
+            <img class="work_img" src="<?php if(isset($primary_image)){echo '../../assets/course/'.$primary_image;}else{}?>" alt="" >
+        </div>
+        <div >
+            <h6>Secondary Image</h6>
+                <img class="work_img" src="<?php if(isset($secondary_image)){echo '../../assets/course/'.$secondary_image;}else{}?>" alt="" >
+                    </div>
+                    <div >
+            <h6>Course Icon</h6>
+                    <img class="work_img" src="<?php if(isset($course_icon)){echo '../../assets/course/'.$course_icon;}else{}?>" alt="" >
+                    </div>
         </div>
         <div class="price-wrapper">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>

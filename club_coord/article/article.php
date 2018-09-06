@@ -39,6 +39,13 @@ $conn->close();
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link href="http://www.testune.com/spacedtimes/content_manager/css/main.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+    <style>
+
+    #ebookfile{
+        width:700px;
+        height:500px;
+    }
+    </style>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"        crossorigin="anonymous"> 
 </head>
@@ -82,15 +89,14 @@ $conn->close();
         </div>
         <div class="text-section">
             <div class="inner_text-sub">
-            <h1>Duration :<?php
-function minutes($duration){
-$time = explode(':', $duration);
-return ($time[0]*60) + ($time[1]);
-}
-echo ' '.minutes($duration).' ';
-?>Mins</h1>
+            <h1><?php if(isset($duration)){echo $duration;}else{}?> Days</h1>
             </div>
         </div>
+        <div class="test-section">
+            <h1 class="test-header"><?php if(isset($name)){echo $name;}else{}?></h1>
+                <div id="ebookfile"></div>        
+        </div>
+       
         <div class="vendor_wrapper">
         <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
         </div>
@@ -123,6 +129,11 @@ echo ' '.minutes($duration).' ';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         <!--ADDED BELOW-->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.0.201604172/pdfobject.min.js"></script>
+        <script>PDFObject.embed("../../assets/article/<?php if(isset($article_file)){echo $article_file;}else{}?>", "#ebookfile");</script>
+ <!--ADDED ABOVE--> 
         
    
 

@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $vid_up = "SELECT video.title, video.description_line, video.duration, video.learning, video.vendor_id, video.price, 
-    video.video_file,vendor.vendor_icon,activities.icon from video
+    video.video_file,vendor.vendor_name,vendor.vendor_icon,activities.icon from video
     INNER JOIN vendor ON 
     video.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
      activities.page_name LIKE 'video.php' where video_id= '$id'";
@@ -20,7 +20,7 @@ if(isset($_GET['id'])){
      $description_line = $row['description_line'];
      $duration =$row['duration'];
      $learning = $row['learning'];
-     $vendor_id =$row['vendor_id'];
+     $vendor_id =$row['vendor_name'];
      $price =$row['price'];
      $video_file =$row['video_file'];
      $ven_icon = $row['vendor_icon'];
