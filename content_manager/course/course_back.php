@@ -53,7 +53,7 @@ if(isset($_POST['action']))
                                     {       
                                         for ($i=0;$i<3;$i++){
                                         $var = (string) $row[$i];
-                                        unlink('../../assets/workshop/'.$var);                                       
+                                        unlink('../../assets/course/'.$var);                                       
                                         }                             
                                     }    
                                     echo 'Updated !';                       

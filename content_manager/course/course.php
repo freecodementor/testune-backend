@@ -88,18 +88,19 @@ $conn->close();
         </div>
         </div>
         <div class="text-section">
-            <div class="inner_text" style="margin:10px">
-            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="Price" class="price_field">
-            </div>
-            <div class="inner_text-sub" style="margin:10px ">
+            
             <div class="vendor_wrapper">
+            
             <select id="vendor" name="vendor" class="vendor__select">
                 <option value="0">Vendor</option>
                 <option value="inst_1">TEST 1</option>
                 <option value="inst_2">TEST 2</option>
             </select>
-        </div>
+            <div class="inner_text" style="margin:10px">
+            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="Price" class="price_field">
             </div>
+        </div>
+            
         </div>
         <div class="upload-wrapper">
             <button type="button" class="upload__btn" data-toggle="modal" data-target="#exampleModal">
