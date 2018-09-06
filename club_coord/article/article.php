@@ -98,7 +98,11 @@ echo ' '.minutes($duration).' ';
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
         </div>
         <div class="deploy-wrapper">
-            <button class="p__btn">DEPLOY</button>
+            <form id="fileUploadForm" action="../deployment_control/dep.php" method="POST">
+                <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
+                    <input type="hidden" name="type" value="article">
+                    <button class="p__btn" type="submit">DEPLOY</button>
+                </form>
         </div>
     </div>
 
@@ -121,76 +125,7 @@ echo ' '.minutes($duration).' ';
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         
    
-<script language="javascript">
 
-
-
-function ajaxbackend(){
-    for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
-    var course= $('#course').val(); 
-    var duration= $('#duration').val(); 
-    var editor1= $('#editor1').val(); 
-    var editor2= $('#editor2').val(); 
-    var vendor= $('#vendor').val(); 
-                
-	    
-    
-    
-          
-           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' )
-                  {
-		        alert('Please make sure all fields are filled.');
-		  } else {
-               //stop submit the form, we will post it manually.   
-               event.preventDefault();
-            // Get form
-            var form = $('#fileUploadForm')[0];
-// Create an FormData object 
-var data = new FormData(form);
-
-// If you want to add an extra field for the FormData
-data.append("CustomField", "This is some extra data, testing");
-
-// disabled the submit button
-$("#sub").prop("disabled", true);
-
-$.ajax({
-    type: "POST",
-    enctype: 'multipart/form-data',
-    url: "video_back.php",
-    data: data,
-    processData: false,
-    contentType: false,
-    cache: false,
-    timeout: 600000,
-    success: function (data) {
-
-        
-        console.log(data);
-        $("#sub").prop("disabled", false);
-
-    },
-    error: function (e) {
-
-        $("#result").text(e.responseText);
-        document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
-        $("#sub").prop("disabled", false);
-
-    }
-
-
-});
-
-}
-
-
-
-          }
-  
-    
-
-   
-</script>
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";

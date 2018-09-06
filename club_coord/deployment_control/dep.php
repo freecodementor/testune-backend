@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -137,12 +137,7 @@
                 <div class="col-1">
                     <input type="checkbox" name="tue" id="">
                 </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker" placeholder="Pick Relevant Date">
-                </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker" placeholder="Pick Relevant Date">
-                </div>
+
             </div>
             <div class="gap"></div>
 
@@ -153,12 +148,7 @@
                 <div class="col-1">
                     <input type="checkbox" name="wed" id="">
                 </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker" placeholder="Pick Relevant Date">
-                </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker" placeholder="Pick Relevant Date">
-                </div>
+                
             </div>
             <div class="gap"></div>
 
@@ -169,12 +159,7 @@
                 <div class="col-1">
                     <input type="checkbox" name="thu" id="">
                 </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
+                
             </div>
             <div class="gap"></div>
 
@@ -185,12 +170,7 @@
                 <div class="col-1">
                     <input type="checkbox" name="fri" id="">
                 </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
+                
             </div>
             <div class="gap"></div>
 
@@ -201,12 +181,7 @@
                 <div class="col-1">
                     <input type="checkbox" name="sat" id="">
                 </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
+                
             </div>
             <div class="gap"></div>
             <div class="row justify-content-start main-row" style="margin-left:50px;">
@@ -216,12 +191,7 @@
                 <div class="col-1">
                     <input type="checkbox" name="sun" id="">
                 </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
-                <div class="col-3">
-                    <input type="text" class="datepicker gap" placeholder="Pick Relevant Date">
-                </div>
+                
             </div><br>
             <div class="student_price">
                 <h1 class="body-header">Price</h1>
@@ -241,6 +211,8 @@
                 </div>
             </div>
             <div class="button-wrap">
+            <input type="hidden" name="id" value="<?php echo $_POST['id'];?>">
+                    <input type="hidden" name="type" value="<?php echo $_POST['type'];?>">
                 <button class="submit__btn" onclick="ajaxbackend()">Submit</button>
             </div>
         </div>
