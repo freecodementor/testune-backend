@@ -1,72 +1,22 @@
+<?php
+     session_start();
+     include("inst_header.php"); 
+     if(isset($_GET['course_code']))
+      {
+         $course=$_GET['course_code'];
+         $r9=mysql_query("select * from inst_course_assign where institute_id='$uid' and course_code='$course'");
+         $num_row=mysql_num_rows($r9);
+          if($num_row == '0')
+           {  
+              echo "<script language='javascript'>window.location='inst_dashboard.php';</script>"; exit(); 
+           }
+         else
+           {
+              $_SESSION['course']=$_GET['course_code'];
+           }  
+    }   
+?>
 
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>School Dashboard Panel</title>
-		<meta charset="utf-8" />
-        <base href="https://www.testune.com/spacedtimes/">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="main.css">
-		<script type="text/javascript" src="fancybox/jquery.min.js"></script>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-        crossorigin="anonymous">
-                <script type="text/javascript" src="fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-                <script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-                <link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" />
-                <script type="text/javascript">
-		$(document).ready(function() {
-				$("a.pop2").fancybox({
-				'overlayColor'		: '#000',
-				'overlayOpacity'	: 0.9
-			});
-		      	$("a.pop").fancybox({
-			           'type': 'iframe',
-				   'autoScale': true,
-				   'autoDimensions': true,
-					//'title'	  : 'By domain E',
-				   'fitToView' : true,
-			     	 //  'width'	: 'auto',
-			      //'height'	: 'auto',
-				//  'overlayShow'	: true,
-				//'transitionIn'	: 'elastic',
-				//'transitionOut'	: 'elastic',
-                                 'onComplete': function() {
-                                 // $("#fancybox-wrap").css({'left':'700px','right':'auto'});
-                                 }
-			});
-                       $("a.view_comment").fancybox({
-				    'type':'iframe',
-			       'width' : 570,
-                                'height':100,
-                                'href':this.href,
-                                'showCloseButton'   : true,
-                                 'hideOnOverlayClick': false,
-                                  'hideOnContentClick' :   false,
-				});  
-                        
-                       $("a.teacher_login_form").fancybox({
-			        'type':'iframe',
-				'width' :750,
-                                'height':530,
-                                'href':this.href,
-                                'showCloseButton'   : true,
-                                'hideOnOverlayClick': false,
-                                'hideOnContentClick' :   false,
-				});   
-                    });                                     
-</script>
-        </head>
-	<body>
-             <!-- Page Wrapper -->
-		
-<div class="navigationBar">
-        <div class="logoBox">
-            <h1 class="logoBox-header"><a href="inst_dashboard.php">SPACED<span>TIMES</span></a></h1>
-        </div>
-        <div class="menu-wrapper" style="margin-right:30px;">
-           <a href="?q=logout" class="logout">Logout</a>
-        </div>
-</div>
 <div class="middleWrapper_Academic">
         <ul class="academic_list">
             <li>
@@ -90,9 +40,34 @@
             <a href="#" class="academic_header_link">ADD DELETE MODIFY BATCHES AND COURSES</a>
               <form action="#" method="post">
                <select name="" class="academic_course"  id="course" name="course" onchange="change_course()">
-                             <option  disabled="disabled" selected>Select Club</option>
-                             <option  disabled="disabled" selected>App Development</option>     
-                  </select></a>
+                   <?php $r=mysql_query("select a.course_name,b.course_code from inst_course a, inst_course_assign b where a.course_code=b.course_code and b.institute_id='$uid'");
+      $course_num=mysql_num_rows($r);
+      if($course_num > '0')
+      { 
+        while($r1=mysql_fetch_array($r))
+       {  
+          if(isset($_SESSION['course']) && ($_SESSION['course'] == $r1[1]))
+            {  
+              ?>
+                <option value='<?php echo $r1[1]; ?>' selected><?php echo $r1[0]; ?></option>   
+   <?php    }
+           else { ?>
+               <option value='<?php echo $r1[1]; ?>'><?php echo $r1[0]; ?></option> 
+<?php }
+           if(!isset($_SESSION['course']))
+           { 
+                $_SESSION['course']=$r1[1];
+           }
+         $course=$_SESSION['course'];
+      ?>    
+<?php }
+      }
+      else
+      { ?>
+          <option  disabled="disabled" selected>No Course Assigned</option>     
+  <?php    }
+ ?>
+                </select></a>
          </div>
 </div>
 
@@ -101,7 +76,7 @@
             <table class="table table-hover academic_table table-bordered">
                  <thead class="thead-dark academic-table-header">
                     <tr>
-                        <th scope="col">Club
+                        <th scope="col">CLASS
                           <a href="add_class.php" class="pop">  <span style="float: right;font-size: 10px;text-align: center;margin:0;">+
                                 <br> ADD
                             </span> </a>
@@ -132,7 +107,15 @@
 <tr>
 <td>
       <table name="class_table" id="class_table" class="table">
-                   </table> 
+             <?php  
+                    $rc=mysql_query("select a.class,a.class_id from inst_class a, inst_course_assign b where b.course_code=a.course_id and b.course_code='$course' and b.institute_id=a.institute_id and b.institute_id='$uid'");
+                    while($gc=mysql_fetch_array($rc))
+                      { ?>
+                         <tr><td id="<?php echo $gc[1]; ?>" class="class_row" name="<?php echo $gc[1]; ?>" ><?php echo $gc[0]; ?> <p align='right' style='margin: 0px;
+    display: inline; float: right;' style='cursor:pointer;'>&nbsp;&nbsp;<i class="fas fa-times" style='cursor:pointer;' onclick="delete_class('<?php echo $gc[1]; ?>')"></i> &nbsp;&nbsp;<a href="edit_class.php?id=<?php echo $gc[1]; ?>" class="pop"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;<i class="fas fa-caret-right" onclick='get_subject("<?php echo $gc[1]; ?>")' style='cursor:pointer;'></i></p></td><tr> 
+                    <?php  }    
+              ?>
+      </table> 
 </td>
 <td>
      <table name="subject_table" id="subject_table" class="table">
@@ -156,28 +139,8 @@
   </table>
 </div>
 </div>
-                                     <div class="footer" style="
-    background-color: #1E252B;
-    width: 100%;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    height: 100px;">
-        <div class="footerInner">
-            <h1>
-                <i class="far fa-copyright"></i> SpacedTimes</h1>
-        </div>
-    </div>
- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
- <script>
-                function openNav() {
-                    document.getElementById("mySidenav").style.width = "250px";
-                }
-        
-                function closeNav() {
-                    document.getElementById("mySidenav").style.width = "0";
-                }
- </script>                        </div>
+                                    <?php include("footer.php"); ?>
+                        </div>
 
 		<!-- Scripts -->
 			<script src="../website/assets3/js/jquery.scrollex.min.js"></script>
