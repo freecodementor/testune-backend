@@ -1,11 +1,13 @@
 <?php
      session_start();
      include("inst_header.php"); 
+     $database = new Database();
+    $conn = $database->getConnection();
      if(isset($_GET['course_code']))
-      {
+      { $uid="inst_1"; //TEMPORARY
          $course=$_GET['course_code'];
-         $r9=mysql_query("select * from inst_course_assign where institute_id='$uid' and course_code='$course'");
-         $num_row=mysql_num_rows($r9);
+         $r9 = $conn->query("select * from inst_course_assign where institute_id='$uid' and course_code='$course'");
+         $num_row=mysqli_num_rows($r9);
           if($num_row == '0')
            {  
               echo "<script language='javascript'>window.location='inst_dashboard.php';</script>"; exit(); 
@@ -13,6 +15,8 @@
          else
            {
               $_SESSION['course']=$_GET['course_code'];
+              
+              
            }  
     }   
 ?>
@@ -40,11 +44,11 @@
             <a href="#" class="academic_header_link">ADD DELETE MODIFY BATCHES AND COURSES</a>
               <form action="#" method="post">
                <select name="" class="academic_course"  id="course" name="course" onchange="change_course()">
-                   <?php $r=mysql_query("select a.course_name,b.course_code from inst_course a, inst_course_assign b where a.course_code=b.course_code and b.institute_id='$uid'");
-      $course_num=mysql_num_rows($r);
+                   <?php $r=$conn->query("select a.course_name,b.course_code from gen_course a, inst_course_assign b where a.course_code=b.course_code and b.institute_id='$uid'");
+      $course_num=mysqli_num_rows($r);
       if($course_num > '0')
       { 
-        while($r1=mysql_fetch_array($r))
+        while($r1=mysqli_fetch_array($r))
        {  
           if(isset($_SESSION['course']) && ($_SESSION['course'] == $r1[1]))
             {  
@@ -108,11 +112,11 @@
 <td>
       <table name="class_table" id="class_table" class="table">
              <?php  
-                    $rc=mysql_query("select a.class,a.class_id from inst_class a, inst_course_assign b where b.course_code=a.course_id and b.course_code='$course' and b.institute_id=a.institute_id and b.institute_id='$uid'");
-                    while($gc=mysql_fetch_array($rc))
+                    $rc=$conn->query("select a.class_name,a.class_id from gen_course_class a, inst_course_assign b where b.course_code=a.course_id and b.course_code='$course' and b.institute_id=a.institute_id and b.institute_id='$uid'");
+                    while($gc=mysqli_fetch_array($rc))
                       { ?>
-                         <tr><td id="<?php echo $gc[1]; ?>" class="class_row" name="<?php echo $gc[1]; ?>" ><?php echo $gc[0]; ?> <p align='right' style='margin: 0px;
-    display: inline; float: right;' style='cursor:pointer;'>&nbsp;&nbsp;<i class="fas fa-times" style='cursor:pointer;' onclick="delete_class('<?php echo $gc[1]; ?>')"></i> &nbsp;&nbsp;<a href="edit_class.php?id=<?php echo $gc[1]; ?>" class="pop"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;<i class="fas fa-caret-right" onclick='get_subject("<?php echo $gc[1]; ?>")' style='cursor:pointer;'></i></p></td><tr> 
+                         <tr><td id="<?php echo $gc[1]; ?>" class="class_row" name="<?php echo $gc[1]; ?>" ><?php echo $gc[0]; ?> <p style="margin: 0px;
+    display: inline; float: right;' style='cursor:pointer;">&nbsp;&nbsp;<i class="fas fa-times" style='cursor:pointer;' onclick="delete_class('<?php echo $gc[1]; ?>')"></i> &nbsp;&nbsp;<a href="edit_class.php?id=<?php echo $gc[1]; ?>" class="pop"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;<i class="fas fa-caret-right" onclick='get_subject("<?php echo $gc[1]; ?>")' style='cursor:pointer;'></i></p></td><tr> 
                     <?php  }    
               ?>
       </table> 
@@ -139,7 +143,7 @@
   </table>
 </div>
 </div>
-                                    <?php include("footer.php"); ?>
+
                         </div>
 
 		<!-- Scripts -->
@@ -233,7 +237,7 @@ function class_add(p,q)
         }
    else
       { $("#no_class").remove(); }  
-   $('#class_table').append("<tr><td id="+q+">"+p+"<p align='right' style='margin: 0px; display: inline; float: right;'>&nbsp;&nbsp;<img src='img/delete.png' onclick='delete_class(\""+q+"\")' width='20px' style='cursor:pointer;'>&nbsp;&nbsp;<a href='edit_class.php?id="+q+"' class='pop'><img src='img/edit.png' width='20px' style='cursor:pointer;'> </a>&nbsp;&nbsp;<img src='img/arrow.png' width='20px' onclick='get_subject(\""+q+"\")' style='cursor:pointer;'></p></td></tr>");
+   $('#class_table').append("<tr><td id="+q+">"+p+"<p align='right' style='margin: 0px; display: inline; float: right;'>&nbsp;&nbsp;<i class='fas fa-times' onclick='delete_class(\""+q+"\")' width='20px' style='cursor:pointer;'>&nbsp;&nbsp;<a href='edit_class.php?id="+q+"' class='pop'><i class='fas fa-pencil-alt' width='20px' style='cursor:pointer;'> </a>&nbsp;&nbsp;<i class='fas fa-caret-right' width='20px' onclick='get_subject(\""+q+"\")' style='cursor:pointer;'></p></td></tr>");
      $("a.pop").fancybox({
                             'type': 'iframe',
 			    'autoScale': true,
@@ -291,7 +295,7 @@ function subtopic_add(p,q)
 
 function class_update(p,q)
 {
-    $('#'+q).html(p+"<p align='right' style='margin: 0px; display: inline; float: right;'>&nbsp;&nbsp;<img src='img/delete.png' onclick='delete_class(\""+q+"\")' width='20px' style='cursor:pointer;'>&nbsp;&nbsp;<a href='edit_class.php?id="+q+"' class='pop'><img src='img/edit.png' width='20px' style='cursor:pointer;'></a>&nbsp;&nbsp;<img src='img/arrow.png' width='20px' onclick='get_subject(\""+q+"\")' style='cursor:pointer;'></p>");
+    $('#'+q).html(p+"<p align='right' style='margin: 0px; display: inline; float: right;'>&nbsp;&nbsp;<i class='fas fa-times' onclick='delete_class(\""+q+"\")' width='20px' style='cursor:pointer;'></i>&nbsp;&nbsp;<a href='edit_class.php?id="+q+"' class='pop'><i class='fas fa-pencil-alt' width='20px' style='cursor:pointer;'></i></a>&nbsp;&nbsp;<i class='fas fa-caret-right' width='20px' onclick='get_subject(\""+q+"\")' style='cursor:pointer;'></i></p>");
      $("a.pop").fancybox({
                             'type': 'iframe',
 			    'autoScale': true,
@@ -348,10 +352,11 @@ function delete_class(p)
                                            $.ajax({
 						  type: 'POST',
 						  url: 'delete_class_id.php?class_id='+p,
-						  data: '',
+						  data: {class_id: p},
 						  beforeSend: function() {  
 							},
 						  success: function(response){  
+                              alert(response);
 						         $('#'+response).remove(); 
                                                     }
 					       });
@@ -423,8 +428,6 @@ function delete_subtopic(p)
    {
    }
 }
-
-
 </script>
 </body>
 </html>

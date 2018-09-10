@@ -10,25 +10,35 @@
         echo "<h3 align='center'>No Course Selected</h3>";
         exit();
       } 
-include("../Home/assets/php/database.php"); 
+/*include("../Home/assets/php/database.php"); 
 include("../Home/assets/php/class.acl.php");
 include_once "../Home/admin/class_admin.php";
-include_once "../Home/Users.php";
-$user = new User();
-$uid = $_SESSION['Userid'];
+include_once "../Home/Users.php";*/
+include_once "../assets/Users.php"; //TEMPORARY
+//$user = new User();
+//$uid = $_SESSION['Userid'];
+$uid = "inst_1";
 if($_SERVER["REQUEST_METHOD"] == "POST")
 { 
   $form = array();
   foreach($_POST as $key=>$value) {
-	  $form[$key] = $value;
+	  $form[$key] = $value;	  
    }
-   $academic_manager=new academic_manager(); 
-   $run_query=$academic_manager->insertData_class($form);
+   //$academic_manager=new academic_manager(); 
+   //$run_query=$academic_manager->insertData_class($form);
+   $database = new Database();
+   $conn = $database->getConnection();
+   $f1=$form['class'];
+   $f2=$form['class_detail'];
+   $f3=$form['institute_id'];
+   $f4=$form['course_id'];
+   $f5 = "class_".$f1;
+   $run_query = $conn->query("insert into gen_course_class (class_name,class_details,institute_id,course_id,class_id) values ('$f1','$f2','$f3','$f4','$f5')");
 	 if($run_query)
 	 { 
              $class_name=$form['class'];
         ?>
-	<script language='javascript'> window.parent.class_add('<?php echo $class_name; ?>','<?php  echo $run_query ?>'); alert('Data Inserted into The DB');</script> 
+	<script language='javascript'> window.parent.class_add('<?php echo $f1; ?>','<?php  echo $f5 ?>'); alert('Data Inserted into The DB');</script> 
 <?php	 }
 	 else
 	 {
