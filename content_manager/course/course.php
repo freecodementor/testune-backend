@@ -92,10 +92,23 @@ $conn->close();
             <div class="vendor_wrapper">
             
             <select id="vendor" name="vendor" class="vendor__select">
-                <option value="0">Vendor</option>
-                <option value="inst_1">TEST 1</option>
-                <option value="inst_2">TEST 2</option>
-            </select>
+                <?php 
+                    $v=$conn->query("select vendor_id,vendor_name from vendor where 1");
+                    $vs=mysqli_num_rows($v);
+                    if($vs > '0'){ 
+                        while($v1=mysqli_fetch_array($v)){
+                                  if(isset($vendor_id) && $vendor_id== $v1[0]){?>
+                        <option value='<?php echo $v1[0]; ?>' selected><?php echo $v1[1]; ?></option> 
+                   <?php   }  else{?>
+                       <option value='<?php echo $v1[0]; ?>'><?php echo $v1[1]; ?></option>
+                 <?php  }
+                    ?>
+                             <?php }
+                    }
+                     else { ?>
+                         <option  disabled="disabled" selected>No Vendors</option>   
+                    <?php } $conn->close();?>
+                </select>               
             <div class="inner_text" style="margin:10px">
             <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="Price" class="price_field">
             </div>
