@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['club_id']="web";
+//$_SESSION['club_id']="web";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -8,7 +8,9 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $web_up = "SELECT title,description_line,no_of_classes,price,class_applicable_for,subscription_level,learning,prerequisites, primary_image,secondary_image, course_icon, vendor_id from workshop where workshop_id= '$id'";
+    $web_up = "SELECT title,description_line,no_of_classes,price,class_applicable_for,
+    subscription_level,learning,prerequisites, primary_image,secondary_image,
+     course_icon, vendor_id, class_applicable_for,subscription_level from workshop where workshop_id= '$id'";
     $result = $conn->query($web_up);
 
     while($row = $result->fetch_array())
@@ -21,7 +23,8 @@ if(isset($_GET['id'])){
      $sub_lvl =$row['subscription_level'];
      $editor2 =$row['learning'];
      $editor3 =$row['prerequisites'];
-
+     $class = explode(",",$row['class_applicable_for']);
+     $sub = $row['subscription_level'];
      $vendor =$row['vendor_id'];
      
     }
@@ -29,7 +32,7 @@ if(isset($_GET['id'])){
 else{
 
 }
-$conn->close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,24 +88,60 @@ $conn->close();
                 <input type="text"  value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="Price" class="course__field">
             </div>
         </div>
-        <div class="vendor_wrapper">
-            <select class="vendor__select" name="cls_lvl" id="cls_lvl" style="width:auto;margin:20px 35px;">
-                <option value="">Class Is Applicable For</option>
-                <option value="1">Class 6 <sup>th</sup></option>
-                <option value="2">Class 7 <sup>th</sup></option>
-                <option value="3">Class 8 <sup>th</sup></option>
-                <option value="4">Class 9 <sup>th</sup></option>
-                <option value="5">Class 10 <sup>th</sup></option>
-                <option value="6">Class 11 <sup>th</sup></option>
-                <option value="7">Class 12 <sup>th</sup></option>
-            </select>
-            <select class="vendor__select" id="sub_lvl" name="sub_lvl" style="width:auto;">
-                <option value="">Subscription Level</option>
-                <option value="1">SILVER</option>
-                <option value="2">GOLD</option>
-                <option value="3">PLATINUM</option>
-            </select>
-        </div>
+        <div class="text-section">
+        <div class="inner_text" style="">
+        
+        <div class='row '>
+                <div class=''>
+                <h1 class="">Class Applicable for: </h1>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]" value='6' <?php if(isset($class)){echo (in_array("6",$class)) ? 'checked="checked"' : '';}else{}?> class="demo_check secondary secondary"> <br>
+                    <label for='class1'>Class 6</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value="7"  <?php if(isset($class)){echo (in_array("7",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class2'>Class 7</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='8'  <?php if(isset($class)){echo (in_array("8",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 8</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='9'  <?php if(isset($class)){echo (in_array("9",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 9</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='10'  <?php if(isset($class)){echo (in_array("10",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 10</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='11'  <?php if(isset($class)){echo (in_array("11",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 11</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='12'  <?php if(isset($class)){echo (in_array("12",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 12</label>
+                </div>
+                </div> </div>
+                <div class="inner_text-sub" style="">
+                <div class=''>
+                <h1 class="">Subscription Level </h1>
+                </div>
+                <div class='inner_text-sub'>                
+                <input type="radio" name="sub" value="silver"  id="" class=""  <?php if(isset($sub)){echo ($sub=='silver') ? 'checked="checked"' : '';}else{}?>>
+                <label for='sub'>Silver</label>
+                </div>
+                <div class='inner_text-sub'>
+                <input type="radio" name="sub" value="gold"  id="" class="" <?php if(isset($sub)){echo ($sub=='gold') ? 'checked="checked"' : '';}else{}?>>
+                <label for='sub'>Gold</label>
+                </div>
+                <div class='inner_text-sub'>
+                <input type="radio" name="sub" value="platinum"  id="" class="" <?php if(isset($sub)){echo ($sub=='platinum') ? 'checked="checked"' : '';}else{}?>>
+                <label for='sub'>Platinum</label>
+                </div>
+            </div>
+            </div><br></div>
         <div class="select-section">
             <h5>What Will I Get ?
             </h5>
@@ -142,11 +181,24 @@ $conn->close();
             </div>
         </div>
         <div class="vendor_wrapper">
-            <select class="vendor__select" name="vendor" id="vendor" style="width:auto;margin:20px 35px;">
-                <option value="">Vendor </option>
-                <option value="inst_1">Vendor 1</option>
-                <option value="inst_2">Vendor 2</option>
-            </select>
+        <select id="vendor" name="vendor" class="vendor__select">
+                <?php 
+                    $v=$conn->query("select vendor_id,vendor_name from vendor where 1");
+                    $vs=mysqli_num_rows($v);
+                    if($vs > '0'){ 
+                        while($v1=mysqli_fetch_array($v)){
+                                  if(isset($vendor_id) && $vendor_id== $v1[0]){?>
+                        <option value='<?php echo $v1[0]; ?>' selected><?php echo $v1[1]; ?></option> 
+                   <?php   }  else{?>
+                       <option value='<?php echo $v1[0]; ?>'><?php echo $v1[1]; ?></option>
+                 <?php  }
+                    ?>
+                             <?php }
+                    }
+                     else { ?>
+                         <option  disabled="disabled" selected>No Vendors</option>   
+                    <?php } $conn->close();?>
+                </select>               
         </div>
         <div class="deploy-wrapper">
         <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>"> 
@@ -176,6 +228,17 @@ $conn->close();
         
         
         function ajaxbackend(){
+              //for checkboxes
+    var checkboxes = document.getElementsByName('class[]');
+    var vals = "";
+    for (var i=0, n=checkboxes.length;i<n;i++) 
+    {
+        if (checkboxes[i].checked) 
+        {
+            vals += ","+checkboxes[i].value;
+        }
+    }
+    if (vals) vals = vals.substring(1);
             for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
             var course= $('#course').val(); 
             var editor3= $('#editor3').val(); 
@@ -204,7 +267,7 @@ $conn->close();
         var data = new FormData(form);
         
         // If you want to add an extra field for the FormData
-        data.append("CustomField", "This is some extra data, testing");
+        data.append("class", vals);
         
         // disabled the submit button
         $("#sub").prop("disabled", true);

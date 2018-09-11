@@ -1,6 +1,7 @@
 <?php 
 session_start();
 $club_id = $_SESSION['club_id'];
+//$club_id = 'club_web';
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -12,11 +13,11 @@ $editor3 = $_POST['editor3'];
 $classes = $_POST['classes'];
 $price = $_POST['price'];
 $vendor = $_POST['vendor'];
-$sub_lvl = $_POST['sub_lvl'];
-$cls_lvl = $_POST['cls_lvl'];
 $str_p='primary';
 $srt_s='secondary';
 $str_i='icon';
+$class = $_POST['class'];
+$sub=$_POST['sub'];
 function ren_save($id){
     $target_dir = "../../assets/workshop/";
     $f = basename($_FILES[$id]["name"]);
@@ -33,14 +34,12 @@ if(isset($_POST['action']))
     {                            //File update
                                     $p=ren_save($str_p);
                                     $s=ren_save($srt_s);
-                                    $i=ren_save($str_i);
-
-                                                 
+                                    $i=ren_save($str_i);                                                 
                              //Data update
                             $workshop_id=$_POST['id'];    
                             $work_up = "SELECT primary_image,secondary_image,course_icon from workshop where workshop_id = '$workshop_id'; ";                               
-                            $work_up .= "UPDATE  workshop SET title = '$course', description_line='$editor1',
-                            no_of_classes='$classes',price='$price',class_applicable_for='$cls_lvl',subscription_level='$sub_lvl',learning='$editor3',";
+                            $work_up .= "UPDATE  workshop SET title = '$course', description_line='$editor1',class_applicable_for='$class',subscription_level='$sub',
+                            no_of_classes='$classes',price='$price',learning='$editor3',";
                             if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
@@ -54,8 +53,8 @@ if(isset($_POST['action']))
                                     while ($row = $result->fetch_row()) 
                                     {       
                                         for ($i=0;$i<3;$i++){
-                                        $var = (string) $row[$i];
-                                        unlink('../../assets/workshop/'.$var);                                       
+                                            if(isset($row[$i])){ $var = (string) $row[$i];
+                                        unlink('../../assets/workshop/'.$var);  }else{}                                     
                                         }                             
                                     }    
                                     echo 'Updated !';                       
@@ -87,11 +86,11 @@ if(isset($_POST['action']))
                              $s=ren_save($srt_s);
                              $i=ren_save($str_i);
                             //Data Upload                             
-                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,price,class_applicable_for,subscription_level,learning,";
+                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,price,learning,class_applicable_for,subscription_level,";
                             if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}
                             if ($_FILES['secondary']['name']==''){}else{ $sql .= "secondary_image,";}
                             if ($_FILES['icon']['name']==''){}else{ $sql .= "course_icon,";}
-                             $sql .= "prerequisites,vendor_id,club_id) VALUES ('$course','$editor1','$classes','$price','$cls_lvl','$sub_lvl','$editor2',";
+                             $sql .= "prerequisites,vendor_id,club_id) VALUES ('$course','$editor1','$classes','$price','$editor2','$class','$sub',";
                              if ($_FILES['primary']['name']==''){}else{ $sql .= "'$p',";}
                              if ($_FILES['secondary']['name']==''){}else{ $sql .= "'$s',";}
                              if ($_FILES['icon']['name']==''){}else{ $sql .= "'$i',";} 

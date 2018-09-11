@@ -1,6 +1,7 @@
 <?php 
 session_start();
-$club_id = $_SESSION['club_id'];
+$club_id = 'club_web';
+//$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -10,6 +11,8 @@ $duration = $_POST['duration'];
 $author = $_POST['author'];
 $price = $_POST['price'];
 $vendor = $_POST['vendor'];
+$class = $_POST['class'];
+$sub=$_POST['sub'];
 function ren_save( $id='fileToUpload' ){
     $target_dir = "../../assets/ebook";
     $f = $target_dir . basename($_FILES[$id]["name"]);
@@ -32,7 +35,7 @@ if(isset($_POST['action']))
                       
                 $book_id=$_POST['id'];
                 $ebk_up = "SELECT ebook_file from ebook where book_id = '$book_id'; ";
-                $ebk_up .= "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',";
+                $ebk_up .= "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$ebk_up .= "ebook_file='$f',";}
                 $ebk_up .= "price='$price', club_id='$club_id',vendor_id='$vendor' where book_id= '$book_id';";                
                 if ($conn->multi_query($ebk_up))
@@ -51,10 +54,6 @@ if(isset($_POST['action']))
 
                         
                                 }
-                                
-                else{               
-                    echo 'update failed !';             
-                }
                         }
                         while ($conn->next_result());
                 }
@@ -85,9 +84,9 @@ if(isset($_POST['action']))
                      
                             //Data Upload
                             
-                            $sql = "INSERT INTO ebook  (name,description,duration,author,";
+                            $sql = "INSERT INTO ebook  (name,description,duration,author,class_applicable_for,subscription_level,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "ebook_file,";}
-                            $sql .= "price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author',";
+                            $sql .= "price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author','$class','$sub',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
                             $sql .= "'$price','$club_id','$vendor');";
                             $sql .= "SELECT LAST_INSERT_ID()";                                              

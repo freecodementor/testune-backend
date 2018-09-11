@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-$_SESSION['club_id']="app";
+//$_SESSION['club_id']="club_app";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -9,7 +9,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT name, description, duration, author, price,vendor_id from article where article_id= '$id'";
+    $art_up = "SELECT name, description, duration, author, price,vendor_id,class_applicable_for,subscription_level from article where article_id= '$id'";
     $result = $conn->query($art_up);
 
     while($row = $result->fetch_array())
@@ -20,6 +20,8 @@ if(isset($_GET['id'])){
      $author = $row['author'];
      $price =$row['price'];
      $vendor_id =$row['vendor_id'];
+     $class = explode(",",$row['class_applicable_for']);
+     $sub = $row['subscription_level'];
      
     }
 }
@@ -78,6 +80,60 @@ else{
             <p class="section-para">Choose a topic that interests you enough to focus on it for at least a week or two. If
                 your topic is broad, narrow it. Instead of writing about how to decorate your home, try covering how to.</p>
         </div>
+        <div class="text-section">
+        <div class="inner_text" style="">
+        
+        <div class='row '>
+                <div class=''>
+                <h1 class="">Class Applicable for: </h1>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]" value='6' <?php if(isset($class)){echo (in_array("6",$class)) ? 'checked="checked"' : '';}else{}?> class="demo_check secondary secondary"> <br>
+                    <label for='class1'>Class 6</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value="7"  <?php if(isset($class)){echo (in_array("7",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class2'>Class 7</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='8'  <?php if(isset($class)){echo (in_array("8",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 8</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='9'  <?php if(isset($class)){echo (in_array("9",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 9</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='10'  <?php if(isset($class)){echo (in_array("10",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 10</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='11'  <?php if(isset($class)){echo (in_array("11",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 11</label>
+                </div>
+                <div class=''>
+                    <input type="checkbox" name="class[]"  value='12'  <?php if(isset($class)){echo (in_array("12",$class)) ? 'checked="checked"' : '';}else{}?>  class="demo_check secondary"> <br>
+                    <label for='class3'>Class 12</label>
+                </div>
+                </div> </div>
+                <div class="inner_text-sub" style="">
+                <div class=''>
+                <h1 class="">Subscription Level </h1>
+                </div>
+                <div class='inner_text-sub'>                
+                <input type="radio" name="sub" value="silver"  id="" class=""  <?php if(isset($sub)){echo ($sub=='silver') ? 'checked="checked"' : '';}else{}?>>
+                <label for='sub'>Silver</label>
+                </div>
+                <div class='inner_text-sub'>
+                <input type="radio" name="sub" value="gold"  id="" class="" <?php if(isset($sub)){echo ($sub=='gold') ? 'checked="checked"' : '';}else{}?>>
+                <label for='sub'>Gold</label>
+                </div>
+                <div class='inner_text-sub'>
+                <input type="radio" name="sub" value="platinum"  id="" class="" <?php if(isset($sub)){echo ($sub=='platinum') ? 'checked="checked"' : '';}else{}?>>
+                <label for='sub'>Platinum</label>
+                </div>
+            </div>
+            </div><br></div>
         <div class="duration">
             <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Duration" class="duration_field">
 
@@ -284,6 +340,21 @@ else{
 
 
 function ajaxbackend(){
+    //for checkboxes
+    var checkboxes = document.getElementsByName('class[]');
+    var vals = "";
+    for (var i=0, n=checkboxes.length;i<n;i++) 
+    {
+        if (checkboxes[i].checked) 
+        {
+            vals += ","+checkboxes[i].value;
+        }
+    }
+    if (vals) vals = vals.substring(1);
+    
+    
+
+
     for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
     var course= $('#course').val(); 
     var duration= $('#duration').val(); 
@@ -311,7 +382,7 @@ var form = $('#fileUploadForm')[0];
 var data = new FormData(form);
 
 // If you want to add an extra field for the FormData
-data.append("CustomField", "This is some extra data, testing");
+data.append("class", vals);
 
 // disabled the submit button
 $("#sub").prop("disabled", true);

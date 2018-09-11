@@ -1,28 +1,25 @@
 <?php 
 session_start();
 $club_id = $_SESSION['club_id'];
+//$club_id = 'club_app';
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-
-
 $test_name = $_POST['course'];
 $test_data = $_POST['editor1'];
 $duration = $_POST['duration'];
 $test_creator = $_POST['author'];
 $price = $_POST['price'];
 $vendor = $_POST['vendor'];
-
-
-
+$class = $_POST['class'];
+$sub=$_POST['sub'];
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     { 
     
                 $test_id=$_POST['id'];
-                $test_up = "UPDATE  online_test SET test_name = '$test_name', test_data='$test_data',duration='$duration',test_creator='$test_creator',price='$price',club_id='$club_id',vendor_id='$vendor' where test_id= '$test_id'";
+                $test_up = "UPDATE  online_test SET test_name = '$test_name', test_data='$test_data',duration='$duration',test_creator='$test_creator',price='$price',club_id='$club_id',class_applicable_for='$class',subscription_level='$sub',vendor_id='$vendor' where test_id= '$test_id'";
 
                 $conn->query($test_up);
                 echo "Published";
@@ -46,7 +43,7 @@ if(isset($_POST['action']))
         {
          
                             
-                            $sql = "INSERT INTO online_test  (test_name,test_data,duration,test_creator,price,club_id,vendor_id) VALUES ('$test_name','$test_data','$duration','$test_creator','$price','$club_id','$vendor');";
+                            $sql = "INSERT INTO online_test  (test_name,test_data,duration,test_creator,price,club_id,class_applicable_for,subscription_level,vendor_id) VALUES ('$test_name','$test_data','$duration','$test_creator','$price','$club_id','$class','$sub','$vendor');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))

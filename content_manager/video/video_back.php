@@ -1,18 +1,18 @@
 <?php 
 session_start();
 $club_id = $_SESSION['club_id'];
+//$club_id = "club_web";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-
-
 $title = $_POST['course'];
 $description_line = $_POST['editor1'];
 $duration = $_POST['duration'];
 $learning = $_POST['editor2'];
 $vendor_id = $_POST['vendor'];
 $price = $_POST['price'];
+$class = $_POST['class'];
+$sub=$_POST['sub'];
 function ren_save(){
     $target_dir = "../../assets/video/";
     $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -28,16 +28,11 @@ function ren_save(){
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
-    {  
-        //New Img with new name upload
-      
-        $f=ren_save();
-                        
-        //Data update
-               
+    {             
+        $f=ren_save();        
                 $video_id=$_POST['id'];
                 $vid_up = "SELECT video_file from video where video_id = '$video_id'; ";
-                $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',";
+                $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
                 $vid_up .= "vendor_id='$vendor_id',price='$price',club_id='$club_id' where video_id= '$video_id'";
                 if ($conn->multi_query($vid_up))
@@ -89,9 +84,9 @@ if(isset($_POST['action']))
                                 $f=ren_save();
                      
                             //Data Upload
-                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,club_id";
+                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,club_id,class_applicable_for,subscription_level";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= ",video_file";}
-                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id','$club_id'";
+                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id','$club_id','$class','$sub'";
                             if($_FILES['fileToUpload']['name']==''){}else{ $sql .= " ,'$f'";}
                             $sql .= ");";
                             $sql .= "SELECT LAST_INSERT_ID()";                          

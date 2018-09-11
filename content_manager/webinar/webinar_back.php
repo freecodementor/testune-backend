@@ -1,12 +1,10 @@
 <?php 
 session_start();
-$club_id = "app";
+//$club_id = "club_app";
+$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-
-
 $title = $_POST['course'];
 $speaker = $_POST['speaker'];
 $description = $_POST['editor1'];
@@ -16,22 +14,15 @@ $vendor_id = $_POST['vendor'];
 $date = $_POST['date'];
 $time = $_POST['time'];
 $price = $_POST['price'];
-
-
-
-
+$class = $_POST['class'];
+$sub=$_POST['sub'];
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     {  
-        //New Img with new name upload
-      
-       
-                        
-        //Data update
-               
+     
                 $webinar_id=$_POST['id'];                                   
-                $web_up = "UPDATE  webinar SET title = '$title', speaker = '$speaker',description='$description',duration='$duration',learning='$learning',vendor_id='$vendor_id',price='$price',date='$date',time='$time',club_id='$club_id' where webinar_id= '$webinar_id'";
+                $web_up = "UPDATE  webinar SET title = '$title', speaker = '$speaker',description='$description',duration='$duration',learning='$learning',vendor_id='$vendor_id',price='$price',date='$date',time='$time',class_applicable_for='$class',subscription_level='$sub',club_id='$club_id' where webinar_id= '$webinar_id'";
                 $conn->query($web_up);
                 echo "Published";
         
@@ -54,7 +45,7 @@ if(isset($_POST['action']))
                                 //File upload
                            
                             //Data Upload
-                            $sql = "INSERT INTO webinar  (title,description,duration,price,learning,vendor_id,date, time, speaker,club_id) VALUES ('$title','$description','$duration','$price','$learning','$vendor_id','$date','$time','$speaker','$club_id');";
+                            $sql = "INSERT INTO webinar  (title,description,duration,price,learning,vendor_id,date, time, speaker,class_applicable_for,subscription_level,club_id) VALUES ('$title','$description','$duration','$price','$learning','$vendor_id','$date','$time','$speaker','$class','$sub','$club_id');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
