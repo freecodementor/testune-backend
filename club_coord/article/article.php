@@ -107,7 +107,7 @@ $conn->close();
             <form id="fileUploadForm" action="../deployment_control/dep.php" method="POST">
                 <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
                     <input type="hidden" name="type" value="article">
-                    <button class="p__btn" type="submit">DEPLOY</button>
+                    <button class="p__btn" type="submit" onclick="deploy()">DEPLOY</button>
                 </form>
         </div>
     </div>
@@ -134,7 +134,29 @@ $conn->close();
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.0.201604172/pdfobject.min.js"></script>
         <script>PDFObject.embed("../../assets/article/<?php if(isset($article_file)){echo $article_file;}else{}?>", "#ebookfile");</script>
  <!--ADDED ABOVE--> 
-        
+    <script language="javascript">
+    function deploy(){
+        $.ajax({
+    type: "POST",
+    enctype: 'multipart/form-data',
+    url: "../deployment_control/dep.php",
+    data: {price:<?php if(isset($price)){echo $price;}else{}?>},
+    processData: false,
+    contentType: false,
+    cache: false,
+    timeout: 600000,
+    success: function (data) {        
+        console.log(data);
+        $("#sub").prop("disabled", false);
+    },
+    error: function (e) {
+        $("#result").text(e.responseText);
+        document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
+        $("#sub").prop("disabled", false);
+    }
+});
+    }
+    </script>    
    
 
     <script>

@@ -1,3 +1,10 @@
+<?php
+include_once "../../assets/Users.php";
+$database = new Database();
+$conn = $database->getConnection();
+
+?>   
+    
     <!DOCTYPE html>
 <html lang="en">
 
