@@ -9,7 +9,8 @@ $name = $_POST['course'];
 $description = $_POST['editor1'];
 $duration = $_POST['duration'];
 $author = $_POST['author'];
-$price = $_POST['price'];
+$price = $_POST['mrp_price'];
+$school_price = $_POST['school_price'];
 $vendor = $_POST['vendor'];
 $class = $_POST['class'];
 $sub=$_POST['sub'];
@@ -37,7 +38,7 @@ if(isset($_POST['action']))
                 $ebk_up = "SELECT ebook_file from ebook where book_id = '$book_id'; ";
                 $ebk_up .= "UPDATE  ebook SET name = '$name', description='$description',duration='$duration',author='$author',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$ebk_up .= "ebook_file='$f',";}
-                $ebk_up .= "price='$price', club_id='$club_id',vendor_id='$vendor' where book_id= '$book_id';";                
+                $ebk_up .= "school_price='$school_price',mrp_price='$price', club_id='$club_id',vendor_id='$vendor' where book_id= '$book_id';";                
                 if ($conn->multi_query($ebk_up))
                 {       
                     do {

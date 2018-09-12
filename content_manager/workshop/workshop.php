@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $web_up = "SELECT title,description_line,no_of_classes,price,class_applicable_for,
+    $web_up = "SELECT title,description_line,no_of_classes,mrp_price,school_price,class_applicable_for,
     subscription_level,learning,prerequisites, primary_image,secondary_image,
      course_icon, vendor_id, class_applicable_for,subscription_level from workshop where workshop_id= '$id'";
     $result = $conn->query($web_up);
@@ -18,7 +18,7 @@ if(isset($_GET['id'])){
      $course =$row['title'];
      $editor1 = $row['description_line'];
      $classes =$row['no_of_classes'];
-     $price = $row['price'];
+     $price = $row['mrp_price'];
      $cls_lvl =$row['class_applicable_for'];
      $sub_lvl =$row['subscription_level'];
      $editor2 =$row['learning'];
@@ -26,6 +26,7 @@ if(isset($_GET['id'])){
      $class = explode(",",$row['class_applicable_for']);
      $sub = $row['subscription_level'];
      $vendor =$row['vendor_id'];
+     $school_price =$row['school_price'];
      
     }
 }
@@ -85,7 +86,10 @@ else{
                 <input type="text"  value="<?php if(isset($classes)){echo $classes;}else{}?>" name="classes" id="classes" placeholder="No Of Classes" class="course__field">
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text"  value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="Price" class="course__field">
+                <input type="text"  value="<?php if(isset($price)){echo $price;}else{}?>" name="mrp_price" id="price" placeholder="MRP Price" class="course__field">
+            </div>
+            <div class="inner_text-sub" style="margin:10px ">
+                <input type="text"  value="<?php if(isset($school_price)){echo $school_price;}else{}?>" name="school_price" id="school_price" placeholder="School sPrice" class="course__field">
             </div>
         </div>
         <div class="text-section">
@@ -249,12 +253,13 @@ else{
             var cls_lvl= $('#cls_lvl').val(); 
             var vendor= $('#vendor').val();  
             var price= $('#price').val(); 
+            var school_price= $('#school_price').val();
                         
                 
             
             
                   
-                   if(course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || price == '' )
+                   if(course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || school_price == '' || price == '' )
                           {
                         alert('Please make sure all fields are filled.');
                         event.preventDefault();

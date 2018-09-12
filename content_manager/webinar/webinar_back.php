@@ -13,7 +13,8 @@ $learning = $_POST['editor2'];
 $vendor_id = $_POST['vendor'];
 $date = $_POST['date'];
 $time = $_POST['time'];
-$price = $_POST['price'];
+$price = $_POST['mrp_price'];
+$school_price = $_POST['school_price'];
 $class = $_POST['class'];
 $sub=$_POST['sub'];
 if(isset($_POST['action']))
@@ -22,7 +23,7 @@ if(isset($_POST['action']))
     {  
      
                 $webinar_id=$_POST['id'];                                   
-                $web_up = "UPDATE  webinar SET title = '$title', speaker = '$speaker',description='$description',duration='$duration',learning='$learning',vendor_id='$vendor_id',price='$price',date='$date',time='$time',class_applicable_for='$class',subscription_level='$sub',club_id='$club_id' where webinar_id= '$webinar_id'";
+                $web_up = "UPDATE  webinar SET title = '$title', speaker = '$speaker',description='$description',duration='$duration',learning='$learning',vendor_id='$vendor_id',school_price='$school_price',mrp_price='$price',date='$date',time='$time',class_applicable_for='$class',subscription_level='$sub',club_id='$club_id' where webinar_id= '$webinar_id'";
                 $conn->query($web_up);
                 echo "Published";
         

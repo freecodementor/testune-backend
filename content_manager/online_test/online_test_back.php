@@ -9,7 +9,8 @@ $test_name = $_POST['course'];
 $test_data = $_POST['editor1'];
 $duration = $_POST['duration'];
 $test_creator = $_POST['author'];
-$price = $_POST['price'];
+$price = $_POST['mrp_price'];
+$school_price = $_POST['school_price'];
 $vendor = $_POST['vendor'];
 $class = $_POST['class'];
 $sub=$_POST['sub'];
@@ -19,7 +20,7 @@ if(isset($_POST['action']))
     { 
     
                 $test_id=$_POST['id'];
-                $test_up = "UPDATE  online_test SET test_name = '$test_name', test_data='$test_data',duration='$duration',test_creator='$test_creator',price='$price',club_id='$club_id',class_applicable_for='$class',subscription_level='$sub',vendor_id='$vendor' where test_id= '$test_id'";
+                $test_up = "UPDATE  online_test SET test_name = '$test_name', test_data='$test_data',duration='$duration',test_creator='$test_creator',school_price='$school_price',mrp_price='$price',club_id='$club_id',class_applicable_for='$class',subscription_level='$sub',vendor_id='$vendor' where test_id= '$test_id'";
 
                 $conn->query($test_up);
                 echo "Published";

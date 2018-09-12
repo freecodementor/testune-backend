@@ -9,7 +9,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT title, description_line, duration, learning, vendor_id, price, video_file,class_applicable_for,subscription_level from video where video_id= '$id'";
+    $vid_up = "SELECT title, description_line, duration, learning, vendor_id,school_price, mrp_price, video_file,class_applicable_for,subscription_level from video where video_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
@@ -19,10 +19,11 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $learning = $row['learning'];
      $vendor_id =$row['vendor_id'];
-     $price =$row['price'];
+     $price =$row['mrp_price'];
      $video_file =$row['video_file'];
      $class = explode(",",$row['class_applicable_for']);
      $sub = $row['subscription_level'];
+     $school_price =$row['school_price'];
     }
 }
 else{
@@ -179,7 +180,10 @@ else{
                 </select>               
         </div>
         <div class="price-wrapper">
-            <input type="text" name="price" value="<?php if(isset($price)){echo $price;}else{}?>" id="price" placeholder="Price" class="price_field">
+            <input type="text" name="price" value="<?php if(isset($price)){echo $price;}else{}?>" id="price" placeholder="MRP Price" class="price_field">
+        </div>
+        <div class="price-wrapper">
+            <input type="text" name="school_price" value="<?php if(isset($school_price)){echo $school_price;}else{}?>" id="school_price" placeholder="School Price" class="price_field">
         </div>
         <div class="deploy-wrapper">
             <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>"> 
@@ -228,13 +232,14 @@ function ajaxbackend(){
     var duration= $('#duration').val(); 
     var editor1= $('#editor1').val(); 
     var editor2= $('#editor2').val(); 
-    var vendor= $('#vendor').val(); 
+    var price= $('#price').val(); 
+    var school_price= $('#school_price').val(); 
                 
 	    
     
     
           
-           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' )
+           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' || school_price == '' || price == '')
                   {
 		        alert('Please make sure all fields are filled.');
                 event.preventDefault();

@@ -10,7 +10,8 @@ $description_line = $_POST['editor1'];
 $duration = $_POST['duration'];
 $learning = $_POST['editor2'];
 $vendor_id = $_POST['vendor'];
-$price = $_POST['price'];
+$price = $_POST['mrp_price'];
+$school_price = $_POST['school_price'];
 $class = $_POST['class'];
 $sub=$_POST['sub'];
 function ren_save(){
@@ -34,7 +35,7 @@ if(isset($_POST['action']))
                 $vid_up = "SELECT video_file from video where video_id = '$video_id'; ";
                 $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
-                $vid_up .= "vendor_id='$vendor_id',price='$price',club_id='$club_id' where video_id= '$video_id'";
+                $vid_up .= "vendor_id='$vendor_id',school_price='$school_price',mrp_price='$price',club_id='$club_id' where video_id= '$video_id'";
                 if ($conn->multi_query($vid_up))
                 {       
                     do {

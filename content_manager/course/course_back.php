@@ -9,7 +9,8 @@ $conn = $database->getConnection();
 $description_line = $_POST['course'];
 $description = $_POST['editor1'];
 $learning = $_POST['editor2'];
-$price = $_POST['price'];
+$price = $_POST['mrp_price'];
+$school_price = $_POST['school_price'];
 $vendor = $_POST['vendor'];
 $duration = $_POST['duration'];
 $str_p='primary';
@@ -40,7 +41,7 @@ if(isset($_POST['action']))
                              //Data update
                             $course_id=$_POST['id'];       
                             $work_up = "SELECT primary_image,secondary_image,course_icon from live_course where course_id = '$course_id'; ";                            
-                            $work_up .= "UPDATE  live_course SET description_line = '$description_line', description='$description',price='$price',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',";
+                            $work_up .= "UPDATE  live_course SET description_line = '$description_line', description='$description',school_price='$school_price',mrp_price='$price',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',";
                             if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}

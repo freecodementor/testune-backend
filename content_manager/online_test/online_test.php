@@ -9,7 +9,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $test_up = "SELECT test_name, test_data, duration, test_creator, price, vendor_id,class_applicable_for,subscription_level from online_test where test_id= '$id'";
+    $test_up = "SELECT test_name, test_data, duration, test_creator, school_price,mrp_price, vendor_id,class_applicable_for,subscription_level from online_test where test_id= '$id'";
     $result = $conn->query($test_up);
 
     while($row = $result->fetch_array())
@@ -18,10 +18,11 @@ if(isset($_GET['id'])){
      $description = $row['test_data'];
      $duration =$row['duration'];
      $author = $row['test_creator'];
-     $price =$row['price'];
+     $price =$row['mrp_price'];
      $vendor_id =$row['vendor_id'];
      $class = explode(",",$row['class_applicable_for']);
      $sub = $row['subscription_level'];
+     $school_price =$row['school_price'];
     }
 }
 else{
@@ -123,7 +124,7 @@ else{
                 <label for='sub'>Platinum</label>
                 </div>
             </div>
-            </div><br></div>
+            </div><br>
         <div class="text-section">
             <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Duration" class="field__1">
             <input type="text" value="<?php if(isset($author)){echo $author;}else{}?>" name="author" id="author" placeholder="Author" class="field__2">
@@ -159,8 +160,12 @@ else{
             <h1 class="test-header">Start Test</h1>
             <i class="fas fa-play secondary-icons"></i>
         </div><div class="price-wrapper">
-            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="Price" class="price_field">
-        </div><br>
+            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="mrp_price" id="price" placeholder="MRP Price" class="price_field">
+        </div>
+        <div class="price-wrapper">
+            <input type="text" value="<?php if(isset($school_price)){echo $school_price;}else{}?>" name="school_price" id="price" placeholder="School Price" class="price_field">
+        </div>
+        <br>
         <div class="deploy-wrapper">
         <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
             <input type="hidden" name="action" <?php if(isset($id)){echo 'value="update"';}else{echo 'value="publish"';}?>>
@@ -168,7 +173,7 @@ else{
         </div>              <p id="msg"></p>
         </form>
     </div>
-    
+    </div>
  
   <div class="footer">
         <div class="footerInner">
@@ -209,8 +214,9 @@ function ajaxbackend(){
     var author= $('#author').val(); 
     var editor1= $('#editor1').val(); 
     var price= $('#price').val(); 
+    var school_price= $('#school_price').val(); 
      
-    if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' )
+    if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' || school_price == '' )
                   {
 		        alert('Please make sure all fields are filled.');
                 event.preventDefault();
