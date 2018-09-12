@@ -86,10 +86,10 @@ else{
                 <input type="text"  value="<?php if(isset($classes)){echo $classes;}else{}?>" name="classes" id="classes" placeholder="No Of Classes" class="course__field">
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text"  value="<?php if(isset($price)){echo $price;}else{}?>" name="mrp_price" id="price" placeholder="MRP Price" class="course__field">
+                <input type="text"  value="<?php if(isset($school_price)){echo $school_price;}else{}?>" name="school_price" id="school_price" placeholder="School Price" class="course__field">
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text"  value="<?php if(isset($school_price)){echo $school_price;}else{}?>" name="school_price" id="school_price" placeholder="School sPrice" class="course__field">
+                <input type="text"  value="<?php if(isset($price)){echo $price;}else{}?>" name="mrp_price" id="price" placeholder="MRP Price" class="course__field">
             </div>
         </div>
         <div class="text-section">
@@ -145,7 +145,7 @@ else{
                 <label for='sub'>Platinum</label>
                 </div>
             </div>
-            </div><br></div>
+            </div><br>
         <div class="select-section">
             <h5>What Will I Get ?
             </h5>
@@ -210,6 +210,7 @@ else{
             <button name="submit" value="submit" type="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
         </div>              <p id="msg"></p>
         </form>
+    </div>
     </div>
     <div class="footer ">
         <div class="footerInner ">

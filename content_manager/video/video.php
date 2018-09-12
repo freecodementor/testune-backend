@@ -140,7 +140,7 @@ else{
                 <label for='sub'>Platinum</label>
                 </div>
             </div>
-            </div><br></div>
+            </div><br>
         <div class="upload-wrapper">
             <button type="button" class="upload__btn" data-toggle="modal" data-target="#exampleModal">
                 UPLOAD FILE <i class="fas fa-cloud-upload-alt"></i>
@@ -180,7 +180,7 @@ else{
                 </select>               
         </div>
         <div class="price-wrapper">
-            <input type="text" name="price" value="<?php if(isset($price)){echo $price;}else{}?>" id="price" placeholder="MRP Price" class="price_field">
+            <input type="text" name="mrp_price" value="<?php if(isset($price)){echo $price;}else{}?>" id="price" placeholder="MRP Price" class="price_field">
         </div>
         <div class="price-wrapper">
             <input type="text" name="school_price" value="<?php if(isset($school_price)){echo $school_price;}else{}?>" id="school_price" placeholder="School Price" class="price_field">
@@ -192,7 +192,7 @@ else{
         </div>              <p id="msg"></p>
         </form>
     </div>
-    
+    </div>
  
   <div class="footer">
         <div class="footerInner">

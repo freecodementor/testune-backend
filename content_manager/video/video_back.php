@@ -40,23 +40,14 @@ if(isset($_POST['action']))
                 {       
                     do {
                         
-                                if ($result = $conn->store_result()) 
-                                {
-                                    while ($row = $result->fetch_row()) 
-                                    {               
-                                    $var = (string) $row[0];
-                                    unlink('../../assets/video/'.$var);
-                                    echo 'Updated !';
-                                    }                                    
-                                    
-
-                        
-                                }  
-                                
-                else{               
-                    echo 'update failed !';             
-                }
-                        }
+                                if ($result = $conn->store_result()){
+                                    while ($row = $result->fetch_row()){               
+                                        $var = (string) $row[0];
+                                        unlink('../../assets/video/'.$var);
+                                        echo 'Updated !';
+                                    }              
+                                }                                 
+                           }
                         while ($conn->next_result());
                 }
                 else{               

@@ -160,7 +160,7 @@ else{
                 <label for='sub'>Platinum</label>
                 </div>
             </div>
-            </div><br></div>    
+            </div><br>
         <div class="text-section">
             <div class="inner_text" style="margin:10px">
                 <p><input type="text" value="<?php if(isset($date)){echo $date;}else{}?>" name="date" id="datepicker" placeholder="Date" class="course__field" autocomplete="off"></p>
@@ -190,7 +190,7 @@ else{
                 </select>               
         </div>
         <div class="price-wrapper">
-            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="price" id="price" placeholder="MRP Price" class="price_field">
+            <input type="text" value="<?php if(isset($price)){echo $price;}else{}?>" name="mrp_price" id="price" placeholder="MRP Price" class="price_field">
         </div>
         <div class="price-wrapper">
             <input type="text" value="<?php if(isset($school_price)){echo $school_price;}else{}?>" name="school_price" id="school_price" placeholder="School Price" class="price_field">
@@ -202,6 +202,7 @@ else{
         </div>              <p id="msg"></p>
         </form>
     </div>
+    </div>    
     <div class="footer ">
         <div class="footerInner ">
             <h1>TESTUNE TECHNOLOGY PVT LTD</h1>
