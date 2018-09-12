@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, 
-    vendor.vendor_name, live_course.price,vendor.vendor_icon,activities.icon,live_course.primary_image,live_course.secondary_image,live_course.course_icon
+    vendor.vendor_name, live_course.mrp_price, live_course.school_price,live_course.class_applicable_for,vendor.vendor_icon,activities.icon,live_course.primary_image,live_course.secondary_image,live_course.course_icon
      from live_course  INNER JOIN vendor ON 
     live_course.vendor_id =   vendor.vendor_id  
     INNER JOIN activities ON
@@ -23,12 +23,15 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $learning = $row['learning'];
      $vendor_id =$row['vendor_name'];
-     $price =$row['price'];
+     $price =$row['mrp_price'];
+     $school_price =$row['school_price'];
+     $class = explode(",",$row['class_applicable_for']);
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];
      $primary_image = $row['primary_image'];
      $secondary_image = $row['secondary_image'];
      $course_icon = $row['course_icon'];
+     
     }
 }
 else{
@@ -99,6 +102,9 @@ $conn->close();
         <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
         </div>
         <div class="vendor_wrapper">
+        <h5> Applicable for : <?php if(!empty($class) && isset($class) ){foreach($class as $key => $val){echo ' Class '.$val;}} else{}?></h5>
+        </div>
+        <div class="vendor_wrapper">
         <div>
             <h6>Primary Image</h6>
             <img class="work_img" src="<?php if(isset($primary_image)){echo '../../assets/course/'.$primary_image;}else{}?>" alt="" >
@@ -116,7 +122,11 @@ $conn->close();
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
         </div>
         <div class="deploy-wrapper">
-            <button class="p__btn">DEPLOY</button>
+            <form id="fileUploadForm" action="../deployment_control/dep.php" method="POST">
+                <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
+                    <input type="hidden" name="type" value="live_course">
+                    <button class="p__btn" type="submit" onclick="deploy()">DEPLOY</button>
+                </form>
         </div>
     </div>
  
@@ -136,77 +146,29 @@ $conn->close();
         crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         
-   
-<script language="javascript">
-
-
-
-function ajaxbackend(){
-    for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
-    var course= $('#course').val(); 
-    var duration= $('#duration').val(); 
-    var editor1= $('#editor1').val(); 
-    var editor2= $('#editor2').val(); 
-    var vendor= $('#vendor').val(); 
-                
-	    
-    
-    
-          
-           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' )
-                  {
-		        alert('Please make sure all fields are filled.');
-		  } else {
-               //stop submit the form, we will post it manually.   
-               event.preventDefault();
-            // Get form
-            var form = $('#fileUploadForm')[0];
-// Create an FormData object 
-var data = new FormData(form);
-
-// If you want to add an extra field for the FormData
-data.append("CustomField", "This is some extra data, testing");
-
-// disabled the submit button
-$("#sub").prop("disabled", true);
-
-$.ajax({
-    type: "POST",
-    enctype: 'multipart/form-data',
-    url: "video_back.php",
-    data: data,
-    processData: false,
-    contentType: false,
-    cache: false,
-    timeout: 600000,
-    success: function (data) {
-
-        
-        console.log(data);
-        $("#sub").prop("disabled", false);
-
-    },
-    error: function (e) {
-
-        $("#result").text(e.responseText);
-        document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
-        $("#sub").prop("disabled", false);
-
+   <script language="javascript">
+    function deploy(){
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "../deployment_control/dep.php",
+            data: {price:<?php if(isset($price)){echo $price;}else{}?>,sprice},
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {        
+                console.log(data);
+                $("#sub").prop("disabled", false);
+            },
+            error: function (e) {
+                $("#result").text(e.responseText);
+                document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
+                $("#sub").prop("disabled", false);
+            }
+        });
     }
-
-
-});
-
-}
-
-
-
-          }
-  
-    
-
-   
-</script>
+    </script>    
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";

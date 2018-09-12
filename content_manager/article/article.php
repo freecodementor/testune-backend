@@ -242,13 +242,7 @@ function ajaxbackend(){
     var author= $('#author').val(); 
     var editor1= $('#editor1').val(); 
     var price= $('#price').val();
-    var school_price= $('#school_price').val(); 
-   
-                
-	    
-    
-    
-          
+    var school_price= $('#school_price').val();         
            if(course == '' || duration == '' || author == '' || editor1 == '' || price == ''  || school_price == '' )
                   {
 		        alert('Please make sure all fields are filled.');

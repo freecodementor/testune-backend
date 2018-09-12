@@ -2,6 +2,7 @@
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
+$dep = "select mrp_price,school_price from ";
 
 ?>   
     
@@ -47,23 +48,23 @@ $conn = $database->getConnection();
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class1"  id='class1' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='1' class="demo_check primary"> <br>
                     <label for='class1'>Class 1</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class2"  id="class2" class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value="2" class="demo_check primary"> <br>
                     <label for='class2'>Class 2</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class3"  id='class3' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='3' class="demo_check primary"> <br>
                     <label for='class3'>Class 3</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class4"  id='class4' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='4' class="demo_check primary"> <br>
                     <label for='class4'>Class 4</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class5"  id='class5' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='5' class="demo_check primary"> <br>
                     <label for='class5'>Class 5</label>
                 </div>
             </div><br>
@@ -73,15 +74,15 @@ $conn = $database->getConnection();
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class6" id='class6' class="demo_check secondary secondary"> <br>
+                    <input type="checkbox" name="class[]" value='6' class="demo_check secondary secondary"> <br>
                     <label for='class1'>Class 6</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class7"  id="class7" class="demo_check secondary"> <br>
+                    <input type="checkbox" name="class[]"  value="7" class="demo_check secondary"> <br>
                     <label for='class2'>Class 7</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class8"  id='class8' class="demo_check secondary"> <br>
+                    <input type="checkbox" name="class[]"  value='8' class="demo_check secondary"> <br>
                     <label for='class3'>Class 8</label>
                 </div>
             </div><br>
@@ -91,11 +92,11 @@ $conn = $database->getConnection();
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class9" id='class9' class="demo_check sen_secondary"> <br>
+                    <input type="checkbox" name="class[]" value='9' class="demo_check sen_secondary"> <br>
                     <label for='class1'>Class 9</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class10"  id="class10" class="demo_check sen_secondary"> <br>
+                    <input type="checkbox" name="class[]"  value='10' class="demo_check sen_secondary"> <br>
                     <label for='class2'>Class 10</label>
                 </div>
             </div><br>
@@ -105,100 +106,31 @@ $conn = $database->getConnection();
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class11" id='class11' class="demo_check senior"> <br>
+                    <input type="checkbox" name="class[]" value='11' class="demo_check senior"> <br>
                     <label for='class1'>Class 11</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class12"  id="class12" class="demo_check senior"> <br>
+                    <input type="checkbox" name="class[]"  value='12' class="demo_check senior"> <br>
                     <label for='class2'>Class 12</label>
                 </div>
             </div><br>
             <h1 class="body-header">Gender</h1>
             <div class="first-half-wrapper">
                 <h1 class="first-header">Boy</h1>
-                <input type="radio" name="gender" value="boy"  id="" class="first-radio">
+                <input type="radio" name="gender" value="m"  id="gender" class="first-radio">
                 <h1 class="first-header">Girl</h1>
-                <input type="radio" name="gender" id=""  value="girl" class="first-radio">
+                <input type="radio" name="gender" id="gender"  value="f" class="first-radio">
             </div><br>
             <h1 class="body-header">Open Time</h1>
             <h1 class="row-header">Weekly</h1>
-            <div class="row justify-content-start main-row" style="margin-left:50px;">
-                <div class="col-2">
-                    Monday
-                </div>
-                <div class="col-1">
-                    <input type="checkbox" name="mon" id="">
+            <div class="row justify-content-start main-row" style="margin-left:50px;">               
+                <div class="col-3">
+                    <input type="text" name="from" class="datepicker" id="from" value="" placeholder="From" required>
                 </div>
                 <div class="col-3">
-                    <input type="text" name="start" class="datepicker" id="start" value="" placeholder="Pick Relevant Date" required>
+                    <input type="text" name="to" class="datepicker" id="to" value="" placeholder="To" required>
                 </div>
-                <div class="col-3">
-                    <input type="text" name="end" class="datepicker" id="end" value="" placeholder="Pick Relevant Date" required>
-                </div>
-            </div>
-            <div class="gap"></div>
-            <div class="row justify-content-start main-row" style="margin-left:50px;">
-                <div class="col-2">
-                    Tuesday
-                </div>
-                <div class="col-1">
-                    <input type="checkbox" name="tue" id="">
-                </div>
-
-            </div>
-            <div class="gap"></div>
-
-            <div class="row justify-content-start main-row" style="margin-left:50px;">
-                <div class="col-2">
-                    Wednesday
-                </div>
-                <div class="col-1">
-                    <input type="checkbox" name="wed" id="">
-                </div>
-                
-            </div>
-            <div class="gap"></div>
-
-            <div class="row justify-content-start main-row" style="margin-left:50px;">
-                <div class="col-2">
-                    Thursday
-                </div>
-                <div class="col-1">
-                    <input type="checkbox" name="thu" id="">
-                </div>
-                
-            </div>
-            <div class="gap"></div>
-
-            <div class="row justify-content-start main-row" style="margin-left:50px;">
-                <div class="col-2">
-                    Friday
-                </div>
-                <div class="col-1">
-                    <input type="checkbox" name="fri" id="">
-                </div>
-                
-            </div>
-            <div class="gap"></div>
-
-            <div class="row justify-content-start main-row" style="margin-left:50px;">
-                <div class="col-2">
-                    Saturday
-                </div>
-                <div class="col-1">
-                    <input type="checkbox" name="sat" id="">
-                </div>
-                
-            </div>
-            <div class="gap"></div>
-            <div class="row justify-content-start main-row" style="margin-left:50px;">
-                <div class="col-2">
-                    Sunday
-                </div>
-                <div class="col-1">
-                    <input type="checkbox" name="sun" id="">
-                </div>
-                
+            </div>                
             </div><br>
             <div class="student_price">
                 <h1 class="body-header">Price</h1>
@@ -213,7 +145,7 @@ $conn = $database->getConnection();
                     </div>
                     <div class="col-4">
                         <h1 class="price-head">Student Price</h1>
-                        <input type="text" name="" id="" class="price__input" placeholder="Price">
+                        <input type="number" name="student_price" id="price" class="price__input" placeholder="Price" required>
                     </div>
                 </div>
             </div>
@@ -264,9 +196,23 @@ $conn = $database->getConnection();
 
 
 function ajaxbackend(){  
-    var start =  $('#start').val();
-    var end =  $('#end').val(); 
-    if (start === '' || end === '' ){alert ("fill necessary fields !");}
+       //for checkboxes
+       var checkboxes = document.getElementsByName('class[]');
+    var vals = "";
+    for (var i=0, n=checkboxes.length;i<n;i++) 
+    {
+        if (checkboxes[i].checked) 
+        {
+            vals += ","+checkboxes[i].value;
+        }
+    }
+    if (vals) vals = vals.substring(1);
+    var start =  $('#from').val();
+    var end =  $('#to').val(); 
+    var end =  $('#to').val(); 
+    var price =  $('#price').val(); 
+    
+    if (start === '' || end === '' ||  price ===''){alert ("fill necessary fields !");}
     else {
 //stop submit the form, we will post it manually.   
 event.preventDefault();
@@ -275,7 +221,7 @@ var form = $('#dep_form')[0];
 // Create an FormData object 
 var data = new FormData(form);
 // If you want to add an extra field for the FormData
-data.append("CustomField", "This is some extra data, testing");
+data.append("class", vals);
 // disabled the submit button
 $("#sub").prop("disabled", true);
 $.ajax({

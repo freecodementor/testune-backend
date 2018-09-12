@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT article.name, article.description, article.duration, article.author, article.price, article.article_file,vendor.vendor_name,
+    $art_up = "SELECT article.name, article.description, article.duration, article.author, article.mrp_price,article.school_price,article.class_applicable_for, article.article_file,vendor.vendor_name,
     vendor.vendor_icon,activities.icon from article  INNER JOIN vendor ON 
     article.vendor_id =   vendor.vendor_id  INNER JOIN activities ON activities.page_name LIKE 'article.php' where article_id= '$id'";
     $result = $conn->query($art_up);
@@ -18,11 +18,14 @@ if(isset($_GET['id'])){
      $description = $row['description'];
      $duration =$row['duration'];
      $author = $row['author'];
-     $price =$row['price'];
+     $price =$row['mrp_price'];
+     $class = explode(",",$row['class_applicable_for']);
      $article_file=$row['article_file'];
      $vendor_id = $row['vendor_name'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];
+
+    
     }
 }
 else{
@@ -100,6 +103,10 @@ $conn->close();
         <div class="vendor_wrapper">
         <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
         </div>
+        <div class="vendor_wrapper">
+        <h5> Applicable for : <?php if(!empty($class) && isset($class) ){foreach($class as $key => $val){echo ' Class '.$val;}} else{}?></h5>
+        </div>
+        
         <div class="price-wrapper">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
         </div>
@@ -111,9 +118,6 @@ $conn->close();
                 </form>
         </div>
     </div>
-
-    
- 
   <div class="footer">
         <div class="footerInner">
             <h1>SPACEDTIMES</h1>
@@ -140,7 +144,6 @@ $conn->close();
     type: "POST",
     enctype: 'multipart/form-data',
     url: "../deployment_control/dep.php",
-    data: {price:<?php if(isset($price)){echo $price;}else{}?>},
     processData: false,
     contentType: false,
     cache: false,

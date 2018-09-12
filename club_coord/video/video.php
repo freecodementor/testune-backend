@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT video.title, video.description_line, video.duration, video.learning, video.vendor_id, video.price, 
+    $vid_up = "SELECT video.title, video.description_line, video.duration, video.learning, video.vendor_id,video.class_applicable_for,video.mrp_price, video.school_price,
     video.video_file,vendor.vendor_name,vendor.vendor_icon,activities.icon from video
     INNER JOIN vendor ON 
     video.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
@@ -21,10 +21,12 @@ if(isset($_GET['id'])){
      $duration =$row['duration'];
      $learning = $row['learning'];
      $vendor_id =$row['vendor_name'];
-     $price =$row['price'];
+     $price =$row['mrp_price'];
+     $school_price =$row['school_price'];
      $video_file =$row['video_file'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];
+     $class = explode(",",$row['class_applicable_for']);
     }
 }
 else{
@@ -102,12 +104,19 @@ echo ' '.minutes($duration).' ';
         <div class="vendor_wrapper">
         <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
         </div>
+        <div class="vendor_wrapper">
+        <h5> Applicable for : <?php if(!empty($class) && isset($class) ){foreach($class as $key => $val){echo ' Class '.$val;}} else{}?></h5>
+        </div>
         <div class="price-wrapper">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo ' '.$price;}else{}?></h1>
         </div>
         <br>
         <div class="deploy-wrapper">
-            <button class="p__btn">DEPLOY</button>
+            <form id="fileUploadForm" action="../deployment_control/dep.php" method="POST">
+                <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
+                    <input type="hidden" name="type" value="video">
+                    <button class="p__btn" type="submit" onclick="deploy()">DEPLOY</button>
+                </form>
         </div>
     </div>
     
@@ -127,78 +136,29 @@ echo ' '.minutes($duration).' ';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        
-   
-<script language="javascript">
-
-
-
-function ajaxbackend(){
-    for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
-    var course= $('#course').val(); 
-    var duration= $('#duration').val(); 
-    var editor1= $('#editor1').val(); 
-    var editor2= $('#editor2').val(); 
-    var vendor= $('#vendor').val(); 
-                
-	    
-    
-    
-          
-           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' )
-                  {
-		        alert('Please make sure all fields are filled.');
-		  } else {
-               //stop submit the form, we will post it manually.   
-               event.preventDefault();
-            // Get form
-            var form = $('#fileUploadForm')[0];
-// Create an FormData object 
-var data = new FormData(form);
-
-// If you want to add an extra field for the FormData
-data.append("CustomField", "This is some extra data, testing");
-
-// disabled the submit button
-$("#sub").prop("disabled", true);
-
-$.ajax({
+        <script language="javascript">
+    function deploy(){
+        $.ajax({
     type: "POST",
     enctype: 'multipart/form-data',
-    url: "video_back.php",
-    data: data,
+    url: "../deployment_control/dep.php",
+    data: {price:<?php if(isset($price)){echo $price;}else{}?>},
     processData: false,
     contentType: false,
     cache: false,
     timeout: 600000,
-    success: function (data) {
-
-        
+    success: function (data) {        
         console.log(data);
         $("#sub").prop("disabled", false);
-
     },
     error: function (e) {
-
         $("#result").text(e.responseText);
         document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
         $("#sub").prop("disabled", false);
-
     }
-
-
 });
-
-}
-
-
-
-          }
-  
-    
-
-   
-</script>
+    }
+    </script>    
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";
