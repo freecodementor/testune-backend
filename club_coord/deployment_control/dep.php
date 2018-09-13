@@ -2,7 +2,47 @@
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-$dep = "select mrp_price,school_price from ";
+$id=$_POST['id'];
+$type=$_POST['type'];
+switch ($type) {
+    case 'article':    
+        $sql="select mrp_price,school_price from article where article_id='$id'";  
+        break;
+    case 'online_test':  
+    $sql="select mrp_price,school_price from online_test where test_id=$id";        
+        break;
+    case 'ebook':        
+    $sql="select mrp_price,school_price from ebook where book_id=$id";  
+        break;
+    case 'workshop':    
+    $sql="select mrp_price,school_price from workshop where workshop_id=$id";      
+        break;
+    case 'webinar':  
+    $sql="select mrp_price,school_price from webinar where webinar_id=$id";        
+        break;        
+    case 'video':  
+    $sql="select mrp_price,school_price from video where video_id=$id";        
+        break;
+    case 'live_course':  
+    $sql="select mrp_price,school_price from live_course where course_id=$id";        
+        break;    
+    default:
+        echo 'Please deploy again';
+        
+}
+if(isset($_POST['id'])){
+$result = $conn->query($sql);
+    echo $sql;
+    while($row = $result->fetch_array())
+    {
+     $price =$row['mrp_price'];
+     $school_price =$row['school_price']; 
+    }
+}
+else{
+
+}
+$conn->close();
 
 ?>   
     
@@ -131,17 +171,17 @@ $dep = "select mrp_price,school_price from ";
                     <input type="text" name="to" class="datepicker" id="to" value="" placeholder="To" required>
                 </div>
             </div>                
-            </div><br>
+            <br>
             <div class="student_price">
                 <h1 class="body-header">Price</h1>
                 <div class="row justify-content-center">
                     <div class="col-4">
                         <h1 class="price-head">MRP</h1>
-                        <h1 class="price-sub">₹ 3000</h1>
+                        <h1 class="price-sub">₹ <?php if(isset($price)){echo $price;}else{}?></h1>
                     </div>
                     <div class="col-4">
                         <h1 class="price-head">School Offer</h1>
-                        <h1 class="price-sub">₹ 2500</h1>
+                        <h1 class="price-sub">₹ <?php if(isset($school_price)){echo $school_price;}else{}?></h1>
                     </div>
                     <div class="col-4">
                         <h1 class="price-head">Student Price</h1>
@@ -157,6 +197,7 @@ $dep = "select mrp_price,school_price from ";
         </div>
     </div>
     </form>
+    </div>
     <div class="footer ">
         <div class="footerInner ">
             <h1>&copy; SPACEDTIMES</h1>

@@ -2,43 +2,60 @@
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-    /*$dep="INSERT INTO deployment_control (for_page,";
-    for ($i=1;$i<=12;$i++)
+$type=$_POST['type'];
+$id=$_POST['id'];
+$class = $_POST['class'];
+$gender=$_POST['gender'];
+$from =date('Y-m-d',strtotime($_POST['from']));
+$to=date('Y-m-d',strtotime($_POST['to']));
+$student_price = $_POST['student_price'];
+$cc_id=$_SESSION['uid'];
+//$cc_id="cc_1";
+switch ($type) {
+    case 'article':    
+        $sql="select mrp_price,school_price from article where article_id='$id'";  
+        break;
+    case 'online_test':  
+    $sql="select mrp_price,school_price from online_test where test_id=$id";        
+        break;
+    case 'ebook':        
+    $sql="select mrp_price,school_price from ebook where book_id=$id";  
+        break;
+    case 'workshop':    
+    $sql="select mrp_price,school_price from workshop where workshop_id=$id";      
+        break;
+    case 'webinar':  
+    $sql="select mrp_price,school_price from webinar where webinar_id=$id";        
+        break;        
+    case 'video':  
+    $sql="select mrp_price,school_price from video where video_id=$id";        
+        break;
+    case 'live_course':  
+    $sql="select mrp_price,school_price from live_course where course_id=$id";        
+        break;    
+    default:
+        echo 'Please deploy again';
+        
+}
+if(isset($_POST['id'])){
+$result = $conn->query($sql);
+    echo $sql;
+    while($row = $result->fetch_array())
     {
-        $k='class'.$i;
-        if(isset($_POST[$k])){$dep .= "$k,";}
-    }    
-    if($_POST['start'] !== ''){$dep .= "start,";}    
-    if(isset($_POST['gender'])){$dep .= "gender,";}
-    if($_POST['end'] !== ''){$dep .= "end";}
-    $dep .= ") VALUES ('$type',";
-    for ($i=1;$i<=12;$i++)
-    {
-        $k='class'.$i;
-        if(isset($_POST[$k])){$dep .= "'1',";}
-    }   
-    $start = $_POST['start']; 
-    $end = $_POST['end'];
+     $price =$row['mrp_price'];
+     $school_price =$row['school_price']; 
+    }
+}
+else{
 
-    if($_POST['start'] !== ''){$dep .= "'$start',";}    
-    if(isset($_POST['gender'])){if($_POST['gender']=='boy'){$dep .= "'m',";}else{$dep .= "'f',";}}
-    if($_POST['end'] !== ''){$dep .= "'$end'";}
-    $dep .= ");";*/
-    $activity_id=$_POST['id'];
-    $class = $_POST['class'];
-    $gender=$_POST['gender'];
-    $from =date('Y-m-d',strtotime($_POST['from']));
-    $to=date('Y-m-d',strtotime($_POST['to']));
-    $student_price = $_POST['student_price'];
-    //$cc_id=$_SESSION['uid'];
-    $cc_id="cc_1";
+}
+    
     $inst_fetch = $conn->query("select institute_id from inst_club_coordinator where club_coordinator_id = '$cc_id'");
     $row = $inst_fetch->fetch_array();
     $inst_id=$row['institute_id'];
    
-    $dep="insert into deployment_control (activity_id, class, gender, from_date, to_date, student_price,cc_id,institute_id)
-    values ('$activity_id','$class','$gender','$from','$to','$student_price','$cc_id','$inst_id');";
+    $dep="insert into deployment_control (activity_id, class, gender, from_date, to_date, student_price,club_coordinator_id,institute_id,mrp_price,school_price)
+    values ('$id','$class','$gender','$from','$to','$student_price','$cc_id','$inst_id','$price','$school_price');";
     $dep .= "SELECT LAST_INSERT_ID()";
     if ($conn->multi_query($dep))
                             {       
