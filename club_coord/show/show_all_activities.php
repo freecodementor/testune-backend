@@ -1,44 +1,18 @@
 <?php 
 session_start();
-$_SESSION["club_id"] = "club_web";
 include_once "../../assets/Users.php";
+//$_SESSION['Userid']='cc_1';
 $database = new Database();
 $conn = $database->getConnection();
 $page = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
-$id=$_GET['id'];
 
-if(isset($_SESSION['club_id'])){
-    $club_id= $_SESSION["club_id"];}
+if(isset($_SESSION['Userid'])){
+    $cc_id= $_SESSION["Userid"];
+    $display= "CALL `show_my_activities`('$cc_id');";}
 else{
-    echo 'No Club';
+    echo 'No club coordinator found';
     die;
     }
-
-switch ($id) {
-    case 'article':
-        $display= "CALL `show_articles`('$club_id');";
-        break;
-    case 'course':
-    $display= "CALL `show_courses`('$club_id');";
-        break;
-    case 'ebook':
-    $display= "CALL `show_ebooks`('$club_id');";
-        break;
-    case 'online_test':
-    $display= "CALL `show_online_tests`('$club_id');";
-        break;
-    case 'video':
-    $display= "CALL `show_videos`('$club_id');";
-        break;
-    case 'webinar':
-    $display= "CALL `show_webinars`('$club_id');";
-        break;
-    case 'workshop':
-    $display= "CALL `show_workshops`('$club_id');";
-        break;
-    default:
-        echo 'error';
-}
 
 $result = $conn->query($display);
 if (mysqli_num_rows($result)>0)

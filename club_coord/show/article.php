@@ -1,4 +1,4 @@
 <?php 
 session_start();
-$_SESSION["club"] = "app";
+$_SESSION["club"] = "club_web";
 include_once "back.php";

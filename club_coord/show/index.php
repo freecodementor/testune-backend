@@ -84,7 +84,7 @@ include_once "../../assets/Users.php";
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <div class="button-wrapper">
                 <a href="?q=logout">Logout</a>
-                <a href="?q=logout">Logout</a>
+                <a href="show_all_activities.php">Show my Activities</a>
             </div>
         </div>
     </div>
