@@ -76,9 +76,9 @@ if(isset($_POST['action']))
                                 $f=ren_save();
                      
                             //Data Upload
-                            $sql = "INSERT INTO video  (title,description_line,duration,price,learning,vendor_id,club_id,class_applicable_for,subscription_level";
+                            $sql = "INSERT INTO video  (title,description_line,duration,mrp_price,school_price,learning,vendor_id,club_id,class_applicable_for,subscription_level";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= ",video_file";}
-                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$learning','$vendor_id','$club_id','$class','$sub'";
+                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$school_price','$learning','$vendor_id','$club_id','$class','$sub'";
                             if($_FILES['fileToUpload']['name']==''){}else{ $sql .= " ,'$f'";}
                             $sql .= ");";
                             $sql .= "SELECT LAST_INSERT_ID()";                          

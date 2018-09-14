@@ -44,7 +44,7 @@ if(isset($_POST['action']))
         {
          
                             
-                            $sql = "INSERT INTO online_test  (test_name,test_data,duration,test_creator,price,club_id,class_applicable_for,subscription_level,vendor_id) VALUES ('$test_name','$test_data','$duration','$test_creator','$price','$club_id','$class','$sub','$vendor');";
+                            $sql = "INSERT INTO online_test  (test_name,test_data,duration,test_creator,mrp_price,school_price,club_id,class_applicable_for,subscription_level,vendor_id) VALUES ('$test_name','$test_data','$duration','$test_creator','$price','$school_price','$club_id','$class','$sub','$vendor');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))

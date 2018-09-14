@@ -88,7 +88,7 @@ if(isset($_POST['action']))
                              $s=ren_save($srt_s);
                              $i=ren_save($str_i);
                             //Data Upload                             
-                            $sql = "INSERT INTO live_course  (description_line,description,price,duration,learning,class_applicable_for,subscription_level,";
+                            $sql = "INSERT INTO live_course  (description_line,description,mrp_price,duration,learning,class_applicable_for,subscription_level,";
                             if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}
                             if ($_FILES['secondary']['name']==''){}else{ $sql .= "secondary_image,";}
                             if ($_FILES['icon']['name']==''){}else{ $sql .= "course_icon,";}

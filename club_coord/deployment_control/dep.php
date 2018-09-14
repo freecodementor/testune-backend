@@ -9,22 +9,22 @@ switch ($type) {
         $sql="select mrp_price,school_price from article where article_id='$id'";  
         break;
     case 'online_test':  
-    $sql="select mrp_price,school_price from online_test where test_id=$id";        
+    $sql="select mrp_price,school_price from online_test where test_id='$id'";        
         break;
     case 'ebook':        
-    $sql="select mrp_price,school_price from ebook where book_id=$id";  
+    $sql="select mrp_price,school_price from ebook where book_id='$id'";  
         break;
     case 'workshop':    
-    $sql="select mrp_price,school_price from workshop where workshop_id=$id";      
+    $sql="select mrp_price,school_price from workshop where workshop_id='$id'";      
         break;
     case 'webinar':  
-    $sql="select mrp_price,school_price from webinar where webinar_id=$id";        
+    $sql="select mrp_price,school_price from webinar where webinar_id='$id'";        
         break;        
     case 'video':  
-    $sql="select mrp_price,school_price from video where video_id=$id";        
+    $sql="select mrp_price,school_price from video where video_id='$id'";        
         break;
     case 'live_course':  
-    $sql="select mrp_price,school_price from live_course where course_id=$id";        
+    $sql="select mrp_price,school_price from live_course where course_id='$id'";        
         break;    
     default:
         echo 'Please deploy again';
@@ -32,7 +32,6 @@ switch ($type) {
 }
 if(isset($_POST['id'])){
 $result = $conn->query($sql);
-    echo $sql;
     while($row = $result->fetch_array())
     {
      $price =$row['mrp_price'];
@@ -58,8 +57,8 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 </head>
 
 <body>
@@ -203,12 +202,7 @@ $conn->close();
             <h1>&copy; SPACEDTIMES</h1>
         </div>
     </div>
-    <script>  
-    $( "#start,#end" ).datepicker({
-  dateFormat: "yy-mm-dd"
-});
-   
-  </script>
+    
     <script>
         var primary_master = $('.primary_master');
         var secondary_master = $('.secondary_master');

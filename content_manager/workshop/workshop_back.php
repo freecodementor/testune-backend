@@ -87,11 +87,11 @@ if(isset($_POST['action']))
                              $s=ren_save($srt_s);
                              $i=ren_save($str_i);
                             //Data Upload                             
-                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,price,learning,class_applicable_for,subscription_level,";
+                            $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,mrp_price,school_price,learning,class_applicable_for,subscription_level,";
                             if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}
                             if ($_FILES['secondary']['name']==''){}else{ $sql .= "secondary_image,";}
                             if ($_FILES['icon']['name']==''){}else{ $sql .= "course_icon,";}
-                             $sql .= "prerequisites,vendor_id,club_id) VALUES ('$course','$editor1','$classes','$price','$editor2','$class','$sub',";
+                             $sql .= "prerequisites,vendor_id,club_id) VALUES ('$course','$editor1','$classes','$price','$school_price','$editor2','$class','$sub',";
                              if ($_FILES['primary']['name']==''){}else{ $sql .= "'$p',";}
                              if ($_FILES['secondary']['name']==''){}else{ $sql .= "'$s',";}
                              if ($_FILES['icon']['name']==''){}else{ $sql .= "'$i',";} 

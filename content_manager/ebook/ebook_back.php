@@ -87,9 +87,9 @@ if(isset($_POST['action']))
                             
                             $sql = "INSERT INTO ebook  (name,description,duration,author,class_applicable_for,subscription_level,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "ebook_file,";}
-                            $sql .= "price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author','$class','$sub',";
+                            $sql .= "mrp_price,school_price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author','$class','$sub',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
-                            $sql .= "'$price','$club_id','$vendor');";
+                            $sql .= "'$price','$school_price','$club_id','$vendor');";
                             $sql .= "SELECT LAST_INSERT_ID()";                                              
                             if ($conn->multi_query($sql))
                             {       

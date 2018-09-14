@@ -16,22 +16,22 @@ switch ($type) {
         $sql="select mrp_price,school_price from article where article_id='$id'";  
         break;
     case 'online_test':  
-    $sql="select mrp_price,school_price from online_test where test_id=$id";        
+    $sql="select mrp_price,school_price from online_test where test_id='$id'";        
         break;
     case 'ebook':        
-    $sql="select mrp_price,school_price from ebook where book_id=$id";  
+    $sql="select mrp_price,school_price from ebook where book_id='$id'";  
         break;
     case 'workshop':    
-    $sql="select mrp_price,school_price from workshop where workshop_id=$id";      
+    $sql="select mrp_price,school_price from workshop where workshop_id='$id'";      
         break;
     case 'webinar':  
-    $sql="select mrp_price,school_price from webinar where webinar_id=$id";        
+    $sql="select mrp_price,school_price from webinar where webinar_id='$id'";        
         break;        
     case 'video':  
-    $sql="select mrp_price,school_price from video where video_id=$id";        
+    $sql="select mrp_price,school_price from video where video_id='$id'";        
         break;
     case 'live_course':  
-    $sql="select mrp_price,school_price from live_course where course_id=$id";        
+    $sql="select mrp_price,school_price from live_course where course_id='$id'";        
         break;    
     default:
         echo 'Please deploy again';
@@ -39,7 +39,6 @@ switch ($type) {
 }
 if(isset($_POST['id'])){
 $result = $conn->query($sql);
-    echo $sql;
     while($row = $result->fetch_array())
     {
      $price =$row['mrp_price'];
@@ -79,11 +78,7 @@ else{
                                     while ($conn->next_result());
                             }
                             else{
-                                echo "Error ! Not deployed";
-                                
+                                echo "Error ! Not deployed";                                
                             }
-    echo $dep;
- 
-
         $conn->close();
         ?>

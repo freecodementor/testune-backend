@@ -46,7 +46,7 @@ if(isset($_POST['action']))
                                 //File upload
                            
                             //Data Upload
-                            $sql = "INSERT INTO webinar  (title,description,duration,price,learning,vendor_id,date, time, speaker,class_applicable_for,subscription_level,club_id) VALUES ('$title','$description','$duration','$price','$learning','$vendor_id','$date','$time','$speaker','$class','$sub','$club_id');";
+                            $sql = "INSERT INTO webinar  (title,description,duration,mrp_price,school_price,learning,vendor_id,date, time, speaker,class_applicable_for,subscription_level,club_id) VALUES ('$title','$description','$duration','$price','$learning','$vendor_id','$date','$time','$speaker','$class','$sub','$club_id');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))
