@@ -470,31 +470,14 @@ function validateEmail(email) {
 
 function check_form()
    {
-           var vendor_name= $('#institute_name').val();    
-	   
-     var country= $('#country').val(); 
-     
-     var dob= $('#datepicker').val(); 
-
-	  
+    var vendor_name= $('#institute_name').val();    	   
+     var country= $('#country').val();      
+     var dob= $('#datepicker').val(); 	  
      var address= $('#address').val(); 
-     var desc= $('#desc').val(); 
-                
-	    
-    
-	  
-          
-           if(vendor_name === '' || address === '' || desc === '' || country === '' || dob === '' )
-                  {
-		        alert('Please make sure all fields are filled.');
-		  }
-           
-           
-	    else
-		 {          
-           
-                 ajaxbackend();
-                 } 
+     var desc= $('#desc').val();       
+      if (vendor_name === '' || address === '' || desc === '' || country === '' || dob === '' )
+      { alert('Please make sure all fields are filled.');	}           
+	    else{ ajaxbackend();} 
    }
 
 function ajaxbackend(){
