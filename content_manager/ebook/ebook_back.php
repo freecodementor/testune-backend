@@ -1,7 +1,7 @@
 <?php 
 session_start();
-//$club_id = 'club_web';
-$club_id = $_SESSION['club_id'];
+$club_id = 'club_web';
+//$club_id = $_SESSION['club_id'];
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -15,7 +15,7 @@ $vendor = $_POST['vendor'];
 $class = $_POST['class'];
 $sub=$_POST['sub'];
 function ren_save( $id='fileToUpload' ){
-    $target_dir = "../../assets/ebook";
+    $target_dir = "../../assets/ebook/";
     $f = $target_dir . basename($_FILES[$id]["name"]);
     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
     $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
