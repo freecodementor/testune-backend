@@ -2,20 +2,37 @@
 //echo $_POST['username'];
 //echo $_POST['password'];
 $club_id= $_POST['club_id'];
+//$inst_id=$SESSION['institute_id'];
+$inst_id = 'inst_1';
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-    $spanel="select club_name,  from clubs where club_id='$club_id'";
-    $result = $conn->query($spanel);    
-    $i=0;
-    while($club[$i] = mysqli_fetch_row($result))
-    { $j=0;
-        foreach($club[$i] as $c ){
-            $row[$i][$j]=$c;
-            $j++;
-        }
-        $i++;     
+    $spanel="select clubs.club_name,inst_club_coordinator.name,inst_club_coordinator.photo,inst_club_coordinator.detail from cc_club_assign
+     INNER JOIN clubs ON cc_club_assign.club_id=clubs.club_id  INNER JOIN inst_club_coordinator ON inst_club_coordinator.club_coordinator_id
+      = cc_club_assign.club_coordinator_id LIKE '$club_id' AND  inst_club_coordinator.institute_id = '$inst_id' ";
+    $up_workshop = "select title from workshop where club_id='$club_id' order by date DESC LIMIT 1"; 
+    $up_webinar = "select title from webinar where club_id='$club_id' order by date DESC LIMIT 1";
+    $result = $conn->query($spanel);       
+    $result1 = $conn->query($up_workshop); 
+    $result2 = $conn->query($up_webinar);
+    if(1==1){
+        while($row = $result->fetch_array())
+        {
+         $club_name =$row['club_name'];
+         $coord_name = $row['name'];
+         $photo =$row['photo'];
+         $detail = $row['detail'];   
+        }unset($row); 
+        while($row = $result1->fetch_array())
+        {
+         $work_title =$row['title'];           
+        }unset($row);
+        while($row = $result2->fetch_array())
+        {
+         $web_title =$row['title'];           
+        }unset($row);
     }
+    else{}
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -103,7 +120,7 @@ $conn = $database->getConnection();
     </div>
     <section id="yt_wrapper" class="page-container">
         <div class="span6 ">
-            <h1 class="club-header" style="margin-left: -10px;">Tech Talk</h1>
+            <h1 class="club-header" style="margin-left: -10px;"><?php if(isset($club_name)){echo $club_name;}else{}?></h1>
         </div>
         <div class="module subcribe">
             <div class="modcontent" style="width:400px;right:0px;height: 150px; ">
@@ -181,43 +198,16 @@ $conn = $database->getConnection();
         <div class="row justify-content-center" style="margin-left:0">
             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 color">
                 <div class="clearfix">
-                    <img class="wrapper-image" src="assets/images/user.png" alt="" width="120" height="120">
+                    <img class="wrapper-image" src="assets/images/<?php if(isset($photo)){echo $photo;}else{}?>" alt="" width="120" height="120">
                     <h1 class="club-head">Club Coordinator</h1>
-                    <h1 class="club-head-sub">Saroj Mehta</h1>
-                    <p class="club-desc">Hi children message (e-mail) including any files transmitted as its
-                        attachment,
-                        is for the sole use of the individual or entity to whom it has been addressed,
-                        and may contain information that is confidential, proprietary or
-                        legally protected. If you are not the intended recipient(s) or have received
-                        Disclaimer:This electronic message (e-mail) including any files transmitted as its
-                        attachment, is
-                        for the sole use of the individual or entity to whom it has been addressed, and may
-                        contain
-                        information that is confidential, proprietary or legally protected. If you are not
-                        the
-                        intended
-                        recipient(s) or have received this email in error, you are not authorized to copy,
-                        distribute, or
-                        otherwise use this message or its attachments. Please notify the sender immediately
-                        by
-                        return
-                        e-mail and permanently delete this message and any attachments from your system.
-                        The
-                        contents
-                        of this (e-mail) do not necessarily represent the views or policies of Yatra Online
-                        Pvt
-                        Ltd
-                        or
-                        its afiliates / group companies (Yatra). Yatra makes no warranty that this e-mail is
-                        error
-                        or virus
-                    </p>
+                    <h1 class="club-head-sub"><?php if(isset($coord_name)){echo $coord_name;}else{}?></h1>
+                    <p class="club-desc"><?php if(isset($detail)){echo $detail;}else{}?></p>
                     <div class="two-div">
                         <div class="first-div">
                             <div class="clearfix">
                                 <i class="far fa-calendar wrapper-image" style="font-size:100px"></i>
                                 <h1 class="club-head" style="margin-top: 50px;"> Workshop</h1>
-                                <h1 class="club-head-sub">Android Development</h1>
+                                <h1 class="club-head-sub"><?php if(isset($work_title)){echo $work_title;}else{}?></h1>
                             </div>
                             <p class="div-description">Disclaimer:This electronic message
                                 (e-mail) including any les transmitted
@@ -227,7 +217,7 @@ $conn = $database->getConnection();
                             <div class="clearfix">
                                 <i class="far fa-calendar wrapper-image" style="font-size:100px"></i>
                                 <h1 class="club-head" style="margin-top: 50px;"> Webinar</h1>
-                                <h1 class="club-head-sub">Internet Of Things</h1>
+                                <h1 class="club-head-sub"><?php if(isset($web_title)){echo $web_title;}else{}?></h1>
                             </div>
                             <p class="div-description">Disclaimer:This electronic message
                                 (e-mail) including any les transmitted
