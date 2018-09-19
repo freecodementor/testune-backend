@@ -119,22 +119,22 @@ $conn->close();
             </div>
         </div>
         <div class="sections">
-            <?php $i=0; while(isset($row[$i][0])){?>
-            <div class="first common">
+            <?php $i=$j=0; while(isset($row[$i][0])){?>
+            <div class="common">
                 <div class="img-section">
                     <img src="assets/images/<?php if(isset($row[$i][3])){echo $row[$i][3];}else{} ?>" height="180px;">
                 </div>
                 <div class="section-info">
                     <h1 class="section--header"><?php if(isset($row[$i][0])){echo $row[$i][0];}else{} ?></h1>
                     <h2 class="section-sub-first"><?php if(isset($row[$i][1])){ $feature = explode(",",$row[$i][1]); echo $feature[0];}else{} ?></h2>
-                    <h3 class="section-sub-first"><?php if(isset($row[$i][1])){  echo $feature[1];}else{} ?></h3>
-                    <h4 class="section-sub-first-new"><?php if(isset($row[$i][1])){  echo $feature[2];}else{} ?></h4>
+                    <h2 class="section-sub-first"><?php if(isset($row[$i][1])){  echo $feature[1];}else{} ?></h2>
+                    <h2 class="section-sub-first"><?php if(isset($row[$i][1])){  echo $feature[2];}else{} ?></h2>
                     <div class="section-link-wrapper">
-                        <a href="#" class="section--link" data-toggle="modal" data-target="#exampleModalCenter-N1">Enter</a>
+                        <a href="#" class="section--link" data-toggle="modal" data-target="#exampleModalCenter-N1<?php echo 'a'.$j;?>">Enter</a>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="exampleModalCenter-N1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            <div class="modal fade" id="exampleModalCenter-N1<?php echo 'a'.$j++;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -173,7 +173,7 @@ $conn->close();
           
             
         </div>
-    </div><?php $i++;}?><br><br>
+    </div><?php $i++;}?><br><br></div>
         <div class="loading_wrapper ">
             <div class="inner_loading">
                 <div class="loading-header">
