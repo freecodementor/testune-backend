@@ -2,22 +2,28 @@
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-    $spanel="select club_name,features,club_description,image, launch_date from clubs where 1";
-    $result = $conn->query($spanel);
-    
+    $nonacademic="select club_name,features,club_description,image, launch_date from clubs where club_category_id='club_nonacademic'";
+    $academic="select club_name,features,club_description,image, launch_date from clubs where club_category_id='club_academic'";
+    $result_nonacad = $conn->query($nonacademic);
+    $result_acad = $conn->query($academic);    
     $i=0;
-    while($club[$i] = mysqli_fetch_row($result))
-    { $j=0;
-        //print_r($club[$i]);
-       // echo '<br>';
+    while($club[$i] = mysqli_fetch_row($result_nonacad))
+    { $j=0;      
         foreach($club[$i] as $c ){
             $row[$i][$j]=$c;
             $j++;
         }
         $i++;     
+    } 
+    $j=$i=0;   
+    while($acad[$i] = mysqli_fetch_row($result_acad))
+    { $j=0;      
+        foreach($acad[$i] as $a ){
+            $row_acad[$i][$j]=$a;
+            $j++;
+        }
+        $i++;     
     }
-    //print_r($row);   
-   
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -166,14 +172,10 @@ $conn->close();
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-            </div>
-
-
-            
-          
-            
+            </div>   
         </div>
-    </div><?php $i++;}?><br><br></div>
+    </div><?php $i++;}?><br><br>
+    </div>
         <div class="loading_wrapper ">
             <div class="inner_loading">
                 <div class="loading-header">
@@ -182,32 +184,54 @@ $conn->close();
             </div>
         </div>
         <div class="inner-info-wrapper">
+        <?php $i=$j=0; while(isset($row_acad[$i][0])){?>
             <div class="sections-div gap-top">
-                <h1 class="div-head">Science</h1>
+                <h1 class="div-head"><?php if(isset($row_acad[$i][0])){echo $row_acad[$i][0];}else{} ?></h1>
                 <div class="sections-img">
-                    <img src="assets/images/img_main.jpeg" alt="">
+                    <img src="assets/images/<?php if(isset($row_acad[$i][3])){echo $row_acad[$i][3];}else{} ?>" alt="" data-toggle="modal" data-target="#exampleModalCenter-N1<?php echo 'b'.$j;?>">
                 </div>
-            </div>
-            <div class="sections-div gap-top">
-                <h1 class="div-head">Mathematics</h1>
-                <div class="sections-img">
-                    <img src="assets/images/img_main.jpeg" alt="">
+               
+        
+    </div>
+    <div class="modal fade" id="exampleModalCenter-N1<?php echo 'b'.$j++;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="sections-div gap-bottom">
-                <h1 class="div-head">History</h1>
-                <div class="sections-img">
-                    <img src="assets/images/img_main.jpeg" alt="">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h1 class="mod-title-new">Club Info</h1>
+                                <p class="mod-info">
+                                <?php if(isset($row_acad[$i][2])){echo $row_acad[$i][2];}else{} ?>
+                                </p>
+                            </div>
+                            <div class="col-md-6 border-left">
+                                <h1 class="mod-title-new">Login Here</h1><br>
+                                <form action="" class="login__form">
+                                    <input type="text" name="" id="" placeholder="Type your username" class="form-field">
+                                    <input type="password" name="" id="" placeholder="Type your password" class="form-field">
+                                    <button class="login_btn">Login</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="sections-div">
-                <h1 class="div-head">Geography</h1>
-                <div class="sections-img gap-bottom">
-                    <img src="assets/images/img_main.jpeg" alt="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+            <?php $i++;}?>
+        </div>
+    
+        
     <section style="background-color:#363636;height: 60px">
         <h1 class="footer-inner"> Powered by <span style="color:#2abfd4"> <a href="www.wingxp.com" class="footer-link">
                     wingxp.com </a></span>
@@ -297,7 +321,7 @@ $conn->close();
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalCenter-N2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <!-- <div class="modal fade" id="exampleModalCenter-N2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -555,7 +579,7 @@ $conn->close();
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
