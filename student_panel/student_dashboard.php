@@ -1,24 +1,22 @@
 <?php
+//echo $_POST['username'];
+//echo $_POST['password'];
+$club_id= $_POST['club_id'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-    $spanel="select club_name,features,club_description,image, launch_date from clubs where 1";
-    $result = $conn->query($spanel);
-    
+    $spanel="select club_name,  from clubs where club_id='$club_id'";
+    $result = $conn->query($spanel);    
     $i=0;
     while($club[$i] = mysqli_fetch_row($result))
     { $j=0;
-        //print_r($club[$i]);
-       // echo '<br>';
         foreach($club[$i] as $c ){
             $row[$i][$j]=$c;
             $j++;
         }
         $i++;     
     }
-    //print_r($row);   
-   
-$conn->close();
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,8 +88,6 @@ $conn->close();
                 color: #000;
                 margin-right: -10px;
             }
-
-
         }
     </style>
 

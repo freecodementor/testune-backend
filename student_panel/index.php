@@ -2,8 +2,8 @@
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-    $nonacademic="select club_name,features,club_description,image, launch_date from clubs where club_category_id='club_nonacademic'";
-    $academic="select club_name,features,club_description,image, launch_date from clubs where club_category_id='club_academic'";
+    $nonacademic="select club_name,features,club_description,image, launch_date,club_id from clubs where club_category_id='club_nonacademic'";
+    $academic="select club_name,features,club_description,image, launch_date,club_id from clubs where club_category_id='club_academic'";
     $result_nonacad = $conn->query($nonacademic);
     $result_acad = $conn->query($academic);    
     $i=0;
@@ -57,9 +57,12 @@ $conn->close();
             <div class="page-container">
                 <div class="head">Student Login</div>
                 <div class="form">
-                    <input type="text" placeholder="your username" />
-                    <input type="text" placeholder="your password" />
-                    <div class="btn-subcribe">Login <i class="fas fa-sign-in-alt"></i></div>
+                <form  id='main' method="POST" action="student_dashboard.php">
+                    <input type="text" name="username" placeholder="your username" autocomplete="email" required/>
+                    <input type="text" name="password"  placeholder="your password" autocomplete="password" required />
+                    <input type="hidden" name="club_id" value="<?php echo 'club_web'; ?>">
+                    <div class="btn-subcribe"><input type="submit" style="">Login <i class="fas fa-sign-in-alt"></i></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -123,9 +126,9 @@ $conn->close();
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>         
         <div class="sections">
-            <?php $i=$j=0; while(isset($row[$i][0])){?>
+            <?php $i=$j=$inc1=0; $inc2=50; while(isset($row[$i][0])){?>
             <div class="common">
                 <div class="img-section">
                     <img src="assets/images/<?php if(isset($row[$i][3])){echo $row[$i][3];}else{} ?>" height="180px;">
@@ -136,7 +139,8 @@ $conn->close();
                     <h2 class="section-sub-first"><?php if(isset($row[$i][1])){  echo $feature[1];}else{} ?></h2>
                     <h2 class="section-sub-first"><?php if(isset($row[$i][1])){  echo $feature[2];}else{} ?></h2>
                     <div class="section-link-wrapper">
-                        <a href="#" class="section--link" data-toggle="modal" data-target="#exampleModalCenter-N1<?php echo 'a'.$j;?>">Enter</a>
+                        <a href="#" class="section--link" data-toggle="modal" data-target="#exampleModalCenter-N1<?php echo 'a'.$j;?>" onclick="(this)">
+                        <?php if(isset($row[$i][4])){if ($row[$i][4]<=date("Y-m-d")){echo 'Enter';}else{echo 'Coming Soon';}}else{} ?></a>
                     </div>
                 </div>
             </div>
@@ -155,16 +159,17 @@ $conn->close();
                             <div class="col-md-6">
                                 <h1 class="mod-title-new">Club Info</h1>
                                 <p class="mod-info">
-                                <?php if(isset($row[$i][2])){echo $row[$i][2];}else{} ?>
+                                <?php if(isset($row[$i][2])){echo $row[$i][2];}else{} ?>                                
                                 </p>
                             </div>
                             <div class="col-md-6 border-left">
                                 <h1 class="mod-title-new">Login Here</h1><br>
-                                <form action="" class="login__form">
-                                    <input type="text" name="" id="" placeholder="Type your username" class="form-field">
-                                    <input type="password" name="" id="" placeholder="Type your password" class="form-field">
-                                    <button class="login_btn">Login</button>
-                                </form>
+                                <form id='<?php echo $inc1;?>' method="POST" action="student_dashboard.php">
+                                    <input type="text" name="username" placeholder="Type your username" class="form-field" autocomplete="email" required>
+                                    <input type="password" name="password" placeholder="Type your password" class="form-field" autocomplete="password" required>
+                                    <input type="hidden" name="club_id" value="<?php if(isset($row[$i][5])){echo $row[$i][5];}else{} ?>">
+                                    <button type="submit" class="login_btn" onclick="open_club('<?php echo$inc1;$inc1++;?>')">Login</button>    
+                                </form>                            
                             </div>
                         </div>
                     </div>
@@ -184,15 +189,13 @@ $conn->close();
             </div>
         </div>
         <div class="inner-info-wrapper">
-        <?php $i=$j=0; while(isset($row_acad[$i][0])){?>
+            <?php $i=$j=0; while(isset($row_acad[$i][0])){?>
             <div class="sections-div gap-top">
                 <h1 class="div-head"><?php if(isset($row_acad[$i][0])){echo $row_acad[$i][0];}else{} ?></h1>
                 <div class="sections-img">
-                    <img src="assets/images/<?php if(isset($row_acad[$i][3])){echo $row_acad[$i][3];}else{} ?>" alt="" data-toggle="modal" data-target="#exampleModalCenter-N1<?php echo 'b'.$j;?>">
-                </div>
-               
-        
-    </div>
+                    <img src="assets/images/<?php if(isset($row_acad[$i][3])){echo $row_acad[$i][3];}else{} ?>"  data-toggle="modal" data-target="#exampleModalCenter-N1<?php echo 'b'.$j;?>" onclick="(this)">
+            </div>  
+        </div>
     <div class="modal fade" id="exampleModalCenter-N1<?php echo 'b'.$j++;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -212,12 +215,13 @@ $conn->close();
                                 </p>
                             </div>
                             <div class="col-md-6 border-left">
-                                <h1 class="mod-title-new">Login Here</h1><br>
-                                <form action="" class="login__form">
-                                    <input type="text" name="" id="" placeholder="Type your username" class="form-field">
-                                    <input type="password" name="" id="" placeholder="Type your password" class="form-field">
-                                    <button class="login_btn">Login</button>
-                                </form>
+                                <h1 class="mod-title-new">Login Here</h1><br>      
+                                <form id='<?php echo $inc2;?>' method="POST" action="student_dashboard.php">                          
+                                    <input type="text" name="username" placeholder="Type your username" class="form-field" autocomplete="email" required>
+                                    <input type="password" name="password" placeholder="Type your password" class="form-field" autocomplete="password" required>
+                                    <input type="hidden" name="club_id" value="<?php if(isset($row_acad[$i][5])){echo $row_acad[$i][5];}else{} ?>">
+                                    <button type="submit" class="login_btn" onclick="open_club('<?php echo$inc2;$inc2++;?>')">Login</button>        
+                                </form>                        
                             </div>
                         </div>
                     </div>
@@ -333,6 +337,48 @@ $conn->close();
         crossorigin="anonymous"></script>
     <script src="assets/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    var club_id;
+    $(document).ready(function() {
+        $('a').click(function () {
+            var club_id = $(this).attr("id")
+        });
+    });
+    /*function open_club(id){    
+    var username= $('#username').val(); 
+    var password= $('#password').val();     
+           if(username == '' || password == '')
+                {
+                        alert('Please make sure all fields are filled.');
+                        event.preventDefault();
+		         } 
+            else {               
+                        event.preventDefault();    
+                        var form = $('#'+id)[0];                        
+                        var data = new FormData(form);
+                        //data.append(club_id);
+                        $.ajax({
+                                    type: "POST",
+                                    url: "student_dashboard.php",
+                                    data: data,
+                                    processData: false,
+                                    contentType: false,
+                                    cache: false,
+                                    timeout: 600000,
+                                    success: function (data) {        
+                                        console.log(data);
+                                        $("#sub").prop("disabled", false);
+                                                                            },
+                                    error: function (e) {
+                                        $("#result").text(e.responseText);
+                                        document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
+                                        $("#sub").prop("disabled", false);
+                                                                    }
+                                });
+                        }
+    }*/
+</script>
     <!-- <script>
         $('.owl-carousel').owlCarousel({
             loop: true,
