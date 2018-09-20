@@ -12,9 +12,13 @@ $conn = $database->getConnection();
       = cc_club_assign.club_coordinator_id LIKE '$club_id' AND  inst_club_coordinator.institute_id = '$inst_id' ";
     $up_workshop = "select title from workshop where club_id='$club_id' order by date DESC LIMIT 1"; 
     $up_webinar = "select title from webinar where club_id='$club_id' order by date DESC LIMIT 1";
+    $articles="select name,description, date_posted,icon from article where club_id='$club_id' order by date_posted   DESC LIMIT 4";
+    $videos= "select link,video_file,title,date_added from video where club_id='$club_id' order by date_added DESC LIMIT 5";
     $result = $conn->query($spanel);       
     $result1 = $conn->query($up_workshop); 
     $result2 = $conn->query($up_webinar);
+    $result3 = $conn->query($articles);
+    $result4 = $conn->query($videos);
     if(1==1){
         while($row = $result->fetch_array())
         {
@@ -31,6 +35,24 @@ $conn = $database->getConnection();
         {
          $web_title =$row['title'];           
         }unset($row);
+        $i=0;
+        while($vid[$i] = mysqli_fetch_row($result4))
+        { $j=0;      
+            foreach($vid[$i] as $v ){
+                $video[$i][$j]=$v;
+                $j++;
+            }
+            $i++;     
+        }
+        $i=0;
+        while($art[$i] = mysqli_fetch_row($result3))
+        { $j=0;      
+            foreach($art[$i] as $a ){
+                $article[$i][$j]=$a;
+                $j++;
+            }
+            $i++;     
+        } 
     }
     else{}
     $conn->close();
@@ -274,25 +296,19 @@ $conn = $database->getConnection();
                                                                 <li class="span6 first ">
 
                                                                     <div class="moduleItemIntrotext ">
-                                                                        <a class="moduleItemImage " href="https://www.techrepublic.com/article/internet-of-things-iot-cheat-sheet/"
-                                                                            title="Continue reading &quot;Nire mase ruma pola kita sire&quot; ">
-                                                                            <img src="assets/images/first.jpeg" style="height:120px;">
+                                                                        <a class="moduleItemImage " href="https://www.techrepublic.com/article/internet-of-things-iot-cheat-sheet/">
+                                                                            <img src="assets/images/<?php if(isset($article[0][3])){echo $article[0][3];}else{} ?>" style="height:120px;">
                                                                         </a>
 
                                                                         <div class="title ">
-                                                                            <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/426-nire-mase-ruma-pola-kita-sire ">Internet
-                                                                                of Things (IoT): Cheat sheet</a>
+                                                                            <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/426-nire-mase-ruma-pola-kita-sire "><?php if(isset($article[0][0])){echo $article[0][0];}else{} ?></a>
                                                                         </div>
 
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
-                                                                            12.Nov.2013 </span>
+                                                                            <?php if(isset($article[0][2])){echo date('D, d M Y',strtotime($article[0][2]));}else{} ?> </span>
 
-                                                                        <div>Suspendisse at libero porttitor
-                                                                            nisi
-                                                                            aliquet vulputate vitae at velit.
-                                                                            Aliquam
-                                                                            eget&#8230;</div>
+                                                                        <div><?php if(isset($article[0][1])){echo mb_strimwidth(strip_tags($article[0][1]), 0, 100, "...");}else{}  ?></div>
 
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-1">
@@ -313,23 +329,19 @@ $conn = $database->getConnection();
                                                                     <div class="moduleItemIntrotext ">
                                                                         <a class="moduleItemImage " href="https://www.wired.co.uk/article/internet-of-things-what-is-explained-iot"
                                                                             title="Continue reading &quot;Nire haze duma kote gace bika&quot; ">
-                                                                            <img src="assets/images/first.jpeg" style="height:120px;">
+                                                                            <img src="assets/images/<?php if(isset($article[1][3])){echo $article[1][3];}else{} ?>" style="height:120px;">
                                                                         </a>
 
                                                                         <div class="title ">
                                                                             <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/425-nire-haze-duma-kote-gace-bika ">
-                                                                                What is the Internet of Things?</a>
+                                                                            <?php if(isset($article[1][0])){echo $article[1][0];}else{} ?></a>
                                                                         </div>
 
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
-                                                                            12.Nov.2013 </span>
+                                                                            <?php if(isset($article[1][2])){echo date('D, d M Y',strtotime($article[1][2]));}else{} ?></span>
 
-                                                                        <div>In the broadest sense, the term
-                                                                            IoT
-                                                                            encompasses everything connected to
-                                                                            the
-                                                                            internet.</div>
+                                                                        <div><?php if(isset($article[1][1])){echo mb_strimwidth(strip_tags($article[1][1]), 0, 100, "...");}else{}  ?></div>
 
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-2">
@@ -347,22 +359,18 @@ $conn = $database->getConnection();
                                                                     <div class="moduleItemIntrotext ">
                                                                         <a class="moduleItemImage " href="https://www.cloudwards.net/what-is-the-internet-of-things/"
                                                                             title="Continue reading &quot;Karun maso poka nace vire nase&quot; ">
-                                                                            <img src="assets/images/first.jpeg" style="height:120px;">
+                                                                            <img src="assets/images/<?php if(isset($article[2][3])){echo $article[2][3];}else{} ?>" style="height:120px;">
                                                                         </a>
 
                                                                         <div class="title ">
-                                                                            <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/424-karun-maso-poka-nace-vire-nase ">What
-                                                                                Is the Internet of Things?</a>
+                                                                            <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/424-karun-maso-poka-nace-vire-nase "><?php if(isset($article[2][0])){echo $article[2][0];}else{} ?></a>
                                                                         </div>
 
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
-                                                                            12.Nov.2013 </span>
+                                                                            <?php if(isset($article[2][2])){echo date('D, d M Y',strtotime($article[2][2]));}else{} ?></span>
 
-                                                                        <div> Nis nulla interdum et. Cursus
-                                                                            senectus
-                                                                            aliquet pretium at tristique hac
-                                                                            ullamcorper&#8230;</div>
+                                                                        <div><?php if(isset($article[2][1])){echo mb_strimwidth(strip_tags($article[2][1]), 0, 100, "...");}else{}  ?></div>
 
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-3">
@@ -380,22 +388,18 @@ $conn = $database->getConnection();
                                                                     <div class="moduleItemIntrotext ">
                                                                         <a class="moduleItemImage " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/423-gamu-poza-sima-kite-rima-cola "
                                                                             title="Continue reading &quot;Gamu poza sima kite rima cola&quot; ">
-                                                                            <img src="assets/images/first.jpeg" style="height:120px;">
+                                                                            <img src="assets/images/<?php if(isset($article[3][3])){echo $article[3][3];}else{} ?>" style="height:120px;">
                                                                         </a>
 
                                                                         <div class="title ">
-                                                                            <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/423-gamu-poza-sima-kite-rima-cola ">Gamu
-                                                                                poza sima kite rima cola</a>
+                                                                            <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/423-gamu-poza-sima-kite-rima-cola "><?php if(isset($article[3][0])){echo $article[3][0];}else{} ?></a>
                                                                         </div>
 
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
-                                                                            12.Nov.2013 </span>
+                                                                            <?php if(isset($article[3][2])){echo date('D, d M Y',strtotime($article[3][2]));}else{} ?></span>
 
-                                                                        <div>Guzasu mako nica at libero
-                                                                            porttitor nisi
-                                                                            aliquet vulputate vitae at
-                                                                            velit.&#8230;</div>
+                                                                        <div><?php if(isset($article[3][1])){echo mb_strimwidth(strip_tags($article[3][1]), 0, 100, "...");}else{}  ?></div>
 
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-4">
@@ -432,22 +436,21 @@ $conn = $database->getConnection();
         </section>
         <br>
         <div class="owl-carousel inner-color">
-            <div class="itemInner">
-                <img src="assets/images/mqdefault_1.jpg" alt="">
-                <div class="video-icon">
-                    <a href="#" data-toggle="modal" data-target="#videoModal" data-theVideo="https://www.youtube.com/embed/QSIPNhOiMoE">
+            <div class="itemInner"><img src="assets/images/mqdefault_1.jpg" alt="">
+                <div class="video-icon ">
+                <a href="#" data-toggle="modal" data-target="#videoModal" data-theVideo="<?php if(isset($video[0][0])){echo $video[0][0];}else{} ?>">
                         <i class="fa fa-play icon-play"></i>
                     </a>
                 </div>
                 <div class=" innerItem-description ">
-                    <h1 class="video-title ">App Development
+                    <h1 class="video-title "><?php if(isset($video[0][2])){echo $video[0][2];}else{} ?>
 
                     </h1>
 
                     <i class="far fa-calendar" style="color:#cccccc;font-size:12px;letter-spacing:
                                             1px; ">
                         <span>
-                            15th.Nov.2018
+                        <?php if(isset($video[0][3])){echo date('D, d M Y',strtotime($video[0][3]));}else{} ?>
                         </span></i>
                     <a href="# " style="font-size:12px;color: #cccccc;float: right;margin-bottom: -15px ">
                         <i class="far fa-comments "></i>
@@ -455,21 +458,20 @@ $conn = $database->getConnection();
                     </a>
                 </div>
             </div>
-            <div class="itemInner ">
-                <img src="assets/images/mqdefault.jpg" alt="">
-                <div class="video-icon">
-                    <a href="#" data-toggle="modal" data-target="#videoModal" data-theVideo="https://www.youtube.com/embed/NjYTzvAVozo">
+            <div class="itemInner "><img src="assets/images/mqdefault_1.jpg" alt="">
+                <div class="video-icon ">
+                <a href="#" data-toggle="modal" data-target="#videoModal_1" data-theVideo="<?php if(isset($video[1][0])){echo $video[1][0];}else{} ?>" >
                         <i class="fa fa-play icon-play"></i>
                     </a>
                 </div>
                 <div class="innerItem-description ">
-                    <h1 class="video-title ">Web Development
+                    <h1 class="video-title "><?php if(isset($video[1][2])){echo $video[1][2];}else{} ?>
 
                     </h1>
                     <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:
                                             1px; ">
                         <span>
-                            15th.Nov.2018
+                        <?php if(isset($video[1][3])){echo date('D, d M Y',strtotime($video[1][3]));}else{} ?>                           
                         </span></i>
                     <a href="# " style="font-size:12px;color: #cccccc;float: right;margin-bottom: -15px ">
                         <i class="far fa-comments "></i>
@@ -478,19 +480,20 @@ $conn = $database->getConnection();
                 </div>
             </div>
             <div class="itemInner ">
-                <img src="assets/images/mqdefault_3.jpg" alt="">
-                <div class="video-icon">
-                    <a href="#" data-toggle="modal" data-target="#videoModal" data-theVideo="https://www.youtube.com/embed/QL-6PdiDTeo">
+            <img src="assets/images/mqdefault_1.jpg" alt="">
+                <div class="video-icon ">
+                <a href="#" data-toggle="modal" data-target="#videoModal_2" data-theVideo="<?php if(isset($video[2][0])){echo $video[2][0];}else{} ?>" >
                         <i class="fa fa-play icon-play"></i>
                     </a>
                 </div>
                 <div class="innerItem-description ">
-                    <h1 class="video-title ">Design Expression
+                    <h1 class="video-title "><?php if(isset($video[2][2])){echo $video[2][2];}else{} ?>
 
                     </h1>
                     <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:1px; ">
                         <span>
-                            15th.Nov.2018
+                        <?php if(isset($video[2][3])){echo date('D, d M Y',strtotime($video[2][3]));}else{} ?>
+                            
                         </span></i>
                     <a href="# " style="font-size:12px;color: #cccccc;float: right;margin-bottom: -15px ">
                         <i class="far fa-comments "></i>
@@ -500,15 +503,15 @@ $conn = $database->getConnection();
                 </a>
             </div>
             <div class="itemInner ">
-                <video src="assets/video/wingxp.mp4 " class="carousel-video"></video>
+            <img src="assets/images/mqdefault_1.jpg" alt="">
                 <div class="video-icon ">
-                    <a href="#">
+                <a href="#" data-toggle="modal" data-target="#videoModal_3" data-theVideo="<?php if(isset($video[3][0])){echo $video[3][0];}else{} ?>" >
                         <i class="fa fa-play icon-play"></i>
                     </a>
                 </div>
 
                 <div class="innerItem-description ">
-                    <h1 class="video-title ">Smarter Minds
+                    <h1 class="video-title "><?php if(isset($video[3][2])){echo $video[3][2];}else{} ?>
                         <span>
                             <a href="#" class="more-link">More
                                 Info <i class="fas fa-angle-right"></i></a>
@@ -517,7 +520,7 @@ $conn = $database->getConnection();
                     <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:
                                             1px; ">
                         <span>
-                            15th.Nov.2018
+                        <?php if(isset($video[3][3])){echo date('D, d M Y',strtotime($video[3][3]));}else{} ?>
                         </span></i>
                     <a href="# " style="font-size:12px;color: #cccccc;float: right;margin-bottom: -15px ">
                         <i class="far fa-comments "></i>
@@ -527,20 +530,20 @@ $conn = $database->getConnection();
                 </a>
             </div>
             <div class="itemInner">
-                <video src="assets/video/wingxp.mp4 " class="carousel-video"></video>
+            <img src="assets/images/mqdefault_1.jpg" alt="">
                 <div class="video-icon ">
-                    <a>
+                <a href="#" data-toggle="modal" data-target="#videoModal_4" data-theVideo="<?php if(isset($video[4][0])){echo $video[4][0];}else{} ?>" >
                         <i class="fa fa-play icon-play"></i>
                     </a>
                 </div>
 
                 <div class="innerItem-description ">
-                    <h1 class="video-title ">English Expression
+                    <h1 class="video-title "><?php if(isset($video[4][2])){echo $video[4][2];}else{} ?>
                     </h1>
                     <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:
                                             1px; ">
                         <span>
-                            15th.Nov.2018
+                        <?php if(isset($video[4][3])){echo date('D, d M Y',strtotime($video[4][3]));}else{} ?>
                         </span></i>
                     <a href="# " style="font-size:12px;color: #cccccc;float: right;margin-bottom: -15px ">
                         <i class="far fa-comments "></i>
@@ -712,11 +715,7 @@ $conn = $database->getConnection();
                 </div>
                 <div class="modal-body">
                     <div class="content">
-                        <p class="mod-info">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo quo
-                            soluta
-                            possimus nemo maxime officiis necessitatibus magni, veritatis modi earum doloribus
-                            accusantium
-                            obcaecati reprehenderit. Cumque et repudiandae ratione temporibus odit.</p>
+                        <p class="mod-info"><?php if(isset($article[0][1])){echo strip_tags($article[0][1]);}else{} ?></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -798,11 +797,7 @@ $conn = $database->getConnection();
                 </div>
                 <div class="modal-body">
                     <div class="content">
-                        <p class="mod-info">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo quo
-                            soluta
-                            possimus nemo maxime officiis necessitatibus magni, veritatis modi earum doloribus
-                            accusantium
-                            obcaecati reprehenderit. Cumque et repudiandae ratione temporibus odit.</p>
+                        <p class="mod-info"><?php if(isset($article[1][1])){echo strip_tags($article[1][1]);}else{} ?></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -825,11 +820,7 @@ $conn = $database->getConnection();
                 </div>
                 <div class="modal-body">
                     <div class="content">
-                        <p class="mod-info">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo quo
-                            soluta
-                            possimus nemo maxime officiis necessitatibus magni, veritatis modi earum doloribus
-                            accusantium
-                            obcaecati reprehenderit. Cumque et repudiandae ratione temporibus odit.</p>
+                        <p class="mod-info"><?php if(isset($article[2][1])){echo strip_tags($article[2][1]);}else{} ?></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -852,11 +843,7 @@ $conn = $database->getConnection();
                 </div>
                 <div class="modal-body">
                     <div class="content">
-                        <p class="mod-info">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo quo
-                            soluta
-                            possimus nemo maxime officiis necessitatibus magni, veritatis modi earum doloribus
-                            accusantium
-                            obcaecati reprehenderit. Cumque et repudiandae ratione temporibus odit.</p>
+                        <p class="mod-info"><?php if(isset($article[3][1])){echo strip_tags($article[3][1]);}else{} ?></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -869,7 +856,7 @@ $conn = $database->getConnection();
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background: #82024f;border-bottom: none">
-                    <h5 class="mod-title" id="exampleModalLabel">Internet Of Things</h5>
+                    <h5 class="mod-title" id="exampleModalLabel"><?php if(isset($video[0][2])){echo $video[0][2];}else{} ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="font-size: 30px;
                                "><i class="fas fa-times-circle"
@@ -878,54 +865,109 @@ $conn = $database->getConnection();
                 </div>
                 <div class="modal-body" style="padding: 0;background-color: #000">
                     <div>
-                        <iframe width="100%" height="350px" src="https://www.youtube.com/embed/QSIPNhOiMoE" frameborder="0"
-                            encrypted-media" allowfullscreen allow="autoplay" ;></iframe>
+                    <?php if($video[0][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[0][1]==''){echo $video[0][0]; } if($video[0][1]==''){echo '" frameborder="0"
+                            encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
+                            <?php if($video[0][0]==''){echo '<video id="vid1" height="350" controls>
+  <source src="';}?><?php  if($video[0][0]==''){echo $video[0][1];}?><?php  if($video[0][0]==''){echo '" type="video/mp4" autoplay>   
+</video>';}?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="videoModal_2" tabindex="-1" role="dialog" aria-labelledby="videoModal_2" aria-hidden="true">
+    <div class="modal fade" id="videoModal_1" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background: #82024f;border-bottom: none">
-                    <h5 class="mod-title" id="exampleModalLabel">Internet Of Things -2</h5>
+                    <h5 class="mod-title" id="exampleModalLabel"><?php if(isset($video[1][2])){echo $video[1][2];}else{} ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="font-size: 30px;
-                                       "><i
-                                class="fas fa-times-circle" style="margin-top: 15px;  color: #fff;"></i></span>
+                               "><i class="fas fa-times-circle"
+                                style="margin-top: 15px;  color: #fff;"></i></span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding: 0;background-color: #000">
                     <div>
-                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/NjYTzvAVozo" frameborder="0"
-                            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <?php if($video[1][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[1][1]==''){echo $video[1][0]; } if($video[1][1]==''){echo '" frameborder="0"
+                            encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
+                            <?php if($video[1][0]==''){echo '<video id="vid2" height="350" controls>
+  <source src="';}?><?php  if($video[1][0]==''){echo $video[1][1];}?><?php  if($video[1][0]==''){echo '" type="video/mp4" autoplay>   
+</video>';}?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="videoModal_2" tabindex="-1" role="dialog" aria-labelledby="videoModal_2" aria-hidden="true">
+    <div class="modal fade" id="videoModal_2" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background: #82024f;border-bottom: none">
-                    <h5 class="mod-title" id="exampleModalLabel">Internet Of Things 3</h5>
+                    <h5 class="mod-title" id="exampleModalLabel"><?php if(isset($video[2][2])){echo $video[2][2];}else{} ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="font-size: 30px;
-                                       "><i
-                                class="fas fa-times-circle" style="margin-top: 15px;  color: #fff;"></i></span>
+                               "><i class="fas fa-times-circle"
+                                style="margin-top: 15px;  color: #fff;"></i></span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding: 0;background-color: #000">
                     <div>
-                        <iframe width="100" height="350" src="https://www.youtube.com/embed/QL-6PdiDTeo" frameborder="0"
-                            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <?php if($video[2][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[2][1]==''){echo $video[2][0]; } if($video[2][1]==''){echo '" frameborder="0"
+                            encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
+                            <?php if($video[2][0]==''){echo '<video id="vid3" height="350" controls>
+  <source src="';}?><?php  if($video[2][0]==''){echo $video[2][1];}?><?php  if($video[2][0]==''){echo '" type="video/mp4" autoplay>   
+</video>';}?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="videoModal_3" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #82024f;border-bottom: none">
+                    <h5 class="mod-title" id="exampleModalLabel"><?php if(isset($video[3][2])){echo $video[3][2];}else{} ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size: 30px;
+                               "><i class="fas fa-times-circle"
+                                style="margin-top: 15px;  color: #fff;"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 0;background-color: #000">
+                    <div>
+                    <?php if($video[3][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[3][1]==''){echo $video[3][0]; } if($video[3][1]==''){echo '" frameborder="0"
+                            encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
+                            <?php if($video[3][0]==''){echo '<video id="vid1" height="350" controls>
+  <source src="';}?><?php  if($video[3][0]==''){echo $video[3][1];}?><?php  if($video[3][0]==''){echo '" type="video/mp4" autoplay>   
+</video>';}?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="videoModal_4" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #82024f;border-bottom: none">
+                    <h5 class="mod-title" id="exampleModalLabel"><?php if(isset($video[4][2])){echo $video[4][2];}else{} ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size: 30px;
+                               "><i class="fas fa-times-circle"
+                                style="margin-top: 15px;  color: #fff;"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 0;background-color: #000">
+                    <div>
+                    <?php if($video[4][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[4][1]==''){echo $video[4][0]; } if($video[4][1]==''){echo '" frameborder="0"
+                            encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
+                            <?php if($video[4][0]==''){echo '<video id="vid5" height="350" controls>
+  <source src="';}?><?php  if($video[4][0]==''){echo $video[4][1];}?><?php  if($video[4][0]==''){echo '" type="video/mp4" autoplay>   
+</video>';}?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <link rel="stylesheet " href="https://use.fontawesome.com/releases/v5.3.1/css/all.css " integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU "
         crossorigin="anonymous ">
     <script src="https://code.jquery.com/jquery-3.3.1.js " integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -940,14 +982,38 @@ $conn = $database->getConnection();
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
 
     <script>
-        /* $(document).ready(function () {
+        $(document).ready(function () {
             $('#videoModal').on('shown.bs.modal', function () {
-                $('#video1')[0].play();
+                $('#vid1').get(0).play();
+            })
+            $('#videoModal_1').on('shown.bs.modal', function () {
+                $('#vid2').get(0).play();
+            })
+            $('#videoModal_2').on('shown.bs.modal', function () {
+                $('#vid3').get(0).play();
+            })
+            $('#videoModal_3').on('shown.bs.modal', function () {
+                $('#vid4').get(0).play();
+            })
+            $('#videoModal_4').on('shown.bs.modal', function () {
+                $('#vid5').get(0).play();
             })
             $('#videoModal').on('hidden.bs.modal', function () {
-                $('#video1')[0].pause();
+                $('#vid1').get(0).pause();
             })
-        }); */
+            $('#videoModal').on('hidden.bs.modal', function () {
+                $('#vid1').get(0).pause();
+            })
+            $('#videoModal').on('hidden.bs.modal', function () {
+                $('#vid1').get(0).pause();
+            })
+            $('#videoModal').on('hidden.bs.modal', function () {
+                $('#vid1').get(0).pause();
+            })
+            $('#videoModal').on('hidden.bs.modal', function () {
+                $('#vid1').get(0).pause();
+            })
+        }); 
 
         autoPlayYouTubeModal();
 
