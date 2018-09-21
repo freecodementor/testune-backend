@@ -36,6 +36,8 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/main.css">
     <link href="assets/css/template-purple.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="http://www.wingxp.com/favicon.ico" type="image/gif" sizes="16x16">
@@ -44,14 +46,14 @@ $conn->close();
 
 <body>
 
-    <div class="time-wrapper">
-        <div class="page-container">
-            <div class="inner-time">
-                <i class="far fa-clock secondary-icons time-icon" style="color:#fff;"> <span id="current_time">
-                    </span></i>
-            </div>
+<div class="time-wrapper">
+    <div class="page-container">
+        <div class="inner-time">
+            <i class="far fa-clock secondary-icons time-icon" style="color:#fff;"> <span id="current_time">
+                </span></i>
         </div>
     </div>
+</div>
     <div class="module subcribe">
         <div class="modcontent" style="float:right;">
             <div class="page-container">
@@ -80,14 +82,24 @@ $conn->close();
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: -2px;">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="assets/images/banner1.jpg" alt="First slide">
+                <img class="d-block w-100" src="assets/images/Slide1.PNG" alt="First slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="assets/images/banner2.jpg" alt="Second slide">
+                <img class="d-block w-100" src="assets/images/Slide2.PNG" alt="Second slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="assets/images/banner3.jpg" alt="Third slide">
+                <img class="d-block w-100" src="assets/images/Slide3.PNG" alt="Third slide">
             </div>
+             <div class="carousel-item">
+                <img class="d-block w-100" src="assets/images/Slide4.PNG" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="assets/images/Slide5.PNG" alt="Third slide">
+            </div>
+             <div class="carousel-item">
+                <img class="d-block w-100" src="assets/images/Slide6.PNG" alt="Second slide">
+            </div>
+             
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -97,6 +109,7 @@ $conn->close();
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
+    </div>
     </div>
     <div class="page-container">
         <div class="button-wrapper">

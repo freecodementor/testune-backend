@@ -1,7 +1,20 @@
 <?php
 //echo $_POST['username'];
 //echo $_POST['password'];
-$club_id= $_POST['club_id'];
+
+if(isset($_GET['id'])){
+    $club_id= $_GET['id'];
+    }
+    else{
+        if(isset($_POST['club_id']))
+        {
+            $club_id= $_POST['club_id'];
+        }
+        else
+        {
+            $club_id= "club_web";
+        }
+    }
 //$inst_id=$SESSION['institute_id'];
 $inst_id = 'inst_1';
 include_once "../assets/Users.php";
@@ -10,15 +23,17 @@ $conn = $database->getConnection();
     $spanel="select clubs.club_name,inst_club_coordinator.name,inst_club_coordinator.photo,inst_club_coordinator.detail from cc_club_assign
      INNER JOIN clubs ON cc_club_assign.club_id=clubs.club_id  INNER JOIN inst_club_coordinator ON inst_club_coordinator.club_coordinator_id
       = cc_club_assign.club_coordinator_id LIKE '$club_id' AND  inst_club_coordinator.institute_id = '$inst_id' ";
-    $up_workshop = "select title from workshop where club_id='$club_id' order by date DESC LIMIT 1"; 
-    $up_webinar = "select title from webinar where club_id='$club_id' order by date DESC LIMIT 1";
+    $up_workshop = "select title,date,start_time,end_time from workshop where club_id='$club_id' order by date_added DESC LIMIT 1"; 
+    $up_webinar = "select title,date,start_time,end_time from webinar where club_id='$club_id' order by date DESC LIMIT 1";
     $articles="select name,description, date_posted,icon from article where club_id='$club_id' order by date_posted   DESC LIMIT 4";
     $videos= "select link,video_file,title,date_added from video where club_id='$club_id' order by date_added DESC LIMIT 5";
+    $clubs= "select club_id,club_name from clubs where 1";
     $result = $conn->query($spanel);       
     $result1 = $conn->query($up_workshop); 
     $result2 = $conn->query($up_webinar);
     $result3 = $conn->query($articles);
     $result4 = $conn->query($videos);
+    $result5 = $conn->query($clubs);
     if(1==1){
         while($row = $result->fetch_array())
         {
@@ -26,15 +41,30 @@ $conn = $database->getConnection();
          $coord_name = $row['name'];
          $photo =$row['photo'];
          $detail = $row['detail'];   
-        }unset($row); 
+        }unset($row);
         while($row = $result1->fetch_array())
         {
-         $work_title =$row['title'];           
+         $work_title =$row['title'];
+         $work_date =$row['date'];    
+         $work_start=$row['start_time'];
+         $work_end=$row['end_time'];       
         }unset($row);
         while($row = $result2->fetch_array())
         {
-         $web_title =$row['title'];           
+         $web_title =$row['title'];
+         $web_date=$row['date'];    
+         $web_start=$row['start_time'];
+         $web_end=$row['end_time'];       
         }unset($row);
+        /*$i=0;
+        while($clb[$i] = mysqli_fetch_row($result5))
+        { $j=0;      
+            foreach($clb[$i] as $c ){
+                $club[$i][$j]=$c;                
+                $j++;
+            }
+            $i++;     
+        }*/
         $i=0;
         while($vid[$i] = mysqli_fetch_row($result4))
         { $j=0;      
@@ -61,15 +91,16 @@ $conn = $database->getConnection();
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-<link rel="shortcut icon" href="http://www.testune.com/spacedtimes/student_panel/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="http://www.testune.com/spacedtimes/student_panel/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="shortcut icon" href="http://www.testune.com/spacedtimes/student_panel/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://www.testune.com/spacedtimes/student_panel/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
     <link href="assets/css/template-purple.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/moduletabs.css" rel="stylesheet">
     <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
@@ -127,6 +158,22 @@ $conn = $database->getConnection();
                 color: #000;
                 margin-right: -10px;
             }
+
+
+        }
+        .imgcontainer {
+            position: relative;
+            text-align: center;            
+        }
+        .img-txt-center{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding-top:1em;
+        }
+        .sp1{
+            font-size:x-large;
         }
     </style>
 
@@ -142,10 +189,18 @@ $conn = $database->getConnection();
     </div>
     <section id="yt_wrapper" class="page-container">
         <div class="span6 ">
-            <h1 class="club-header" style="margin-left: -10px;"><?php if(isset($club_name)){echo $club_name;}else{}?></h1>
+            <div class="ribbon-wrapper">
+                <div class="glow">&nbsp;</div>
+                <div class="ribbon-front"><?php if(isset($club_name)){echo $club_name;}else{}?></h1>
+                    </div>
+                <div class="ribbon-edge-topleft"></div>
+                <div class="ribbon-edge-topright"></div>
+                <div class="ribbon-edge-bottomleft"></div>
+                <div class="ribbon-edge-bottomright"></div>
+            </div>
         </div>
         <div class="module subcribe">
-            <div class="modcontent" style="width:400px;right:0px;height: 150px; ">
+            <div class="modcontent" style="width:400px;right:0px;height: 155px; ">
                 <div class="page-container">
                     <div class="head" style="padding-top: 2px;font-size: 14px;text-align: center;letter-spacing: 2px;">Change
                         Your Club From Here!
@@ -155,95 +210,107 @@ $conn = $database->getConnection();
                             <div id="dd" class="wrapper-dropdown-3" tabindex="1">
                                 <span>Change Club</span>
                                 <ul class="dropdown">
-                                    <li><a href="#"> <i class="fas fa-school icon-large"></i>Academic Club</a></li>
-                                    <li><a href="#"><i class="fas fa-calculator icon-large"></i>Smarter Minds</a></li>
-                                    <li><a href="#"><i class="fas fa-laptop-code icon-large"></i>Technology Club</a></li>
-                                    <li><a href="#"><i class="fas fa-chess icon-large"></i>Chess Club</a></li>
-                                    <li><a href="#"><i class="fas fa-futbol icon-large"></i>Sports Club</a></li>
-                                    <li><a href="#"><i class="fab fa-facebook icon-large"></i>Social Club</a></li>
-                                    <li><a href="#"><i class="fas fa-language icon-large"></i>Language Club</a></li>
-                                    <li><a href="#"><i class="fas fa-atom icon-large"></i>Science Club</a></li>
-                                    <li><a href="#"><i class="fas fa-calculator icon-large"></i>Mathematics Club</a></li>
-                                    <li><a href="#"><i class="fas fa-monument icon-large"></i>History Club</a></li>
-                                    <li><a href="#"><i class="fas fa-globe-americas icon-large"></i>Geography Club</a></li>
-                                </ul>
+                                    <?php $i=0;
+                                    while($clb[$i] = mysqli_fetch_row($result5))
+                                    { $j=$flag=0;      
+                                        foreach($clb[$i] as $c ){                                            
+                                            $club[$i][$j]=$c;
+                                            if($flag==0){echo '<li><a id="'.$club[$i][$j].'" href="'.$club[$i][$j].'" target="_self" onchange="change_club(this)"><i class="fas fa-school icon-large"></i>';$flag++;}
+                                            else{echo $club[$i][$j].'</a></li>';$flag--;}                
+                                            $j++;
+                                        }
+                                        $i++;     
+                                    }?>
+                                    </ul>
+                                </div>
                             </div>
-                            ​
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <header id="yt_header2" class="block">
+            <div class="yt-main">
+                <div class="yt-main-in1 container">
+                    <div class="yt-main-in2 row-fluid">
+    
+                        <div class="school section">
                         </div>
-                    </section>
-                </div>
-            </div>
-        </div>
-    </section>
-    <header id="yt_header2" class="block">
-        <div class="yt-main">
-            <div class="yt-main-in1 container">
-                <div class="yt-main-in2 row-fluid">
-
-                    <div class="school section">
-                    </div>
-
-                    <div id="head-4" class="span2">
-
+    
+                        <div id="head-4" class="span2">
+    
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-
-    <div class="topnav" id="myTopnav">
-        <div class="page-container">
-            <a href="#contact" style="font-weight: 900;font-size: 15px;background-color: #82024f;color: #fff;"><i class="fas fa-home"></i></a>
-            <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Profile </a>
-            <div class="mydropdown">
-                <button class="mydropbtn" style="font-weight: 900">Dashboard</button>
-                <div class="
-                    my-dropdown-content">
-                    <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">Reports </a>
-                    <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Courses</a>
-                    <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Uploads</a>
-                    <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Workshops</a>
-                    <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Downloads</a>
-
+        </header>
+    
+        <div class="topnav" id="myTopnav">
+            <div class="page-container">
+                <a href="#contact" style="font-weight: 900;font-size: 15px;background-color: #82024f;color: #fff;"><i class="fas fa-home"></i></a>
+                <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Profile </a>
+                <div class="mydropdown">
+                    <button class="mydropbtn" style="font-weight: 900">Dashboard</button>
+                    <div class="
+                        my-dropdown-content">
+                        <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">Reports </a>
+                        <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Courses</a>
+                        <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Uploads</a>
+                        <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Workshops</a>
+                        <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Downloads</a>
+    
+                    </div>
                 </div>
+                <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">FAQs</a>
+                <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">Contact</a>
             </div>
-            <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">FAQs</a>
-            <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">Contact</a>
-
-            <!--   <a href="#" style="font-weight: 900;font-size: 15px;background-color: #82024f;color: #fff;border-radius: 5px">Logout<i
-                    class="fas fa-sign-out-alt"></i></a> -->
         </div>
-    </div>
-
-
-    <div class="page-container new-row">
-        <div class="row justify-content-center" style="margin-left:0">
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 color">
-                <div class="clearfix">
-                    <img class="wrapper-image" src="assets/images/<?php if(isset($photo)){echo $photo;}else{}?>" alt="" width="120" height="120">
+    
+    
+        <div class="page-container new-row">
+            <div class="row justify-content-center" style="margin-left:0">
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 color">
+                    <div class="clearfix">
+                    <img class="wrapper-image" src="assets/images/<?php if(isset($photo)){echo $photo;}else{}?>"style="border-radius: 50%;" alt="" width="120" height="120">
                     <h1 class="club-head">Club Coordinator</h1>
                     <h1 class="club-head-sub"><?php if(isset($coord_name)){echo $coord_name;}else{}?></h1>
                     <p class="club-desc"><?php if(isset($detail)){echo $detail;}else{}?></p>
-                    <div class="two-div">
-                        <div class="first-div">
-                            <div class="clearfix">
-                                <i class="far fa-calendar wrapper-image" style="font-size:100px"></i>
-                                <h1 class="club-head" style="margin-top: 50px;"> Workshop</h1>
-                                <h1 class="club-head-sub"><?php if(isset($work_title)){echo $work_title;}else{}?></h1>
-                            </div>
-                            <p class="div-description">Disclaimer:This electronic message
-                                (e-mail) including any les transmitted
-                                as its attachment, is for the sole use of</p>
+                        <div class="two-div">
+                        <div class="inner-one">
+                        <div class="imgcontainer">
+                            <img src="assets/images/calendar-2.png" alt="" height="120px">
+                            <div class="img-txt-center"><span class="sp1"><?php if(isset($work_date)){echo date('M',strtotime($work_date));}else{}?></span><br><span class="sp2"><?php if(isset($work_date)){echo date('d',strtotime($work_date));}else{}?></span></div>
                         </div>
-                        <div class="second-div">
-                            <div class="clearfix">
-                                <i class="far fa-calendar wrapper-image" style="font-size:100px"></i>
-                                <h1 class="club-head" style="margin-top: 50px;"> Webinar</h1>
-                                <h1 class="club-head-sub"><?php if(isset($web_title)){echo $web_title;}else{}?></h1>
-                            </div>
-                            <p class="div-description">Disclaimer:This electronic message
-                                (e-mail) including any les transmitted
-                                as its attachment, is for the sole use of</p>
+                            <h6 class="club-head-one">Workshop
+                                <span class="club-head-sub-one"><?php if(isset($work_title)){echo $work_title;}else{}?></h1>
+                                    </span>
+                            </h6>
+                            <p class="club-description-common">Disclaimer:This electronic message (e-mail) including
+                                any
+                                files transmitted as its
+                                attachment, is for the sole use of</p>
+                            
+                            <i class="fas fa-clock float-left-icon">
+                                <span><?php if(isset($work_start)){echo date('g:i A',strtotime($work_start));}else{}?> to <?php if(isset($work_end)){echo date('g:i A',strtotime($work_end));}else{}?></span>
+                            </i>
+                        </div>
+                        <div class="inner-two">
+                        <div class="imgcontainer">
+                            <img src="assets/images/calendar-2.png" alt="" height="120px">
+                            <div class="img-txt-center"><span class="sp1"><?php if(isset($web_date)){echo date('M',strtotime($web_date));}else{}?></span><br><span class="sp2"><?php if(isset($web_date)){echo date('d',strtotime($web_date));}else{}?></span></div>
+                        </div>
+                            <h6 class="club-head-one">Webinar<span class="club-head-sub-one">
+                                <?php if(isset($web_title)){echo $web_title;}else{}?></h1>
+                                    </span>
+                            </h6>
+                            <p class="club-description-common">Disclaimer:This electronic message (e-mail) including
+                                any
+                                files transmitted as its
+                                attachment, is for the sole use of</p>
+                            <i class="fas fa-clock float-left-icon">
+                            <span><?php if(isset($web_start)){echo date('g:i A',strtotime($web_start));}else{}?> to <?php if(isset($web_end)){echo date('g:i A',strtotime($web_end));}else{}?></span>
+                            </i>
+                            
                         </div>
                     </div>
                     <a href="#" class="upcoming-link">All Upcoming Events<i class="fas fa-hand-point-right secondary-icons"></i></a>
@@ -252,26 +319,53 @@ $conn = $database->getConnection();
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                 <h6 class="two-wrapper-second-header">Pin Board</h6>
                 <ul class="two-wrapper-list color" style="margin: 0;padding: 0">
-                    <li class="two-list-items" style="color:#777;font-size: 18px;">Submission of Hook 1
-                        <span style="display: block;padding: 5px 0;font-size: 16px;">Images of Night Sky</span>
-                        <span style="font-size: 16px;">Last Date: 24 April 2018</span>
-                    </li><br>
-                    <li class="two-list-items" style="color:#777;font-size:18px;">Submission of Hook 1
-                        <span style="display: block;padding: 5px 0;font-size: 16px;">Images of Night Sky</span>
-                        <span style="font-size: 16px;">Last Date: 24 April 2018</span>
-                    </li><br>
-                    <li class="two-list-items" style="color:#777;font-size: 18px;">Submission of Hook 1
-                        <span style="display: block;padding: 5px 0;font-size: 16px;">Images of Night Sky</span>
-                        <span style="font-size: 16px;">Last Date: 24 April 2018</span>
-                    </li><br>
-                    <li class="two-list-items" style="color:#777;font-size: 18px;">Submission of Hook 1
-                        <span style="display: block;padding: 5px 0;font-size: 16px;">Images of Night Sky</span>
-                        <span style="font-size: 16px;">Last Date: 24 April 2018</span>
-                    </li><br>
-                    <li class="two-list-items" style="color:#777;font-size: 18px;">Submission of Hook 1
-                        <span style="display: block;padding: 5px 0;font-size: 16px;">Images of Night Sky</span>
-                        <span style="font-size: 16px;">Last Date: 24 April 2018</span>
+                    <li class="two-list-items" style="color:#777;font-size: 18px;">Monthly Pick
+                        <span style="display: block;padding: 5px 0;font-size: 20px;font-weight: 900;margin-top: 20px;">Theme
+                            of the Month</span>
+                        <span style="font-size: 16px;">Internet of Things(IOT) </span>
+                        <span style="font-size: 16px;margin: 5px 0;display: block;"> <a href="#">Click Here</a><i class="fas fa-long-arrow-alt-right right-icon-pin"></i>
+                        </span>
                     </li>
+                    <li class="two-list-items" style="color:#777;font-size:18px;">
+                        <span style="display: block;padding: 5px 0;font-size: 20px;font-weight: 900;">Wall of Fame</span>
+                        <span style="font-size: 16px;">3D Bottle - using illustrator. by Raghvendra Grade 8 C</span>
+                        <span style="font-size: 16px;margin: 5px 0;display: block;"> <a href="https://www.youtube.com/watch?v=QaTIt1C5R-M">Click
+                                Here</a><i class="fas fa-long-arrow-alt-right right-icon-pin"></i>
+                        </span>
+                    </li>
+                    <li class="two-list-items" style="color:#777;font-size:18px;">
+                        <span style="display: block;padding: 5px 0;font-size: 20px;font-weight: 900;">Featured
+                            Video</span>
+                        <span style="font-size: 16px;">The Internet of Things: Dr. John Barrett at TEDxCIT</span>
+                        <span style="font-size: 16px;margin: 5px 0;display: block;"> <a href="https://www.youtube.com/watch?v=QaTIt1C5R-M">Click
+                                Here</a><i class="fas fa-long-arrow-alt-right right-icon-pin"></i>
+                        </span>
+                    </li>
+                    <li class="two-list-items" style="color:#777;font-size: 18px;">
+                        <span style="display: block;padding: 5px 0;font-size: 16px;font-size: 20px;font-weight: 900;">Featured
+                            Article</span>
+                        <span style="font-size: 16px;">What the IoT is, and where it's going next? By Steve Ranger
+                            (editor-in-chief TechRepublic)</span>
+                        <span style="font-size: 16px;margin: 5px 0;display: block;"> <a href="https://www.zdnet.com/article/what-is-the-internet-of-things-everything-you-need-to-know-about-the-iot-right-now/">Click
+                                Here</a><i class="fas fa-long-arrow-alt-right right-icon-pin"></i>
+                        </span>
+                    </li>
+                    <li class="two-list-items" style="color:#777;font-size: 18px;">
+                        <span style="display: block;padding: 5px 0;font-size: 16px;font-size: 20px;font-weight: 900;">Featured
+                            Presentation</span>
+                        <span style="font-size: 16px;">Basics on IOT. By - Ranjeet Pandey</span>
+                        <span style="font-size: 16px;margin: 5px 0;display: block;"> <a href="https://www.slideshare.net/jaswindersinghthind/a-basic-ppt-on-internet-of-thingsiot">Click
+                                Here</a><i class="fas fa-long-arrow-alt-right right-icon-pin"></i>
+                        </span>
+                    </li>
+                    <li class="two-list-items" style="color:#777;font-size: 18px;">
+                        <span style="display: block;padding: 5px 0;font-size: 16px;font-size: 20px;font-weight: 900;">Message
+                            from Co-ordinator</span>
+                        <span style="font-size: 16px;">Basics on IOT. By - Ranjeet Pandey</span>
+                        <span style="font-size: 16px;margin: 5px 0;display: block;"> <a href="https://www.slideshare.net/jaswindersinghthind/a-basic-ppt-on-internet-of-thingsiot">Click
+                                Here</a><i class="fas fa-long-arrow-alt-right right-icon-pin"></i>
+                        </span>
+                    </li><br>
                 </ul>
             </div>
         </div>
@@ -294,6 +388,7 @@ $conn = $database->getConnection();
                                                         <div id="k2ModuleBox234 " class="k2ItemsBlock zoom-image ">
                                                             <ul>
                                                                 <li class="span6 first ">
+
 
                                                                     <div class="moduleItemIntrotext ">
                                                                         <a class="moduleItemImage " href="https://www.techrepublic.com/article/internet-of-things-iot-cheat-sheet/">
@@ -868,7 +963,7 @@ $conn = $database->getConnection();
                     <?php if($video[0][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[0][1]==''){echo $video[0][0]; } if($video[0][1]==''){echo '" frameborder="0"
                             encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
                             <?php if($video[0][0]==''){echo '<video id="vid1" height="350" controls>
-  <source src="';}?><?php  if($video[0][0]==''){echo $video[0][1];}?><?php  if($video[0][0]==''){echo '" type="video/mp4" autoplay>   
+  <source src="./assets/video/';}?><?php  if($video[0][0]==''){echo $video[0][1];}?><?php  if($video[0][0]==''){echo '" type="video/mp4" autoplay>   
 </video>';}?>
                     </div>
                 </div>
@@ -891,7 +986,7 @@ $conn = $database->getConnection();
                     <?php if($video[1][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[1][1]==''){echo $video[1][0]; } if($video[1][1]==''){echo '" frameborder="0"
                             encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
                             <?php if($video[1][0]==''){echo '<video id="vid2" height="350" controls>
-  <source src="';}?><?php  if($video[1][0]==''){echo $video[1][1];}?><?php  if($video[1][0]==''){echo '" type="video/mp4" autoplay>   
+  <source src="./assets/video/';}?><?php  if($video[1][0]==''){echo $video[1][1];}?><?php  if($video[1][0]==''){echo '" type="video/mp4" autoplay>   
 </video>';}?>
                     </div>
                 </div>
@@ -914,7 +1009,7 @@ $conn = $database->getConnection();
                     <?php if($video[2][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[2][1]==''){echo $video[2][0]; } if($video[2][1]==''){echo '" frameborder="0"
                             encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
                             <?php if($video[2][0]==''){echo '<video id="vid3" height="350" controls>
-  <source src="';}?><?php  if($video[2][0]==''){echo $video[2][1];}?><?php  if($video[2][0]==''){echo '" type="video/mp4" autoplay>   
+  <source src="./assets/video/';}?><?php  if($video[2][0]==''){echo $video[2][1];}?><?php  if($video[2][0]==''){echo '" type="video/mp4" autoplay>   
 </video>';}?>
                     </div>
                 </div>
@@ -937,7 +1032,7 @@ $conn = $database->getConnection();
                     <?php if($video[3][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[3][1]==''){echo $video[3][0]; } if($video[3][1]==''){echo '" frameborder="0"
                             encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
                             <?php if($video[3][0]==''){echo '<video id="vid1" height="350" controls>
-  <source src="';}?><?php  if($video[3][0]==''){echo $video[3][1];}?><?php  if($video[3][0]==''){echo '" type="video/mp4" autoplay>   
+  <source src="./assets/video/';}?><?php  if($video[3][0]==''){echo $video[3][1];}?><?php  if($video[3][0]==''){echo '" type="video/mp4" autoplay>   
 </video>';}?>
                     </div>
                 </div>
@@ -960,7 +1055,7 @@ $conn = $database->getConnection();
                     <?php if($video[4][1]==''){echo '<iframe width="100%" height="350px" src="';}?><?php  if($video[4][1]==''){echo $video[4][0]; } if($video[4][1]==''){echo '" frameborder="0"
                             encrypted-media allowfullscreen allow="autoplay" ;></iframe>';}?>
                             <?php if($video[4][0]==''){echo '<video id="vid5" height="350" controls>
-  <source src="';}?><?php  if($video[4][0]==''){echo $video[4][1];}?><?php  if($video[4][0]==''){echo '" type="video/mp4" autoplay>   
+  <source src="./assets/video/';}?><?php  if($video[4][0]==''){echo $video[4][1];}?><?php  if($video[4][0]==''){echo '" type="video/mp4" autoplay>   
 </video>';}?>
                     </div>
                 </div>
@@ -1002,16 +1097,16 @@ $conn = $database->getConnection();
                 $('#vid1').get(0).pause();
             })
             $('#videoModal').on('hidden.bs.modal', function () {
-                $('#vid1').get(0).pause();
+                $('#vid2').get(0).pause();
             })
             $('#videoModal').on('hidden.bs.modal', function () {
-                $('#vid1').get(0).pause();
+                $('#vid3').get(0).pause();
             })
             $('#videoModal').on('hidden.bs.modal', function () {
-                $('#vid1').get(0).pause();
+                $('#vid4').get(0).pause();
             })
             $('#videoModal').on('hidden.bs.modal', function () {
-                $('#vid1').get(0).pause();
+                $('#vid5').get(0).pause();
             })
         }); 
 
@@ -1131,6 +1226,12 @@ $conn = $database->getConnection();
         });
 
     </script>
+    <script>
+        $("a").click(function () {
+            var club= $(this).attr("href");            
+            window.location.href = window.location.href.replace( /[\?#].*|$/, "?id="+club );
+            });
+        </script>
 </body>
 
 </html>

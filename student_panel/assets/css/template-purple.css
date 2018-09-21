@@ -58,7 +58,6 @@
     display: inline-block;
   }
   #cpanel_wrapper {
-    font-family: "arial";
     background: #e5e5e5;
     border: 1px solid #f3f3f3;
     border-right: none;
@@ -1849,7 +1848,6 @@
   .contentpane {
     margin: 1em;
     font-size: 12px;
-    font-family: 'Roboto', sans-serif;
     color: #777;
   }
   .contentpane #mailto-window > h2 {
@@ -2583,8 +2581,8 @@
   }
   .module_menu,
   div.module {
-    margin: 0 0 30px;
-    position: relative;
+/*     margin: 0 0 30px;
+ */    position: relative;
   }
   .module h3.modtitle {
     line-height: 100%;
@@ -2661,7 +2659,6 @@
   .module._menu .modcontent ul.menu li > .separator:before {
     content: "\f006";
     display: inline-block;
-    font-family: "fontawesome";
     font-size: 10px;
     margin: 0 10px 0 0;
     vertical-align: top;
@@ -2684,7 +2681,6 @@
   .module[class*="bgcolor"] .modcontent li:before {
     content: "\f006";
     display: inline-block;
-    font-family: "fontawesome";
     font-size: 10px;
     margin: 0 10px 0 0;
     vertical-align: top;
@@ -2831,7 +2827,6 @@
   }
   div.most-popular.module div.k2ItemsBlock ul li a.moduleItemComments:before {
     content: "\f0e6";
-    font-family: "fontawesome";
     margin: 0 5px 0 0;
   }
   div.most-popular.module .even,
@@ -2925,7 +2920,6 @@
   }
   .mega2 .k2ItemsBlock ul li a.moduleItemTitle:before {
     content: "\f111";
-    font-family: "fontawesome";
     font-size: 5px;
     margin-right: 10px;
     vertical-align: top;
@@ -2940,7 +2934,6 @@
   }
   .mega3 ul li a:before {
     content: "\f111";
-    font-family: "fontawesome";
     font-size: 5px;
     margin-right: 10px;
     vertical-align: top;
@@ -3204,7 +3197,6 @@
     text-align: center;
   }
   ul.social li [data-iconsocial]:before {
-    font-family: 'SocialicoRegular';
     content: attr(data-iconsocial);
 /*     speak: none;
  */    font-weight: normal;
@@ -3375,7 +3367,6 @@
   }
   div.footer-menu.module ul.menu li a:before {
     content: "\f111";
-    font-family: "fontawesome";
     font-size: 5px;
     margin: 0 7px 0 0;
     vertical-align: middle;
@@ -3591,9 +3582,9 @@
     margin: 0 7px 0 0;
   }
   .tabs-spotlight1 div.k2ItemsBlock ul li a.moduleItemTitle {
-    color: #666666;
-    line-height: 180%;
-    text-transform: uppercase;
+    color: #777;
+    font-size: 18px;
+    font-weight:900;
   }
   .tabs-spotlight1 div.k2ItemsBlock ul li a.moduleItemTitle:hover {
     color: #820250;
@@ -4368,7 +4359,6 @@
   }
   code,
   pre {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
   }
   code {
     display: inline-block;
@@ -4482,7 +4472,6 @@
     text-transform: capitalize;
   }
   #yt_menuposition ul.navi ul.subnavi li .item-link.havechild:after {
-    font-family: 'FontAwesome';
     content: "\f0da";
     font-size: 14px;
     position: absolute;
@@ -4494,7 +4483,6 @@
   }
   #yt_menuposition ul.navi ul.subnavi li .item-link:before {
     content: "\f111";
-    font-family: "fontawesome";
     font-size: 6px;
     margin: 0 7px 0 0;
     display: inline-block;
@@ -4507,7 +4495,6 @@
     padding-bottom: 5px;
   }
   #yt_menuposition ul.navi ul.subnavi li .showdesc span.menu-desc {
-    font-family: "arial";
     padding-bottom: 3px;
   }
   #yt_menuposition ul.navi ul.subnavi li:hover > .item-link,
@@ -4609,7 +4596,6 @@
     padding: 0 0 5px;
   }
   #yt_menuposition #meganavigator li.level1 .mega-content .mega-col .mega-group div.mega-group-title .showdesc .menu-desc {
-    font-family: "arial";
   }
   #yt_menuposition #meganavigator li.level1 .mega-content .mega-col .mega-group div.mega-group-content {
     position: relative;
@@ -4729,6 +4715,7 @@
     position: absolute;
     /* margin-top: -3px; */
    /*  top: 185px; */
+   border-radius: 0;
   }
   
   .icon-play {
@@ -4746,7 +4733,6 @@
     transition: all 0.2s ease-out 0s;
     cursor: pointer;
     background-color: #fff;
-    border-radius: 2px;
   }
   .icon-play:hover {
     color: #b4036f;
@@ -4815,17 +4801,13 @@
 .club-head{
   font-size: 28px;
   font-weight: 900;  
-  padding: 0;
-  margin: 0;
   color: #696969;
-  
 }
 
 .club-head-sub{
   font-size: 18px;
   color: #696969;
-  padding: 3px 0 0 0;
-  font-weight: 900
+  font-weight: 900;
 }
 
 .club-desc{
@@ -4841,7 +4823,8 @@
 .two-div{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
+  grid-gap: 30px;
+  margin-bottom: 25px;
 }
 
 .div-icon{
@@ -4874,5 +4857,5 @@
   font-size: 24px;
   font-weight: 900;
   color: #363636;
-  margin-right: 50px;
+  margin: 35px 50px 0 0;
 }

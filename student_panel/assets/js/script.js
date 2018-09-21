@@ -6,8 +6,3 @@ function myFunction() {
     x.className = "topnav";
   }
 }
-var vid = document.getElementById("myVideo");
-
-function playVid() {
-  vid.play();
-}
