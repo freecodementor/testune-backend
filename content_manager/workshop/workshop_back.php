@@ -1,7 +1,7 @@
 <?php 
 session_start();
-$club_id = $_SESSION['club_id'];
-//$club_id = 'club_web';
+//$club_id = $_SESSION['club_id'];
+$club_id = 'club_web';
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -13,7 +13,11 @@ $editor3 = $_POST['editor3'];
 $classes = $_POST['classes'];
 $price = $_POST['mrp_price'];
 $school_price = $_POST['school_price'];
+$start = $_POST['start'];
+$end = $_POST['end'];
+$duration = $_POST['duration'];
 $vendor = $_POST['vendor'];
+$date=$_POST['date'];
 $str_p='primary';
 $srt_s='secondary';
 $str_i='icon';
@@ -44,7 +48,7 @@ if(isset($_POST['action']))
                             if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
-                            $work_up .= "prerequisites='$editor3',vendor_id='$vendor',club_id='$club_id' where workshop_id= '$workshop_id'";
+                            $work_up .= "prerequisites='$editor3',vendor_id='$vendor',club_id='$club_id',start_time='$start',end_time='$end',date='$date',duration='$duration' where workshop_id= '$workshop_id'";
                             if ($conn->multi_query($work_up))
                 {       
                     do {
@@ -91,11 +95,11 @@ if(isset($_POST['action']))
                             if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}
                             if ($_FILES['secondary']['name']==''){}else{ $sql .= "secondary_image,";}
                             if ($_FILES['icon']['name']==''){}else{ $sql .= "course_icon,";}
-                             $sql .= "prerequisites,vendor_id,club_id) VALUES ('$course','$editor1','$classes','$price','$school_price','$editor2','$class','$sub',";
+                             $sql .= "prerequisites,vendor_id,club_id,start_time,end_time,date,duration) VALUES ('$course','$editor1','$classes','$price','$school_price','$editor2','$class','$sub',";
                              if ($_FILES['primary']['name']==''){}else{ $sql .= "'$p',";}
                              if ($_FILES['secondary']['name']==''){}else{ $sql .= "'$s',";}
                              if ($_FILES['icon']['name']==''){}else{ $sql .= "'$i',";} 
-                             $sql .= "'$editor3','$vendor','$club_id');";
+                             $sql .= "'$editor3','$vendor','$club_id','$start','$end','$date','$duration');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
                             
                             if ($conn->multi_query($sql))

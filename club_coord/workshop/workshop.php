@@ -9,7 +9,8 @@ if(isset($_GET['id'])){
     $id = $_GET['id'];
     $art_up = "SELECT workshop.title,workshop.description,workshop.no_of_classes,workshop.class_applicable_for,
     workshop.learning,vendor.vendor_name,workshop.prerequisites,workshop.mrp_price,workshop.school_price,
-    workshop.primary_image,workshop.secondary_image,workshop.course_icon,vendor.vendor_icon,activities.icon
+    workshop.primary_image,workshop.secondary_image,workshop.course_icon,vendor.vendor_icon,activities.icon,
+    workshop.start_time,workshop.end_time,workshop.duration,workshop.date
      from workshop 
      INNER JOIN vendor ON 
     workshop.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
@@ -24,6 +25,10 @@ if(isset($_GET['id'])){
      $learning =$row['learning'];
      $prerequisites =$row['prerequisites'];
      $vendor_id = $row['vendor_name'];
+     $start = $row['start_time'];
+     $end = $row['end_time'];
+     $duration = $row['duration'];
+     $date = $row['date'];
      $price =$row['mrp_price'];
      $school_price =$row['school_price'];
      $class = explode(",",$row['class_applicable_for']);
@@ -103,12 +108,29 @@ $conn->close();
             <h1>No of Classes : <?php if(isset($no_of_classes)){echo $no_of_classes;}else{}?></h1>            </div>
             <div class="inner_text-sub" style="margin:10px ">
             <h1 style="font-size:24px;color:#777;margin-top: 5px;">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
+            </div>            
+        </div>
+        <div class="text-section">
+        <div class="inner_text" style="margin:10px">
+        <?php if(isset($duration)){echo '<h1>'.$duration.' Days</h1>';}else{}?>
+        </div>
+            
+            
+            
+        </div>
+        <div class="text-section">                 
+            <div class="inner_text-sub">
+            <?php if(isset($end)){echo date('g:i A',strtotime($end));}else{}?>
             </div>
+            <div class="inner_text-sub">
+            <?php if(isset($start)){echo date('g:i A',strtotime($start)).' TO&nbsp;';}else{}?>
+            </div>                
         </div>
-        <div class="vendor_wrapper">
-        <h5>Class Applicable for: <?php if(isset($class_applicable_for)){echo $class_applicable_for;}else{}?></h5> &nbsp;
-            <h5>Subscription Level: <?php if(isset($subscription_level)){echo $subscription_level;}else{}?></h5>
-        </div>
+        <div class="text-section">            
+            <div class="inner_text-sub" style="margin:10px ">
+            <h1 style="font-size:24px;color:#777;margin-top: 5px;"><?php if(isset($date)){echo $date;}else{}?></h1>
+            </div>            
+        </div>        
         <div class="select-section">
             <h5>What Will I Get ?
             </h5>

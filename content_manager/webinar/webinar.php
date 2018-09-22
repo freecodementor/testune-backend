@@ -1,12 +1,13 @@
 <?php
 session_start();
 //$_SESSION['club_id']="app";
+$club_id='club_web';
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $web_up = "SELECT title,speaker,description,duration,date,time,mrp_price,school_price,learning,vendor_id,class_applicable_for,subscription_level from webinar where webinar_id= '$id'";
+    $web_up = "SELECT title,speaker,description,duration,date,start_time,mrp_price,school_price,learning,vendor_id,class_applicable_for,subscription_level,start_time,end_time from webinar where webinar_id= '$id'";
     $result = $conn->query($web_up);
 
     while($row = $result->fetch_array())
@@ -15,8 +16,9 @@ if(isset($_GET['id'])){
      $speaker = $row['speaker'];
      $description =$row['description'];
      $duration = $row['duration'];
-     $date =$row['date'];
-     $time =$row['time'];
+     $date =$row['date'];     
+     $start =$row['start_time'];
+     $end =$row['end_time'];
      $price =$row['mrp_price'];
      $school_price =$row['school_price'];
      $learning =$row['learning'];
@@ -166,9 +168,14 @@ else{
                 <p><input type="text" value="<?php if(isset($date)){echo $date;}else{}?>" name="date" id="datepicker" placeholder="Date" class="course__field" autocomplete="off"></p>
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="time" value="<?php if(isset($time)){echo $time;}else{}?>" name="time" id="time" placeholder="Time in HH:MM" class="course__field">
+            <label>Start Time</label> <input type="time" value="<?php if(isset($start)){echo $start;}else{}?>" name="start" id="start" placeholder="Time in HH:MM" class="course__field">
             </div>
-        </div>
+        </div>        
+        <div class="text-section">
+            <div class="inner_text-sub" style="margin:10px ">
+            <label>End Time</label>  <input type="time" value="<?php if(isset($end)){echo $end;}else{}?>" name="end" id="end" placeholder="Time in HH:MM" class="course__field">
+            </div>
+        </div>        
         <div class="vendor_wrapper">
         <select id="vendor" name="vendor" class="vendor__select">
                 <?php 
@@ -241,6 +248,8 @@ else{
             var editor1= $('#editor1').val(); 
             var editor2= $('#editor2').val(); 
             var time= $('#time').val();
+            var end= $('#end').val();
+            var start= $('#start').val();
             var date= $('#date').val(); 
             var vendor= $('#vendor').val();  
             var price= $('#price').val(); 
@@ -250,7 +259,7 @@ else{
             
             
                   
-                   if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == ''  || speaker == '' || time == '' || date == '' || price == '' || school_price == '' )
+                   if(start == '' || end == '' ||course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == ''  || speaker == '' || time == '' || date == '' || price == '' || school_price == '' )
                           {
                         alert('Please make sure all fields are filled.');
                         event.preventDefault();

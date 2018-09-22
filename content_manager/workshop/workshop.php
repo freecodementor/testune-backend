@@ -1,6 +1,7 @@
 <?php
 session_start();
 //$_SESSION['club_id']="web";
+$club_id='club_web';
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -9,8 +10,9 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $web_up = "SELECT title,description_line,no_of_classes,mrp_price,school_price,class_applicable_for,
-    subscription_level,learning,prerequisites, primary_image,secondary_image,
-     course_icon, vendor_id, class_applicable_for,subscription_level from workshop where workshop_id= '$id'";
+    subscription_level,learning,prerequisites, primary_image,secondary_image,date,duration,
+     course_icon, vendor_id, class_applicable_for,subscription_level,start_time,end_time,duration from workshop where workshop_id= '$id'";
+     
     $result = $conn->query($web_up);
 
     while($row = $result->fetch_array())
@@ -23,10 +25,14 @@ if(isset($_GET['id'])){
      $sub_lvl =$row['subscription_level'];
      $editor2 =$row['learning'];
      $editor3 =$row['prerequisites'];
+     $date =$row['date'];
      $class = explode(",",$row['class_applicable_for']);
      $sub = $row['subscription_level'];
      $vendor =$row['vendor_id'];
      $school_price =$row['school_price'];
+     $start =$row['start_time'];
+     $end =$row['end_time'];
+     $duration =$row['duration'];
      
     }
 }
@@ -47,6 +53,18 @@ else{
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>var $j = jQuery.noConflict(true);</script>
+  <script>
+  $j( function() {
+    dateFormat: "yy-mm-dd"
+    $j( "#datepicker" ).datepicker({
+  dateFormat: "yy-mm-dd"
+});
+  } );
+  </script>
 </head>
 
 <body>
@@ -158,6 +176,22 @@ else{
         <div class="second-section">
             <textarea name="editor3" id="editor3" class=""> <?php if(isset($editor3)){echo $editor3;}else{}?></textarea>
         </div>
+        <div class="text-section">
+        <div class="inner_text" style="margin:10px">
+                <input type="text"  value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Duration" class="course__field">
+            </div>
+            <div class="inner_text-sub" style="margin:10px ">
+            <label>Start Time</label>  <input type="time" value="<?php if(isset($start)){echo $start;}else{}?>" name="start" id="start" placeholder="Time in HH:MM" class="course__field">
+            </div>
+        </div>
+        <div class="text-section">
+        <div class="inner_text" style="margin:10px">
+                <p><input type="text" value="<?php if(isset($date)){echo $date;}else{}?>" name="date" id="datepicker" placeholder="Date" class="course__field" autocomplete="off"></p>
+            </div>
+            <div class="inner_text-sub" style="margin:10px ">
+            <label>End Time</label>  <input type="time" value="<?php if(isset($end)){echo $end;}else{}?>" name="end" id="end" placeholder="Time in HH:MM" class="course__field">
+            </div>
+        </div>
         <div class="upload-wrapper">
             <button type="button" class="upload__btn" data-toggle="modal" data-target="#exampleModal">
                 UPLOAD FILE <i class="fas fa-cloud-upload-alt"></i>
@@ -253,14 +287,17 @@ else{
             var sub_lvl= $('#sub_lvl').val();
             var cls_lvl= $('#cls_lvl').val(); 
             var vendor= $('#vendor').val();  
-            var price= $('#price').val(); 
+            var price= $('#price').val();
+            var start= $('#start').val();
+            var end= $('#end').val();
+            var duration= $('#duration').val(); 
             var school_price= $('#school_price').val();
                         
                 
             
             
                   
-                   if(course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || school_price == '' || price == '' )
+                   if(start == '' ||end == '' ||duration == '' ||course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || school_price == '' || price == '' )
                           {
                         alert('Please make sure all fields are filled.');
                         event.preventDefault();

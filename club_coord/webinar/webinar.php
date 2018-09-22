@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,
-    webinar.time,vendor.vendor_name,webinar.class_applicable_for,webinar.mrp_price,webinar.school_price,vendor.vendor_icon,activities.icon
+    webinar.time,vendor.vendor_name,webinar.class_applicable_for,webinar.mrp_price,webinar.school_price,webinar.start_time,webinar.end_time, vendor.vendor_icon,activities.icon
      from webinar INNER JOIN vendor ON 
     webinar.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
      activities.page_name LIKE 'webinar.php' where webinar_id= '$id'";
@@ -23,6 +23,8 @@ if(isset($_GET['id'])){
      $learning =$row['learning'];
      $date=$row['date'];
      $time =$row['time'];
+     $start =$row['start_time'];
+     $end =$row['end_time'];
      $vendor_id = $row['vendor_name'];
      $price =$row['mrp_price'];
      $school_price =$row['school_price'];
@@ -105,6 +107,14 @@ echo ' '.minutes($duration).' ';
 ?>Mins</h1>
             </div>
         </div>
+        <div class="text-section">            
+            <div class="inner_text-sub">
+            <div class="inner_text-sub">
+            <?php if(isset($end)){echo date('g:i A',strtotime($end));}else{}?>
+            </div>
+            <?php if(isset($start)){echo date('g:i A',strtotime($start)).' TO&nbsp;';}else{}?>
+            </div>            
+        </div>
         <div class="select-section">
             <h5>What Will I Get?</h5>
             <div class="second-section">
@@ -115,9 +125,7 @@ echo ' '.minutes($duration).' ';
             <div class="inner_text" style="margin:10px">
                 <h1><?php if(isset($date)){echo $date;}else{}?></h1>
             </div>
-            <div class="inner_text-sub" style="margin:10px ">
-                <h1><?php if(isset($time)){echo $time;}else{}?></h1>
-            </div>
+            
         </div>
         <div class="vendor_wrapper">
         <h5>Vendor: <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h5>
