@@ -9,7 +9,7 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT title, description_line, duration, learning, vendor_id,school_price, mrp_price, video_file,class_applicable_for,subscription_level from video where video_id= '$id'";
+    $vid_up = "SELECT title, description_line, duration, learning, vendor_id,school_price, mrp_price, video_file,class_applicable_for,subscription_level,link from video where video_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
@@ -24,6 +24,7 @@ if(isset($_GET['id'])){
      $class = explode(",",$row['class_applicable_for']);
      $sub = $row['subscription_level'];
      $school_price =$row['school_price'];
+     $link =$row['link'];
     }
 }
 else{
@@ -145,7 +146,9 @@ else{
             <button type="button" class="upload__btn" data-toggle="modal" data-target="#exampleModal">
                 UPLOAD FILE <i class="fas fa-cloud-upload-alt"></i>
             </button>
-
+            <button type="button" class="upload__btn" data-toggle="modal" data-target="#exampleModal_1" style="margin-inline-start: 100px;">
+                Youtube Video <i class="fas fa-cloud-upload-alt"></i>
+            </button>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -158,6 +161,20 @@ else{
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="exampleModal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                                <input id="link" type="text" value="<?php if(isset($link)){echo $link;}else{}?>" name="link" placeholder="Paste youtube link">                                               
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
         </div>
         <div class="vendor_wrapper">
         <select id="vendor" name="vendor" class="vendor__select">
@@ -233,13 +250,22 @@ function ajaxbackend(){
     var editor1= $('#editor1').val(); 
     var editor2= $('#editor2').val(); 
     var price= $('#price').val(); 
+    var link= $('#link').val(); 
     var school_price= $('#school_price').val(); 
-                
-	    
-    
-    
-          
-           if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' || school_price == '' || price == '')
+    var fileToUpload=$('#fileToUpload').val();
+   
+    if(fileToUpload == '' && link == ''){
+    alert('Please upload a file OR Paste a youtube link');
+    event.preventDefault();
+    }
+    else{
+        if(fileToUpload !== '' && link !== '')
+    {
+        alert('Please Either Upload Video or Paste a link. Not both.');
+        event.preventDefault();
+    }
+    else{        
+        if(course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == '' || school_price == '' || price == '')
                   {
 		        alert('Please make sure all fields are filled.');
                 event.preventDefault();
@@ -285,6 +311,15 @@ $.ajax({
 });
 
 }
+    }
+    }
+
+                
+	    
+    
+    
+          
+        
 
 
 

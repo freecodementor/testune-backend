@@ -1,7 +1,7 @@
 <?php 
 session_start();
-$club_id = $_SESSION['club_id'];
-//$club_id = "club_web";
+//$club_id = $_SESSION['club_id'];
+$club_id = "club_web";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -13,6 +13,7 @@ $vendor_id = $_POST['vendor'];
 $price = $_POST['mrp_price'];
 $school_price = $_POST['school_price'];
 $class = $_POST['class'];
+if(isset($_POST['link'])){$link=$_POST['link'];}else{$link='';}
 $sub=$_POST['sub'];
 function ren_save(){
     $target_dir = "../../assets/video/";
@@ -35,6 +36,7 @@ if(isset($_POST['action']))
                 $vid_up = "SELECT video_file from video where video_id = '$video_id'; ";
                 $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
+                if($link ==''){}else{$link .= "video_file='$link',";}
                 $vid_up .= "vendor_id='$vendor_id',school_price='$school_price',mrp_price='$price',club_id='$club_id' where video_id= '$video_id'";
                 if ($conn->multi_query($vid_up))
                 {       
@@ -78,8 +80,10 @@ if(isset($_POST['action']))
                             //Data Upload
                             $sql = "INSERT INTO video  (title,description_line,duration,mrp_price,school_price,learning,vendor_id,club_id,class_applicable_for,subscription_level";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= ",video_file";}
+                            if($link==''){}else{$sql .= ",link";}
                             $sql .= ") VALUES ('$title','$description_line','$duration','$price','$school_price','$learning','$vendor_id','$club_id','$class','$sub'";
                             if($_FILES['fileToUpload']['name']==''){}else{ $sql .= " ,'$f'";}
+                            if($link ==''){}else{ $sql .= " ,'$link'";}
                             $sql .= ");";
                             $sql .= "SELECT LAST_INSERT_ID()";                          
                             

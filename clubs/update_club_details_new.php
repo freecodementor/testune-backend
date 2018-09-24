@@ -1,5 +1,6 @@
 <?php
-include("home_header.php"); 
+include_once "../assets/Users.php";
+
 $db = new Database();
 $conn = $db->getConnection();
 $club_id = $_GET['id'];

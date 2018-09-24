@@ -14,7 +14,7 @@ if(isset($_GET['id'])){
         {
             $club_id= "club_web";
         }
-    }
+    }    
 //$inst_id=$SESSION['institute_id'];
 $inst_id = 'inst_1';
 include_once "../assets/Users.php";
@@ -22,7 +22,7 @@ $database = new Database();
 $conn = $database->getConnection();
     $spanel="select clubs.club_name,inst_club_coordinator.name,inst_club_coordinator.photo,inst_club_coordinator.detail from cc_club_assign
      INNER JOIN clubs ON cc_club_assign.club_id=clubs.club_id  INNER JOIN inst_club_coordinator ON inst_club_coordinator.club_coordinator_id
-      = cc_club_assign.club_coordinator_id LIKE '$club_id' AND  inst_club_coordinator.institute_id = '$inst_id' ";
+      = cc_club_assign.club_coordinator_id where clubs.club_id LIKE '$club_id' AND  inst_club_coordinator.institute_id = '$inst_id'"; 
     $up_workshop = "select title,date,start_time,end_time from workshop where club_id='$club_id' order by date_added DESC LIMIT 1"; 
     $up_webinar = "select title,date,start_time,end_time from webinar where club_id='$club_id' order by date DESC LIMIT 1";
     $articles="select name,description, date_posted,icon from article where club_id='$club_id' order by date_posted   DESC LIMIT 4";
@@ -215,7 +215,7 @@ $conn = $database->getConnection();
                                     { $j=$flag=0;      
                                         foreach($clb[$i] as $c ){                                            
                                             $club[$i][$j]=$c;
-                                            if($flag==0){echo '<li><a id="'.$club[$i][$j].'" href="'.$club[$i][$j].'" target="_self" onchange="change_club(this)"><i class="fas fa-school icon-large"></i>';$flag++;}
+                                            if($flag==0){echo '<li><a class="drops" id="'.$club[$i][$j].'" href="'.$club[$i][$j].'" target="_self" onchange="change_club(this)"><i class="fas fa-school icon-large"></i>';$flag++;}
                                             else{echo $club[$i][$j].'</a></li>';$flag--;}                
                                             $j++;
                                         }
@@ -1227,7 +1227,7 @@ $conn = $database->getConnection();
 
     </script>
     <script>
-        $("a").click(function () {
+        $(".drops").click(function () {
             var club= $(this).attr("href");            
             window.location.href = window.location.href.replace( /[\?#].*|$/, "?id="+club );
             });
