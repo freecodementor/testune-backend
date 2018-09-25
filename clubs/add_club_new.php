@@ -90,9 +90,11 @@ function check_form()
    {       var club_name= $('#club_name').val();    
             var desc= $('#desc').val();
             //CHANGE START
+            
             var date= $('#datepicker').val();         
-            var temp= $('#features').val();                       
-             if(club_name === '' || desc === '' || features === '' || date === '')
+            var temp= $('#features').val();       
+            var CC_ID=$('#club_category_id ').val();                
+             if(club_name === '' || desc === '' || features === '' || date === '' || CC_ID ==='')
                   {
 		        alert('Please make sure all fields are filled.');
 		  }

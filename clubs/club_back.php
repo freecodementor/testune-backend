@@ -7,6 +7,7 @@ $desc = $_POST['desc'];
 $features=$_POST['features'];
 $date=$_POST['datepicker'];
 $club_id =$_POST['club_id'];
+$club_cat =$_POST['club_category_id'];
 function ren_save($id = 'fileToUpload'){
     $target_dir = "../assets/club/";
     $f = $target_dir . basename($_FILES[$id]["name"]);
@@ -18,7 +19,7 @@ if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update'){
         $f=ren_save();        
-        $club_up = "UPDATE  clubs SET club_name = '$club_name', club_description='$desc',";
+        $club_up = "UPDATE  clubs SET club_category_id='$club_cat',club_name = '$club_name', club_description='$desc',";
         if($_FILES['fileToUpload']['name']==''){}else{$club_up .= "image='$f',";}
         $club_up .= "features='$features',launch_date='$date' where club_id= '$club_id'";
         $conn->query($club_up);
@@ -37,7 +38,7 @@ if(isset($_POST['action']))
     else {       
         $f=ren_save();        
         $sql = "INSERT INTO clubs (club_category_id,club_name, club_description,features,image,launch_date)
-    VALUES ('$clubid','$club_name','$desc','$features','$f','$date');";
+    VALUES ('$club_cat','$club_name','$desc','$features','$f','$date');";
      $sql .= "SELECT LAST_INSERT_ID()"; 
      
      if ($conn->multi_query($sql)) {
