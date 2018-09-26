@@ -101,7 +101,7 @@ if(isset($_POST['action']))
                                                 $video_id = "vid_".$var."";
                                                 $sqli = "UPDATE  video SET video_id = '$video_id' where sno= $var";         
                                                 $conn->query($sqli);
-                                                echo "Data Saved";
+                                                echo 'success';
                                                 $result->free();
                                     
                                             }  
@@ -120,7 +120,6 @@ if(isset($_POST['action']))
 
 $conn->close();
 
-?>
 
 
 

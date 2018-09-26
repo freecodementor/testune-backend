@@ -116,7 +116,7 @@ if(isset($_POST['action']))
                                                 $workshop_id = "work_".$var."";
                                                 $sqli = "UPDATE  workshop SET workshop_id = '$workshop_id' where sno= $var";         
                                                 $conn->query($sqli);
-                                                echo "Data Saved";
+                                                echo "success";
                                                 $result->free();
                                     
                                             }  
@@ -135,7 +135,7 @@ if(isset($_POST['action']))
 
 $conn->close();
 
-?>
+
 
 
 

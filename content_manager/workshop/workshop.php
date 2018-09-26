@@ -241,7 +241,7 @@ else{
         <div class="deploy-wrapper">
         <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>"> 
             <input type="hidden" name="action" <?php if(isset($id)){echo 'value="update"';}else{echo 'value="publish"';}?>>
-            <button name="submit" value="submit" type="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
+            <button name="submit" value="submit" type="submit" id="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
         </div>              <p id="msg"></p>
         </form>
     </div>
@@ -292,62 +292,43 @@ else{
             var end= $('#end').val();
             var duration= $('#duration').val(); 
             var school_price= $('#school_price').val();
-                        
-                
-            
-            
-                  
-                   if(start == '' ||end == '' ||duration == '' ||course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || school_price == '' || price == '' )
+             if(start == '' ||end == '' ||duration == '' ||course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || school_price == '' || price == '' || vals=='' )
                           {
                         alert('Please make sure all fields are filled.');
                         event.preventDefault();
                   } else {
-                       //stop submit the form, we will post it manually.   
-                       event.preventDefault();
-                    // Get form
-                    var form = $('#fileUploadForm')[0];
-        // Create an FormData object 
-        var data = new FormData(form);
-        
-        // If you want to add an extra field for the FormData
-        data.append("class", vals);
-        
-        // disabled the submit button
-        $("#sub").prop("disabled", true);
-        
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "workshop_back.php",
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-        
-                
-                console.log(data);
-                $("#sub").prop("disabled", false);
-        
-            },
-            error: function (e) {
-        
-                $("#result").text(e.responseText);
-                document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
-                $("#sub").prop("disabled", false);
-        
-            }
-        
-        
-        });
-        
-        }
-        
-        
-        
-                  }
-                </script>
+            if($('[name=sub]:checked').length){
+                        event.preventDefault();            
+                        var form = $('#fileUploadForm')[0];           
+                    var data = new FormData(form);    
+                    data.append("class", vals);          
+                    $("#sub").prop("disabled", true);          
+                    $.ajax({
+                        type: "POST",
+                        enctype: 'multipart/form-data',
+                        url: "workshop_back.php",
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        timeout: 600000,
+                        success: function (data) {                            
+                            if (data=='success')
+                        {alert('Published Successfully !');
+                        location.reload(true); 
+                        }
+                        $("#submit").css({'background-color':'#2abfd4'});
+                        $("#submit").html(data);                        
+                        },
+                        error: function (e) {           
+                            console.log(e);
+                        }
+                    });
+                    }
+                    else{alert('Choose Subscription');
+                                event.preventDefault();
+                }}}
+        </script>
     <script>
         CKEDITOR.replace('editor1');
     </script>

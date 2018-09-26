@@ -70,9 +70,9 @@ if(isset($_POST['action']))
 
                             $sql = "INSERT INTO article  (name,description,duration,author,class_applicable_for,subscription_level,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "article_file,";}
-                            $sql .= "price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author','$class','$sub',";
+                            $sql .= "mrp_price,school_price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author','$class','$sub',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
-                            $sql .= "'$price','$club_id','$vendor_id');";
+                            $sql .= "'$price','$school_price','$club_id','$vendor_id');";
                             $sql .= "SELECT LAST_INSERT_ID()";                             
                             if ($conn->multi_query($sql))
                             {       
@@ -88,7 +88,7 @@ if(isset($_POST['action']))
                                                 $article_id = "art_".$var."";
                                                 $sqli = "UPDATE  article SET article_id = '$article_id' where sno= $var";         
                                                 $conn->query($sqli);
-                                                echo "Data Saved";
+                                                echo "success";
                                                 $result->free();
                                     
                                             }  
@@ -108,7 +108,6 @@ if(isset($_POST['action']))
 
 $conn->close();
 
-?>
 
 
 

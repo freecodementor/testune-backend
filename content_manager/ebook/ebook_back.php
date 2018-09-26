@@ -105,7 +105,7 @@ if(isset($_POST['action']))
                                                 $book_id = "ebk_".$var."";
                                                 $sqli = "UPDATE  ebook SET book_id = '$book_id' where sno= $var";         
                                                 $conn->query($sqli);
-                                                echo "Data Saved";
+                                                echo "success";
                                                 $result->free();
                                     
                                             }  
@@ -124,8 +124,6 @@ if(isset($_POST['action']))
 
 $conn->close();
 
-
-?>
 
 
 

@@ -64,7 +64,7 @@ if(isset($_POST['action']))
                                                 $webinar_id = "web_".$var."";
                                                 $sqli = "UPDATE  webinar SET webinar_id = '$webinar_id' where sno= $var";         
                                                 $conn->query($sqli);
-                                                echo "Data Saved";
+                                                echo "success";
                                                 $result->free();
                                     
                                             }  
@@ -83,7 +83,7 @@ if(isset($_POST['action']))
 
 $conn->close();
 
-?>
+
 
 
 
