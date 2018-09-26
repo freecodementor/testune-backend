@@ -169,7 +169,7 @@ else{
         <div class="deploy-wrapper">
         <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
             <input type="hidden" name="action" <?php if(isset($id)){echo 'value="update"';}else{echo 'value="publish"';}?>>
-            <button name="submit" value="submit" id="submit" onclick="ajaxbackend()" class="p__btn"><span id="buttonaction">Publish</span></button>
+            <button name="submit" value="submit" id="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
         </div>              <p id="msg"></p>
         </form>
     </div>

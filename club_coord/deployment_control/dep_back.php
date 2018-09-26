@@ -9,8 +9,8 @@ $gender=$_POST['gender'];
 $from =date('Y-m-d',strtotime($_POST['from']));
 $to=date('Y-m-d',strtotime($_POST['to']));
 $student_price = $_POST['student_price'];
-$cc_id=$_SESSION['uid'];
-//$cc_id="cc_1";
+//$cc_id=$_SESSION['uid'];
+$cc_id="cc_1";
 switch ($type) {
     case 'article':    
         $sql="select mrp_price,school_price from article where article_id='$id'";  
@@ -70,7 +70,7 @@ else{
                                                 $deploy_id = "dep_".$var."";
                                                 $sqli = "UPDATE  deployment_control SET deploy_id = '$deploy_id' where sno= $var";         
                                                 $conn->query($sqli);
-                                                echo "Deployed";
+                                                echo "success";
                                                 $result->free();
                                     
                                             }  
@@ -81,4 +81,4 @@ else{
                                 echo "Error ! Not deployed";                                
                             }
         $conn->close();
-        ?>
+        
