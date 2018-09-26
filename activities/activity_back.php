@@ -28,7 +28,7 @@ if(isset($_POST['action']))
          if($_FILES['icon']['name']==''){}else{$activity_up .= ",icon='$f'";}
         $activity_up .= " where activities_id= '$activity_id'";        
         $conn->query($activity_up);
-        echo "Updated";
+        echo "update";
         
     }
     else if ($_POST['action']=='add'){
@@ -38,7 +38,7 @@ if(isset($_POST['action']))
     
     if ($num_rows>=1) {
         
-        echo "Activity already exists";
+        echo "exists";
         
     } 
     
@@ -66,7 +66,7 @@ if(isset($_POST['action']))
                 $sqli = "UPDATE  activities SET activities_id = '$activity_id' where sno= $var";
              
                 $conn->query($sqli);
-                echo "Data Saved";
+                echo "success";
                 $result->free();
                 
             }

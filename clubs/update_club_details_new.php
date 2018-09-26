@@ -5,10 +5,11 @@ $db = new Database();
 $conn = $db->getConnection();
 $club_id = $_GET['id'];
 //CHANGE START
-$check="SELECT club_name,club_description,features,image,launch_date FROM clubs WHERE club_id = '$club_id'";
+$check="SELECT club_category_id,club_name,club_description,features,image,launch_date FROM clubs WHERE club_id = '$club_id'";
 $result = $conn->query($check);
 while($row = $result->fetch_array())
     {
+        $cat =$row['club_category_id'];
      $name =$row['club_name'];
      $desc = $row['club_description'];
      $image = $row['image'];
@@ -35,6 +36,9 @@ $conn->close();
 							    <div class="content">
                                         <div class="container">
                                           <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
+                                          <div class="10u -1u" style="padding: 20px 0 0 20px;">
+                                              <input type="text" placeholder="Club Category" value="<?php if(isset($cat)){echo $cat;unset($cat);}else{echo 'No data';} ?>" name="club_category_id" id="club_category_id" class="padding-popup radius03" required="true">
+											</div>
                                             <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                               <input type="text" placeholder="Club Name" value="<?php if(isset($name)){echo $name;unset($name);}else{echo 'No data';} ?>" name="club_name" id="club_name" class="padding-popup radius03" required="true">
 											</div>
@@ -116,9 +120,11 @@ function ajaxbackend(){
         cache: false,
         timeout: 600000,
         success: function (data) {
-            $("#result").text(data);
-            document.getElementById('msg').innerHTML = data;
-            $("#sub").prop("disabled", false);
+            if(data=='updated')
+            {
+                alert('Club Updated !');
+                location.reload(true);
+            }
         },
         error: function (e) {
             $("#result").text(e.responseText);

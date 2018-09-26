@@ -1,5 +1,5 @@
 <?php
-    include("home_header.php");
+    
 ?>
 <?php
 
@@ -25,7 +25,7 @@
                                                                   <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
                                                                          <div class="10u -1u" style="padding: 20px 0 0 20px;">
                                                                              <select  name="club_category_id" id="club_category_id" class="padding-popup radius03" required>
-                                                                             <option value="club_tech" selected>Club_tech</option>
+                                                                             <option value="club_tech" selected>web</option>
                                                                                   <?php /*
                                                                                          $check="SELECT * FROM club_category";
                                                                                          $result1 = $db->query($check);
@@ -114,8 +114,7 @@ function add_image(){
     var data = new FormData(form);
     // If you want to add an extra field for the FormData
     data.append("CustomField", "This is some extra data, testing");
-    // disabled the submit button
-    $("#sub").prop("disabled", true);
+    // disabled the submit button    
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
@@ -126,14 +125,19 @@ function add_image(){
         cache: false,
         timeout: 600000,
         success: function (data) {
-            $("#result").text(data);
-            document.getElementById('msg').innerHTML = data;
-            $("#sub").prop("disabled", false);
+            console.log(data);
+            if(data=='success'){               
+            alert('Club Added Successfully');
+            location.reload(true); 
+            }
+            if(data=='exists')
+            {
+                alert('Club Name Already Exists');  
+            }           
         },
         error: function (e) {
-            $("#result").text(e.responseText);
-            document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
-            $("#sub").prop("disabled", false);
+            console.log(e);
+            alert('Error ! Check console for error !');
         }
   
 });

@@ -269,10 +269,10 @@ $.ajax({
     cache: false,
     timeout: 600000,
     success: function (data) {       
-        
+        console.log(data);
                             if (data=='success')
                         {alert('Published Successfully !');
-                            window.location.replace("http://http://www.testune.com/spacedtimes/club_coordinator/index.php");
+                            //window.location.replace("http://http://www.testune.com/spacedtimes/club_coordinator/index.php");
                         }
                         $("#submit").css({'background-color':'#2abfd4'});
                         $("#submit").html(data);                        

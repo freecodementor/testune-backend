@@ -587,16 +587,21 @@ function login()
 			  data: { username:user, password:pass, logintype:'institute' },
 			  beforeSend: function() {
 			  },
-			  success: function(response){   
-                                 if(response == 'institute')
-				 {
-				    parent.window.location="../dummy_page.php#cta";
-				 }
-				 else
-				 {
-				    alert("Incorrect username & password");
-				 }  
-			  }
+			  success: function (data) {
+            console.log(data);
+            if(data=='success'){               
+            alert('Content Manager Added Successfully');
+            location.reload(true); 
+            }
+            if(data=='exists')
+            {
+                alert('Content Manager Name Already Exists');  
+            }           
+        },
+        error: function (e) {
+            console.log(e);
+            alert('Error ! Check console for error !');
+        }
 			 }); 
 }  }
 

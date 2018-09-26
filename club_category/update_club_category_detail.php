@@ -243,7 +243,7 @@ function ajaxbackend(){
     data.append("action", "update");
 
     // disabled the submit button
-    $("#sub").prop("disabled", true);
+    
 
     $.ajax({
         type: "POST",
@@ -255,26 +255,18 @@ function ajaxbackend(){
         cache: false,
         timeout: 600000,
         success: function (data) {
-
-            $("#result").text(data);
-            document.getElementById('msg').innerHTML = data;
-            $("#sub").prop("disabled", false);
-
+            console.log(data);
+            if(data=='updated'){
+           alert("Content Manager Deatils Updated !");
+           location.reload();
+            }      
         },
         error: function (e) {
-
-            $("#result").text(e.responseText);
-            
-            $("#sub").prop("disabled", false);
-
+            console.log(e);
+            alert('Error ! Check console for error !');
         }
-  
-
 });
-
-}
-
- 
+} 
 </script>
 <script>
    

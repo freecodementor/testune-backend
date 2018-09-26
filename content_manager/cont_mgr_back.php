@@ -74,7 +74,7 @@ if(isset($_POST['action']))
                 
                 $cont_mgr__up = "UPDATE  content_manager SET name = '$name', phone_number='$phone_number',dob='$dob',address='$address',photo='$tmp_name',email_id='$email_id',nationality='$nationality',qualification='$qualification',experience='$experience',phone_no2='$phone_no2',sec_email_id='$sec_email_id',username='$email_id' where content_manager_id= '$content_manager_id'";
                 $conn->query($cont_mgr__up);
-                echo "Updated";
+                echo "updated";
         
      }
 
@@ -88,7 +88,7 @@ if(isset($_POST['action']))
     
         if ($num_rows>=1) 
         {        
-        echo "Content Manager already exists";        
+        echo "exists";        
          } 
     
         else 
@@ -143,7 +143,7 @@ if(isset($_POST['action']))
                                                 $cont_id = "inst_".$var."";
                                                 $sqli = "UPDATE  content_manager SET content_manager_id = '$cont_id' where sno= $var";         
                                                 $conn->query($sqli);
-                                                echo "Data Saved";
+                                                echo "success";
                                                 $result->free();
                                     
                                             }      

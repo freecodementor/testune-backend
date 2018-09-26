@@ -6,7 +6,6 @@ $club_name = $_POST['club_name'];
 $desc = $_POST['desc'];
 $features=$_POST['features'];
 $date=$_POST['datepicker'];
-$club_id =$_POST['club_id'];
 $club_cat =$_POST['club_category_id'];
 function ren_save($id = 'fileToUpload'){
     $target_dir = "../assets/club/";
@@ -18,13 +17,13 @@ function ren_save($id = 'fileToUpload'){
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update'){
-        $f=ren_save();        
+        $f=ren_save();      
+        $club_id=$_POST['club_id'];  
         $club_up = "UPDATE  clubs SET club_category_id='$club_cat',club_name = '$club_name', club_description='$desc',";
         if($_FILES['fileToUpload']['name']==''){}else{$club_up .= "image='$f',";}
         $club_up .= "features='$features',launch_date='$date' where club_id= '$club_id'";
         $conn->query($club_up);
-        echo "Updated";
-        echo $club_up;        
+        echo "updated";             
     }
     else if ($_POST['action']=='add'){
         $check="SELECT * FROM clubs WHERE club_name = '$club_name'";
@@ -32,7 +31,7 @@ if(isset($_POST['action']))
         $num_rows = mysqli_num_rows($result1);
     
     if ($num_rows>=1) {        
-        echo "club already exists";        
+        echo "exists";        
     } 
     
     else {       
@@ -50,7 +49,7 @@ if(isset($_POST['action']))
                 $club_id = "club_".$var."";
                 $sqli = "UPDATE  clubs SET club_id = '$club_id' where sno= $var";             
                 $conn->query($sqli);
-                echo "Data Saved";
+                echo "success";
                 $result->free();
             }    
         } while ($conn->next_result());
@@ -59,5 +58,3 @@ if(isset($_POST['action']))
 } 
 }
 $conn->close();
-
-?>

@@ -56,6 +56,7 @@ else{
     $dep="insert into deployment_control (activity_id, class, gender, from_date, to_date, student_price,club_coordinator_id,institute_id,mrp_price,school_price)
     values ('$id','$class','$gender','$from','$to','$student_price','$cc_id','$inst_id','$price','$school_price');";
     $dep .= "SELECT LAST_INSERT_ID()";
+    echo $dep;
     if ($conn->multi_query($dep))
                             {       
                                 do {

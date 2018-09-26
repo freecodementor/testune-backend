@@ -13,7 +13,7 @@ if(isset($_POST['action']))
         $club_category_id=$_POST['club_category_id'];
         $club_cat_up = "UPDATE  club_category SET club_category_name = '$club_category_name', club_category_description='$club_category_description' where club_category_id= '$club_category_id'";
         $conn->query($club_cat_up);
-        echo "Updated";
+        echo "updated";
         
     }
     else if ($_POST['action']=='add'){
@@ -23,7 +23,7 @@ if(isset($_POST['action']))
     
     if ($num_rows>=1) {
         
-        echo "club category already exists";
+        echo "exists";
         
     } 
     
@@ -45,7 +45,7 @@ if(isset($_POST['action']))
                 $sqli = "UPDATE  club_category SET club_category_id = '$club_category_id' where sno= $var";
              
                 $conn->query($sqli);
-                echo "Data Saved";
+                echo "success";
                 $result->free();
                 
             }
@@ -58,5 +58,3 @@ if(isset($_POST['action']))
 
 }
 $conn->close();
-
-?>

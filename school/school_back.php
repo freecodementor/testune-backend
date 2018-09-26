@@ -18,7 +18,7 @@ if(isset($_POST['action']))
         $institute_id=$_POST['institute_id'];
         $school_up = "UPDATE  school SET institute_name = '$institute_name', details='$desc', promoters='$promoters', address='$address', email_id='$email_id', phone_no='$phone_no', password='$password' where institute_id= '$institute_id'";
         $conn->query($school_up);
-        echo "Updated";
+        echo "updated";
         
     }
     else if ($_POST['action']=='add'){
@@ -28,7 +28,7 @@ if(isset($_POST['action']))
     
     if ($num_rows>=1) {
         
-        echo "Email already exists";
+        echo "exists";
         
     } 
     
@@ -50,7 +50,7 @@ if(isset($_POST['action']))
                 $sqli = "UPDATE  school SET institute_id = '$institute_id' where sno= $var";
              
                 $conn->query($sqli);
-                echo "Data Saved";
+                echo "success";
                 $result->free();
                 
             }

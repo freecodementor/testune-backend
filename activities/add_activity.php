@@ -156,16 +156,20 @@ function add_image(){
         contentType: false,
         cache: false,
         timeout: 600000,
-        success: function (data) { alert(data);
-            $("#result").text(data);
-            document.getElementById('msg').innerHTML = data;
-            $("#sub").prop("disabled", false);
-
+        success: function (data) {
+            console.log(data);
+            if(data=='success'){               
+            alert('Activity Added Successfully');
+            location.reload(true); 
+            }
+            if(data=='exists')
+            {
+                alert('Activity Name Already Exists');  
+            }           
         },
         error: function (e) {
-            $("#result").text(e.responseText);
-            document.getElementById('msg').innerHTML = 'Rename File or upload smaller file!';
-            $("#sub").prop("disabled", false);
+            console.log(e);
+            alert('Error ! Check console for error !');
         }
 });
 }
