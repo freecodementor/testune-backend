@@ -1,4 +1,5 @@
 <?php 
+
 session_start();
 $club_id = 'club_web'; 
 //$club_id = $_SESSION['club_id'];
@@ -56,10 +57,13 @@ if(isset($_POST['action']))
                                     {       
                                         for ($i=0;$i<3;$i++){
                                             if(isset($row[$i])){ $var = (string) $row[$i];
-                                        unlink('../../assets/course/'.$var);}else{}                                 
+                                                error_reporting(0); 
+                                                if(!unlink('../../assets/course/'.$var)){}else{}                                
+                                            }                                       
+                                                else{}                               
                                         }                             
                                     }    
-                                    echo 'Updated !';                       
+                                    echo 'updated';                       
                                 }  
                                
                                 

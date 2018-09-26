@@ -4,8 +4,8 @@ $database = new Database();
 $conn = $database->getConnection();
 $type=$_POST['type'];
 $id=$_POST['id'];
-$class = $_POST['class'];
-$gender=$_POST['gender'];
+if(isset($_POST['class'])){$class = $_POST['class'];}else{$class = '';}
+if(isset($_POST['gender'])){$gender = $_POST['gender'];}else{$gender = '';}
 $from =date('Y-m-d',strtotime($_POST['from']));
 $to=date('Y-m-d',strtotime($_POST['to']));
 $student_price = $_POST['student_price'];

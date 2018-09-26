@@ -49,7 +49,7 @@ if(isset($_POST['action']))
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
                             $work_up .= "prerequisites='$editor3',vendor_id='$vendor',club_id='$club_id',start_time='$start',end_time='$end',date='$date',duration='$duration' where workshop_id= '$workshop_id'";
-                            if ($conn->multi_query($work_up))
+                           if ($conn->multi_query($work_up))
                 {       
                     do {
                         
@@ -59,10 +59,11 @@ if(isset($_POST['action']))
                                     {       
                                         for ($i=0;$i<3;$i++){
                                             if(isset($row[$i])){ $var = (string) $row[$i];
-                                        unlink('../../assets/workshop/'.$var);  }else{}                                     
+                                                error_reporting(0); 
+                                                if(!unlink('../../assets/workshop/'.$var)){}else{} }else{}                                     
                                         }                             
                                     }    
-                                    echo 'Updated !';                       
+                                    echo 'updated';                       
                                 }  
                         }
                         while ($conn->next_result());

@@ -48,8 +48,10 @@ if(isset($_POST['action']))
                                     while ($row = $result->fetch_row()) 
                                     {               
                                     $var = (string) $row[0];
-                                    unlink('../../assets/ebook/'.$var);
-                                    echo 'Updated !';
+                                    
+                                    error_reporting(0); 
+                                                if(!unlink('../../assets/ebook/'.$var)){}else{}
+                                    echo 'updated';
                                     }                                    
                                     
 

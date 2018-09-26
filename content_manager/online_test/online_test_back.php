@@ -23,7 +23,7 @@ if(isset($_POST['action']))
                 $test_up = "UPDATE  online_test SET test_name = '$test_name', test_data='$test_data',duration='$duration',test_creator='$test_creator',school_price='$school_price',mrp_price='$price',club_id='$club_id',class_applicable_for='$class',subscription_level='$sub',vendor_id='$vendor' where test_id= '$test_id'";
 
                 $conn->query($test_up);
-                echo "Updated !";
+                echo "updated";
         
      }
 

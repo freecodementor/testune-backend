@@ -28,7 +28,7 @@ if(isset($_GET['id'])){
      $date =$row['date'];
      $class = explode(",",$row['class_applicable_for']);
      $sub = $row['subscription_level'];
-     $vendor =$row['vendor_id'];
+     $vendor_id =$row['vendor_id'];
      $school_price =$row['school_price'];
      $start =$row['start_time'];
      $end =$row['end_time'];
@@ -312,13 +312,16 @@ else{
                         contentType: false,
                         cache: false,
                         timeout: 600000,
-                        success: function (data) {                            
+                        success: function (data) {    
+                            console.log(data);                          
                             if (data=='success')
                         {alert('Published Successfully !');
                         location.reload(true); 
+                        }else if(data=='updated')
+                        {                            
+                            $("#submit").html('Updated');
                         }
-                        $("#submit").css({'background-color':'#2abfd4'});
-                        $("#submit").html(data);                        
+                        $("#submit").css({'background-color':'#2abfd4'});                                                
                         },
                         error: function (e) {           
                             console.log(e);

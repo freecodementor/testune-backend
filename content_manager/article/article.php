@@ -259,13 +259,17 @@ function ajaxbackend(){
                         contentType: false,
                         cache: false,
                         timeout: 600000,
-                        success: function (data) {                            
+                        success: function (data) {   
+                            console.log(data);                          
                             if (data=='success')
                         {alert('Published Successfully !');
                         location.reload(true); 
+                        }else if(data=='updated')
+                        {
+                            alert('Updated Successfully !');
+                            $("#submit").html('Updated');
                         }
-                        $("#submit").css({'background-color':'#2abfd4'});
-                        $("#submit").html(data);                        
+                        $("#submit").css({'background-color':'#2abfd4'});                                                
                         },
                         error: function (e) {           
                             console.log(e);

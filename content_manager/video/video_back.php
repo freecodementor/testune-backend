@@ -45,8 +45,9 @@ if(isset($_POST['action']))
                                 if ($result = $conn->store_result()){
                                     while ($row = $result->fetch_row()){               
                                         $var = (string) $row[0];
-                                        unlink('../../assets/video/'.$var);
-                                        echo 'Updated !';
+                                        error_reporting(0); 
+                                        if(!unlink('../../assets/video/'.$var)){}else{}
+                                        echo 'updated';
                                     }              
                                 }                                 
                            }

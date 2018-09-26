@@ -43,10 +43,11 @@ if(isset($_POST['action']))
                                         {       
                                             for ($i=0;$i<3;$i++){
                                                 if(isset($row[$i])){ $var = (string) $row[$i];
-                                            unlink('../../assets/article/'.$var);}else{}                                       
+                                                    error_reporting(0); 
+                                                    if(!unlink('../../assets/article/'.$var)){}else{}}else{}                                       
                                             }                             
                                         }    
-                                    echo 'Updated !';                       
+                                    echo 'updated';                       
                                 }  
                         }
                         while ($conn->next_result());
