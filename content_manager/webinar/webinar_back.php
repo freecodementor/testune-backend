@@ -34,6 +34,7 @@ if(isset($_POST['action']))
     else if ($_POST['action']=='publish') 
       {           
         $check="SELECT * FROM webinar WHERE title = '$title'";
+        echo $check;
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
     
@@ -49,7 +50,7 @@ if(isset($_POST['action']))
                             //Data Upload
                             $sql = "INSERT INTO webinar  (title,description,duration,mrp_price,school_price,learning,vendor_id,date, speaker,class_applicable_for,subscription_level,club_id,start_time,end_time) VALUES ('$title','$description','$duration','$price','$school_price','$learning','$vendor_id','$date','$speaker','$class','$sub','$club_id','$start','$end');";
                             $sql .= "SELECT LAST_INSERT_ID()"; 
-                                                        
+                                                                                    
                             if ($conn->multi_query($sql))
                             {      
                                 do {
