@@ -17,7 +17,6 @@ $result = $conn->query($check);
      $email_id =$row['email_id'];
      $phone_no =$row['phone_no'];
      $password =$row['password'];
-
     
     }
 
