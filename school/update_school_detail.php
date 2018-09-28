@@ -10,7 +10,7 @@ $result = $conn->query($check);
 
     while($row = $result->fetch_array())
     {
-     $institute_name =$row['institute_name'];
+     $institute_name =$row['institute_name']; 
      $details = $row['details'];
      $promoters =$row['promoters'];
      $address =$row['address'];
