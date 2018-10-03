@@ -13,7 +13,7 @@ if(isset($_GET['id'])){
 
     while($row = $result->fetch_array())
     {
-     $name =$row['name'];
+     $title =$row['name'];
      $description = $row['description'];
      $duration = date("h:i",strtotime($row['duration']));
      $author = $row['author'];
@@ -69,7 +69,7 @@ else{
         <form action="" id="form" enctype="multipart/form-data">
             <div class="index-wrap">
                 <div class="input-group">
-                    <input type="text" value="<?php if(isset($name)){echo $name;}else{}?>" name="course" id="course" placeholder="Enter Title Here" />
+                    <input type="text" value="<?php if(isset($title)){echo $title;}else{}?>" name="title" id="title" placeholder="Enter Title Here" />
                 </div>
                 <a href="#" class="more-link">Change Vendor</a>
             </div>
@@ -308,14 +308,14 @@ else{
     }
     if (vals) vals = vals.substring(1);
     for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
-    var course= $('#course').val(); 
+    var title= $('#title').val(); 
     var duration= $('#duration').val(); 
     var author= $('#author').val(); 
     var editor1= $('#editor1').val(); 
     var price= $('#price').val();
     var price= $('#price').val();
     var school_price= $('#school_price').val();         
-           if(course == '' || duration == '' || author == '' || editor1 == '' || price == ''  || school_price == '' || vals == '')
+           if(title == '' || duration == '' || author == '' || editor1 == '' || price == ''  || school_price == '' || vals == '')
                   {
 		        alert('Please make sure all fields are filled.');
                 event.preventDefault();

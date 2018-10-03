@@ -5,7 +5,7 @@ $club_id = 'club_web';
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-$name = $_POST['course'];
+$name = $_POST['title'];
 $description = $_POST['editor1'];
 $author = $_POST['author'];
 $price = $_POST['mrp_price'];

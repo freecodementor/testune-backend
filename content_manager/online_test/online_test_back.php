@@ -5,7 +5,7 @@ $club_id = 'club_app';
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-$test_name = $_POST['course'];
+$test_name = $_POST['title'];
 $test_data = $_POST['editor1'];
 $duration = $_POST['duration'];
 $test_creator = $_POST['author'];
@@ -29,15 +29,13 @@ if(isset($_POST['action']))
 
 
     else if ($_POST['action']=='publish')
-    {  
-        $name = $_POST['course']; //check for existing vendor
-        $check="SELECT * FROM online_test WHERE test_name = '$test_name'";
+    {   $check="SELECT * FROM online_test WHERE test_name = '$test_name'";
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
     
         if ($num_rows>=1) 
         {        
-        echo "Test Already Exists";        
+        echo "exists";        
          } 
     
         else 

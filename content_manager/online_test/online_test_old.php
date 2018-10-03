@@ -209,14 +209,14 @@ function ajaxbackend(){
     }
     if (vals) vals = vals.substring(1);
     for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
-    var course= $('#course').val(); 
+    var title= $('#title').val(); 
     var duration= $('#duration').val(); 
     var author= $('#author').val(); 
     var editor1= $('#editor1').val(); 
     var price= $('#price').val(); 
     var school_price= $('#school_price').val(); 
      
-    if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' || school_price == '' || vals =='')
+    if(title == '' || duration == '' || author == '' || editor1 == '' || price == '' || school_price == '' || vals =='')
                   {
 		        alert('Please make sure all fields are filled.');
                 event.preventDefault();
