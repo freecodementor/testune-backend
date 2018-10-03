@@ -99,7 +99,7 @@ else{
                 <input type="text" value="<?php if(isset($speaker)){echo $speaker;}else{}?>" name="speaker" id="speaker" placeholder="Speaker" class="course__field">
             </div>
             <div class="inner_text-sub" style="margin:10px ">
-                <input type="text" value="<?php if(isset($duration)){echo "a".date("h:i",$duration);}else{}?>" name="duration" id="duration" placeholder="Duration in HH:MM" class="course__field">
+                <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Duration in HH:MM" class="course__field">
             </div>
         </div>
         <div class="select-section">
@@ -222,24 +222,18 @@ else{
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script> 
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        
-   
-        <script language="javascript">
-        
-        
-        
+    <script language="javascript">
         function ajaxbackend(){
-            //for checkboxes
-    var checkboxes = document.getElementsByName('class[]');
-    var vals = "";
-    for (var i=0, n=checkboxes.length;i<n;i++) 
-    {
-        if (checkboxes[i].checked) 
+        var checkboxes = document.getElementsByName('class[]');
+        var vals = "";
+        for (var i=0, n=checkboxes.length;i<n;i++) 
         {
-            vals += ","+checkboxes[i].value;
+            if (checkboxes[i].checked) 
+            {
+                vals += ","+checkboxes[i].value;
+            }
         }
-    }
-    if (vals) vals = vals.substring(1);
+        if (vals) vals = vals.substring(1);
             for (instance in CKEDITOR.instances) { CKEDITOR.instances[instance].updateElement(); }
             var course= $('#course').val(); 
             var duration= $('#duration').val(); 
