@@ -33,8 +33,7 @@ if(isset($_POST['action']))
 
     else if ($_POST['action']=='publish') 
       {           
-        $check="SELECT * FROM webinar WHERE title = '$title'";
-        echo $check;
+        $check="SELECT * FROM webinar WHERE title = '$title'";        
         $result1 = $conn->query($check);
         $num_rows = mysqli_num_rows($result1);
     
