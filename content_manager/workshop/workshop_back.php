@@ -6,7 +6,7 @@ include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 
-$course = $_POST['course'];
+$course = $_POST['title'];
 $editor1 = $_POST['editor1'];
 $editor2 = $_POST['editor2'];
 $editor3 = $_POST['editor3'];
@@ -82,7 +82,7 @@ if(isset($_POST['action']))
     
         if ($num_rows>=1) 
         {        
-        echo "Workshop Already Exists";        
+        echo "exists";        
          } 
     
         else 
@@ -101,12 +101,10 @@ if(isset($_POST['action']))
                              if ($_FILES['secondary']['name']==''){}else{ $sql .= "'$s',";}
                              if ($_FILES['icon']['name']==''){}else{ $sql .= "'$i',";} 
                              $sql .= "'$editor3','$vendor','$club_id','$start','$end','$date','$duration');";
-                            $sql .= "SELECT LAST_INSERT_ID()"; 
-                            
+                            $sql .= "SELECT LAST_INSERT_ID()";                             
                             if ($conn->multi_query($sql))
-                            {     
-                                do {
-                                    
+                            {
+                                do {                                    
                                             if ($result = $conn->store_result()) 
                                             {
                                                 while ($row = $result->fetch_row()) 
