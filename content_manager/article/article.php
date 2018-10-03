@@ -75,10 +75,13 @@ else{
             </div>
             <h1 class="text-head">Enter Description Below: </h1>
             <textarea name="editor1"><?php if(isset($description)){echo $description;}else{}?></textarea>
-            <div class="left-right-div">                
-                <div class="input-group">
-                    <input type="text" value="<?php if(isset($author)){echo $author;}else{}?>" name="author" id="author" placeholder="Enter Author Name" />
-                </div>
+            <div class="left-right-div"> 
+            <div class="input-group">
+                    <input type="text" value="<?php if(isset($duration)){echo $duration;}else{}?>" name="duration" id="duration" placeholder="Enter Duration In HH:MM" />
+            </div>               
+            <div class="input-group">
+                <input type="text" value="<?php if(isset($author)){echo $author;}else{}?>" name="author" id="author" placeholder="Enter Author Name" />
+            </div>
             </div>            
             <p class="para-text" style="margin: 25px 0 0 0">Choose a topic that interests you enough to focus on it for
                 at least a week or

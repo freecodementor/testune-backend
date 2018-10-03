@@ -7,7 +7,7 @@ include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 
-$description_line = $_POST['course'];
+$description_line = $_POST['title'];
 $description = $_POST['editor1'];
 $learning = $_POST['editor2'];
 $price = $_POST['mrp_price'];
