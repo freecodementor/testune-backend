@@ -5,7 +5,7 @@ $club_id = "club_web";
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-$title = $_POST['course'];
+$title = $_POST['title'];
 $description_line = $_POST['editor1'];
 $duration = $_POST['duration'];
 $learning = $_POST['editor2'];
@@ -69,7 +69,7 @@ if(isset($_POST['action']))
     
         if ($num_rows>=1) 
         {        
-        echo "Video Already Exists";        
+        echo "exists";        
          } 
     
         else 

@@ -334,7 +334,11 @@ else{
                             if (data=='success')
                         {alert('Published Successfully !');
                         location.reload(true); 
-                        }else if(data=='updated')
+                        }else if(data=='exists')
+                        {
+                            alert('Already Exists !');
+                        }    
+                        else if(data=='updated')
                         {
                             alert('Updated Successfully !');
                             $("#submit").html('Updated');

@@ -306,7 +306,7 @@ else{
                         {alert('Published Successfully !');
                         location.reload(true); 
                         }else if(data=='exists')
-                        {}
+                        {alert('Already Exists !');}
                         else if(data=='updated')
                         {
                             alert('Updated Successfully !');

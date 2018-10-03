@@ -58,7 +58,7 @@ if(isset($_POST['action']))
         $num_rows = mysqli_num_rows($result1);    
         if ($num_rows>=1) 
         {        
-        echo "Article Already Exists";        
+        echo "exists";        
          }     
         else 
         {

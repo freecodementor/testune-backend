@@ -81,7 +81,7 @@ if(isset($_POST['action']))
     
         if ($num_rows>=1) 
         {        
-        echo "Course Already Exists";        
+        echo "exists";        
          } 
     
         else 
