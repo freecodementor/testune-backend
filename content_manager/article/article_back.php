@@ -7,7 +7,6 @@ $database = new Database();
 $conn = $database->getConnection();
 $name = $_POST['course'];
 $description = $_POST['editor1'];
-$duration = $_POST['duration'];
 $author = $_POST['author'];
 $price = $_POST['mrp_price'];
 $school_price = $_POST['school_price'];
@@ -31,7 +30,7 @@ if(isset($_POST['action']))
         //Data Upload
                 $article_id=$_POST['id'];
                 $art_up = "SELECT article_file from article where article_id = '$article_id'; ";
-                $art_up .= "UPDATE  article SET name = '$name', description='$description',duration='$duration',author='$author',class_applicable_for='$class',subscription_level='$sub',";
+                $art_up .= "UPDATE  article SET name = '$name', description='$description',author='$author',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$art_up .= "article_file='$f',";}
                 $art_up .= "school_price='$school_price',mrp_price='$price', club_id='$club_id',vendor_id='$vendor_id' where article_id= '$article_id'";
                 if ($conn->multi_query($art_up))
@@ -69,9 +68,9 @@ if(isset($_POST['action']))
                 $f=ren_save();                     
                             //Data Upload
 
-                            $sql = "INSERT INTO article  (name,description,duration,author,class_applicable_for,subscription_level,";
+                            $sql = "INSERT INTO article  (name,description,author,class_applicable_for,subscription_level,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "article_file,";}
-                            $sql .= "mrp_price,school_price,club_id,vendor_id) VALUES ('$name','$description','$duration','$author','$class','$sub',";
+                            $sql .= "mrp_price,school_price,club_id,vendor_id) VALUES ('$name','$description','$author','$class','$sub',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
                             $sql .= "'$price','$school_price','$club_id','$vendor_id');";
                             $sql .= "SELECT LAST_INSERT_ID()";                             
