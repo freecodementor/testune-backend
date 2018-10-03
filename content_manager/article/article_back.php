@@ -24,11 +24,9 @@ function ren_save($id = 'fileToUpload'){
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
-    { 
-        //New Img with new name upload       
-        $f=ren_save();          
-        //Data Upload
-                $article_id=$_POST['id'];
+    {               
+        $f=ren_save();//FILE UPLOAD        
+/*DATA UPLOAD*/ $article_id=$_POST['id'];
                 $art_up = "SELECT article_file from article where article_id = '$article_id'; ";
                 $art_up .= "UPDATE  article SET name = '$name', description='$description',author='$author',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$art_up .= "article_file='$f',";}
