@@ -18,12 +18,9 @@ $end = $_POST['end'];
 $duration = $_POST['duration'];
 $vendor = $_POST['vendor'];
 $date=$_POST['date'];
-$str_p='primary';
-$srt_s='secondary';
-$str_i='icon';
 $class = $_POST['class'];
 $sub=$_POST['sub'];
-function ren_save($id){
+function ren_save($id = 'fileToUpload'){
     $target_dir = "../../assets/workshop/";
     $f = basename($_FILES[$id]["name"]);
     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
@@ -37,9 +34,9 @@ if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     {                            //File update
-                                    $p=ren_save($str_p);
-                                    $s=ren_save($srt_s);
-                                    $i=ren_save($str_i);                                                 
+                                    $p=ren_save('primary');
+                                    $s=ren_save('secondary');
+                                    $i=ren_save('icon');                                                 
                              //Data update
                             $workshop_id=$_POST['id'];    
                             $work_up = "SELECT primary_image,secondary_image,course_icon from workshop where workshop_id = '$workshop_id'; ";                               
@@ -57,11 +54,22 @@ if(isset($_POST['action']))
                                 { 
                                     while ($row = $result->fetch_row()) 
                                     {       
-                                        for ($i=0;$i<3;$i++){
-                                            if(isset($row[$i])){ $var = (string) $row[$i];
-                                                error_reporting(0); 
-                                                if(!unlink('../../assets/workshop/'.$var)){}else{} }else{}                                     
-                                        }                             
+                                        if($_FILES['primary']['name']!==''){ 
+                                            $var = (string) $row[0];    
+                                            error_reporting(0); 
+                                            if(!unlink('../../assets/workshop/'.$var)){}else{}                                
+                                        }
+                                        if($_FILES['secondary']['name']!==''){ 
+                                            $var = (string) $row[1];    
+                                            error_reporting(0); 
+                                            if(!unlink('../../assets/workshop/'.$var)){}else{}                                
+                                        }
+                                        if($_FILES['icon']['name']!==''){ 
+                                            $var = (string) $row[2];
+                                            error_reporting(0); 
+                                            if(!unlink('../../assets/workshop/'.$var)){}else{}                                
+                                        }                                       
+                                            else{}                             
                                     }    
                                     echo 'updated';                       
                                 }  
@@ -88,9 +96,9 @@ if(isset($_POST['action']))
         else 
         {
                              //File upload
-                             $p=ren_save($str_p);
-                             $s=ren_save($srt_s);
-                             $i=ren_save($str_i);
+                             $p=ren_save('primary');
+                             $s=ren_save('secondary');
+                             $i=ren_save('icon');
                             //Data Upload                             
                             $sql = "INSERT INTO workshop  (title,description_line,no_of_classes,mrp_price,school_price,learning,class_applicable_for,subscription_level,";
                             if ($_FILES['primary']['name']==''){}else{ $sql .= "primary_image,";}

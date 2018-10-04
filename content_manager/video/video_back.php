@@ -33,7 +33,7 @@ if(isset($_POST['action']))
     {             
         $f=ren_save();        
                 $video_id=$_POST['id'];
-                $vid_up = "SELECT video_file from video where video_id = '$video_id'; ";
+                $vid_up = "SELECT video_file,link from video where video_id = '$video_id'; ";
                 $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
                 if($link ==''){}else{$link .= "video_file='$link',";}
@@ -44,11 +44,13 @@ if(isset($_POST['action']))
                         
                                 if ($result = $conn->store_result()){
                                     while ($row = $result->fetch_row()){               
-                                        $var = (string) $row[0];
-                                        error_reporting(0); 
-                                        if(!unlink('../../assets/video/'.$var)){}else{}
-                                        echo 'updated';
-                                    }              
+                                        if($_FILES['fileToUpload']['name']!==''){
+                                            $var = (string) $row[0];
+                                            error_reporting(0); 
+                                            if(!unlink('../../assets/video/'.$var)){}else{}
+                                        }
+                                    } 
+                                    echo 'updated';             
                                 }                                 
                            }
                         while ($conn->next_result());

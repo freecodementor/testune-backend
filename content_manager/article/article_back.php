@@ -25,11 +25,13 @@ if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
     {               
-        $f=ren_save();//FILE UPLOAD        
+        $f=ren_save();
+        $i=ren_save('icon');//FILE UPLOAD        
 /*DATA UPLOAD*/ $article_id=$_POST['id'];
-                $art_up = "SELECT article_file from article where article_id = '$article_id'; ";
+                $art_up = "SELECT article_file,icon from article where article_id = '$article_id'; ";
                 $art_up .= "UPDATE  article SET name = '$name', description='$description',author='$author',class_applicable_for='$class',subscription_level='$sub',";
                 if($_FILES['fileToUpload']['name']==''){}else{$art_up .= "article_file='$f',";}
+                if($_FILES['icon']['name']==''){}else{$art_up .= "icon='$i',";}
                 $art_up .= "school_price='$school_price',mrp_price='$price', club_id='$club_id',vendor_id='$vendor_id' where article_id= '$article_id'";
                 if ($conn->multi_query($art_up))
                 {       
@@ -38,11 +40,17 @@ if(isset($_POST['action']))
                                 { 
                                     while ($row = $result->fetch_row()) 
                                         {       
-                                            for ($i=0;$i<3;$i++){
-                                                if(isset($row[$i])){ $var = (string) $row[$i];
+                                            
+                                                if($_FILES['fileToUpload']['name']!==''){ $var = (string) $row[0];  
                                                     error_reporting(0); 
-                                                    if(!unlink('../../assets/article/'.$var)){}else{}}else{}                                       
-                                            }                             
+                                                    if(!unlink('../../assets/article/'.$var)){}else{}
+                                                }
+                                                if($_FILES['icon']['name']!==''){ $var = (string) $row[1];
+                                                        error_reporting(0); 
+                                                        if(!unlink('../../assets/article/'.$var)){}else{}
+                                                }
+                                                else{}                                       
+                                                                       
                                         }    
                                     echo 'updated';                       
                                 }  
@@ -63,13 +71,16 @@ if(isset($_POST['action']))
         else 
         {
                //File upload                
-                $f=ren_save();                     
+                $f=ren_save(); 
+                $i=ren_save('icon');                     
                             //Data Upload
 
                             $sql = "INSERT INTO article  (name,description,author,class_applicable_for,subscription_level,";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "article_file,";}
+                            if($_FILES['icon']['name']==''){}else{$sql .= "icon,";}
                             $sql .= "mrp_price,school_price,club_id,vendor_id) VALUES ('$name','$description','$author','$class','$sub',";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= "'$f',";}
+                            if($_FILES['icon']['name']==''){}else{$sql .= "'$i',";}
                             $sql .= "'$price','$school_price','$club_id','$vendor_id');";
                             $sql .= "SELECT LAST_INSERT_ID()";                             
                             if ($conn->multi_query($sql))

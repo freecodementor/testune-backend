@@ -234,13 +234,14 @@ else{
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Upload Video File Below</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Upload File Below</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input id="fileToUpload" type="file" name="fileToUpload">
+                    <label>Upload PDF:</label><br><input id="fileToUpload" type="file" name="fileToUpload"><br>
+                    <br><label>Upload Article Image:</label><br><input id="icon" type="file" name="icon">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Save changes</button>
@@ -339,7 +340,7 @@ else{
                             if (data=='success')
                         {alert('Published Successfully !');
                         location.reload(true); 
-                        }else if(data=='updated')
+                        }else if(data=='exists')
                         {alert('Already Exists !');}
                         else if(data=='updated')
                         {

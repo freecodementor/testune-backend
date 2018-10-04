@@ -49,8 +49,10 @@ if(isset($_POST['action']))
                                     {               
                                     $var = (string) $row[0];
                                     
-                                    error_reporting(0); 
-                                                if(!unlink('../../assets/ebook/'.$var)){}else{}
+                                    error_reporting(0);
+                                    if($_FILES['fileToUpload']['name']!==''){
+                                    if(!unlink('../../assets/ebook/'.$var)){}else{}
+                                    }
                                     echo 'updated';
                                     }                                    
                                     
