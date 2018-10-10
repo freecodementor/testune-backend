@@ -87,23 +87,23 @@ $conn->close();
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value='1' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='1' class="demo_check primary" <?php if(isset($_POST['class1'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class1'>Class 1</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value="2" class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value="2" class="demo_check primary" <?php if(isset($_POST['class2'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class2'>Class 2</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value='3' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='3' class="demo_check primary" <?php if(isset($_POST['class3'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class3'>Class 3</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value='4' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='4' class="demo_check primary" <?php if(isset($_POST['class4'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class4'>Class 4</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value='5' class="demo_check primary"> <br>
+                    <input type="checkbox" name="class[]"  value='5' class="demo_check primary" <?php if(isset($_POST['class5'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class5'>Class 5</label>
                 </div>
             </div><br>
@@ -113,15 +113,15 @@ $conn->close();
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]" value='6' class="demo_check secondary secondary"> <br>
+                    <input type="checkbox" name="class[]" value='6' class="demo_check secondary secondary" <?php if(isset($_POST['class6'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class1'>Class 6</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value="7" class="demo_check secondary"> <br>
+                    <input type="checkbox" name="class[]"  value="7" class="demo_check secondary" <?php if(isset($_POST['class7'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class2'>Class 7</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value='8' class="demo_check secondary"> <br>
+                    <input type="checkbox" name="class[]"  value='8' class="demo_check secondary" <?php if(isset($_POST['class8'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class3'>Class 8</label>
                 </div>
             </div><br>
@@ -131,25 +131,25 @@ $conn->close();
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]" value='9' class="demo_check sen_secondary"> <br>
+                    <input type="checkbox" name="class[]" value='9' class="demo_check sen_secondary" <?php if(isset($_POST['class9'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class1'>Class 9</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value='10' class="demo_check sen_secondary"> <br>
+                    <input type="checkbox" name="class[]"  value='10' class="demo_check sen_secondary" <?php if(isset($_POST['class10'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class2'>Class 10</label>
                 </div>
             </div><br>
             <div class="first-half-wrapper">
                 <h1 class="first-half__header">Senior</h1>
-                <input type="checkbox"  id="senior" class="first-half__check senior_master">
+                <input type="checkbox"  id="senior" class="first-half__check senior_master" >
             </div>
             <div class='row '>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]" value='11' class="demo_check senior"> <br>
+                    <input type="checkbox" name="class[]" value='11' class="demo_check senior" <?php if(isset($_POST['class11'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class1'>Class 11</label>
                 </div>
                 <div class='col-sm-1'>
-                    <input type="checkbox" name="class[]"  value='12' class="demo_check senior"> <br>
+                    <input type="checkbox" name="class[]"  value='12' class="demo_check senior" <?php if(isset($_POST['class12'])){echo 'checked="checked"';}else{}?>> <br>
                     <label for='class2'>Class 12</label>
                 </div>
             </div><br>
