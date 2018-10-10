@@ -4,75 +4,6 @@
     box-sizing: border-box;
 }
 
-#ebookfile {
-    width: 700px !important;
-    height: 500px !important;
-    margin: 0 auto;
-    display: block;
-}
-
-header {
-    background-color: black;
-    padding: 20px;
-    text-align: center;
-    color: white;
-}
-
-footer {
-    background-color: black;
-    padding: 10px;
-    text-align: center;
-    color: white;
-}
-
-.page {
-    background-color: #fbcb31;
-    font-size: 28px;
-    width: 100%;
-}
-
-.font {
-    font-size: 20px;
-}
-
-input[type="radio"] {
-    margin: 0px 0px 0px 20px;
-    -webkit-appearance: checkbox;/ Chrome,
-    Safari,
-    Opera / -moz-appearance: checkbox;/ Firefox /
-}
-
-.spacing {
-    margin: 0px 0px 0px 30px;
-}
-
-.gender_rad {
-    margin: 0px;
-}
-
-input[type="text"] {
-    width: 30%;
-    align-items: center;
-}
-
-.__btn {
-    font-size: 18px;
-    text-transform: uppercase;
-    background-color: rgb(202, 71, 71);
-    margin: 20px 0;
-}
-
-input[type="time"] {
-    margin: 10px 0px 10px 30px;
-    width: 20%;
-}
-
-.timeSection {
-    background-color: #fbcb31;
-    font-size: 16px;
-    margin: 10px 0px 10px 30px;
-}
-
 html {
     font-family: "Nunito", sans-serif;
     font-size: 16px;
@@ -87,6 +18,7 @@ body {
     margin: 0;
     padding-bottom: 6rem;
     min-height: 100%;
+    background: linear-gradient(to left, #6190e8, #a7bfe8);
 }
 
 .banner {
@@ -97,6 +29,7 @@ body {
     font-size: 1.2em;
     font-weight: 400;
     color: #ffffff;
+    padding-left: 15px;
 }
 
 .banner::before,
@@ -140,10 +73,6 @@ body {
     font-size: 2vmax;
     line-height: 2.85714286vmax;
     letter-spacing: 2px;
-}
-
-.content {
-    padding: 5vmax;
 }
 
 .navigationBar {
@@ -337,7 +266,6 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
-    text-align: center;
 }
 
 .desc-detail-wrap-new {
@@ -349,11 +277,36 @@ body {
 
 .desc-text {
     padding: 0;
-    font-size: 19px;
-    color: #363636;
+    font-size: 20px;
+    color: #777;
     font-weight: 900;
     letter-spacing: 1px;
-    margin: 15px 0;
+    margin: 5px 0;
+}
+
+.desc-box {
+    background: #fff;
+    border-radius: 2px;
+    display: block;
+    height: 140px;
+    position: relative;
+    padding: 12px 0;
+    margin-top: 10px;
+}
+
+.desc-box {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.desc-box:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.desc-image {
+    height: 72px;
+    margin: 0 auto;
+    display: block;
 }
 
 .pre-list {
@@ -434,21 +387,6 @@ body {
     transform: rotate(3deg);
     right: 10px;
     left: auto;
-}
-
-.last-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-}
-
-.last-text {
-    padding: 0;
-    font-size: 26px;
-    color: #7e7e7e;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin: 15px 0;
 }
 
 .div-gap {
@@ -820,7 +758,6 @@ select {
   #page-table tr:hover {
     background-color: #ddd;
   } */
-
 #page-table th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -1953,6 +1890,11 @@ html {
     height: 100%;
 }
 
+#ebookfile {
+    width: 700px;
+    height: 500px;
+}
+
 body {
     font-family: "Nunito", sans-serif;
     position: relative;
@@ -2012,10 +1954,6 @@ body {
     font-size: 2vmax;
     line-height: 2.85714286vmax;
     letter-spacing: 2px;
-}
-
-.content {
-    padding: 5vmax;
 }
 
 .navigationBar {
@@ -2219,15 +2157,6 @@ body {
     text-align: center;
 }
 
-.desc-text {
-    padding: 0;
-    font-size: 19px;
-    color: #363636;
-    font-weight: 900;
-    letter-spacing: 1px;
-    margin: 15px 0;
-}
-
 .pre-list {
     margin-left: 35px !important;
     color: #7e7e7e;
@@ -2311,17 +2240,17 @@ body {
 .last-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
-
     justify-items: center;
 }
 
 .last-text {
-    padding: 0;
-    font-size: 26px;
+    padding: 10px 15px;
+    font-size: 20px;
     color: #7e7e7e;
     font-weight: 700;
     letter-spacing: 1px;
     margin: 15px 0;
+    text-align: center;
 }
 
 .div-gap {
@@ -2346,7 +2275,6 @@ body {
     font-size: 24px;
     text-align: center;
     text-transform: uppercase;
-
     margin-bottom: 10px;
     color: #777;
 }
@@ -2395,4 +2323,38 @@ body {
     height: 120px;
     margin: 15px auto 0 auto;
     display: block;
+}
+
+.main-box {
+    background: #fff;
+    margin: 20px auto;
+    padding: 5px 15px;
+    border-radius: 2px;
+}
+
+.box-effect-2 {
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+
+.dep-head {
+    font-size: 42px;
+    color: #777;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin: 10px 0 25px 0;
+}
+
+.dep-head-sub {
+    font-size: 24px;
+    margin: 15px 0 10px 0;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #363636;
+    padding-left: 25px;
+}
+
+.new-rdn-btn {
+    margin: 0 15px;
 }

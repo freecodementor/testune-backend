@@ -5,6 +5,8 @@
   font-family: "Josefin Sans", sans-serif;
 }
 
+
+
 html {
   font-size: 100%;
   line-height: 190%;
@@ -341,19 +343,23 @@ body {
     width: 200px;
     margin-top: 2px;
   }
+
   .description__section {
     margin: 5px 10px;
   }
+
   .duration {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin: 5px;
   }
+
   .select-section {
     margin: 30px 5px;
     height: 200px;
   }
+
   .p__btn {
     width: 100%;
     margin: 10px 0 50px 0;
@@ -466,13 +472,16 @@ body {
 .headPage {
   font-size: 20px;
 }
+
 .hi {
   float: right;
 }
+
 .font {
   font-size: 20px;
   padding: 10px;
 }
+
 table,
 th,
 td {
@@ -482,11 +491,13 @@ td {
   background-color: white;
   width: 70%;
 }
+
 .tableProperty {
   width: 50%;
   text-align: left;
   font-size: 20px;
 }
+
 td {
   width: 10%;
   text-align: center;
@@ -580,6 +591,7 @@ td {
 .main-row {
   height: auto;
 }
+
 .gap {
   margin-bottom: 5px;
 }
