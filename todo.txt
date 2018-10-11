@@ -1,3 +1,0 @@
-Add MRP PRice instead of price and school offer field and make changes in db
-clubcoordinator/ display mrp price and school offer price, class app and sub level
-deploy remove days and keep start and end only
