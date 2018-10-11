@@ -176,7 +176,9 @@ $conn = $database->getConnection();
             font-size:x-large;
         }
     </style>
+
 </head>
+
 <body>
     <div class="time-wrapper">
         <div class="page-container">
@@ -241,7 +243,8 @@ $conn = $database->getConnection();
                     </div>
                 </div>
             </div>
-        </header>    
+        </header>
+    
         <div class="topnav" id="myTopnav">
             <div class="page-container">
                 <a href="#contact" style="font-weight: 900;font-size: 15px;background-color: #82024f;color: #fff;"><i class="fas fa-home"></i></a>
@@ -254,13 +257,16 @@ $conn = $database->getConnection();
                         <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Courses</a>
                         <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Uploads</a>
                         <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Workshops</a>
-                        <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Downloads</a>    
+                        <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">My Downloads</a>
+    
                     </div>
                 </div>
                 <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">FAQs</a>
                 <a href="#" style="font-size: 15px;font-weight: 900" class="webinar">Contact</a>
             </div>
-        </div> 
+        </div>
+    
+    
         <div class="page-container new-row">
             <div class="row justify-content-center" style="margin-left:0">
                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 color">
@@ -282,7 +288,8 @@ $conn = $database->getConnection();
                             <p class="club-description-common">Disclaimer:This electronic message (e-mail) including
                                 any
                                 files transmitted as its
-                                attachment, is for the sole use of</p>                            
+                                attachment, is for the sole use of</p>
+                            
                             <i class="fas fa-clock float-left-icon">
                                 <span><?php if(isset($work_start)){echo date('g:i A',strtotime($work_start));}else{}?> to <?php if(isset($work_end)){echo date('g:i A',strtotime($work_end));}else{}?></span>
                             </i>
@@ -302,7 +309,8 @@ $conn = $database->getConnection();
                                 attachment, is for the sole use of</p>
                             <i class="fas fa-clock float-left-icon">
                             <span><?php if(isset($web_start)){echo date('g:i A',strtotime($web_start));}else{}?> to <?php if(isset($web_end)){echo date('g:i A',strtotime($web_end));}else{}?></span>
-                            </i>                            
+                            </i>
+                            
                         </div>
                     </div>
                     <a href="#" class="upcoming-link">All Upcoming Events<i class="fas fa-hand-point-right secondary-icons"></i></a>
@@ -369,7 +377,10 @@ $conn = $database->getConnection();
                         <div id="spotlight1 " class="span12 ">
                             <div class="module blank tabs-spotlight1 ">
                                 <div class="modcontent clearfix ">
+
+
                                     <div id="moduletabs_469587721535195993 " class="moduletabs top-position clearfix ">
+
                                         <div class="tabs-content-wrap ">
                                             <div class="tabs-content ">
                                                 <div class="tabs-content-inner ">
@@ -377,17 +388,23 @@ $conn = $database->getConnection();
                                                         <div id="k2ModuleBox234 " class="k2ItemsBlock zoom-image ">
                                                             <ul>
                                                                 <li class="span6 first ">
+
+
                                                                     <div class="moduleItemIntrotext ">
                                                                         <a class="moduleItemImage " href="https://www.techrepublic.com/article/internet-of-things-iot-cheat-sheet/">
                                                                             <img src="assets/images/<?php if(isset($article[0][3])){echo $article[0][3];}else{} ?>" style="height:120px;">
                                                                         </a>
+
                                                                         <div class="title ">
                                                                             <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/426-nire-mase-ruma-pola-kita-sire "><?php if(isset($article[0][0])){echo $article[0][0];}else{} ?></a>
                                                                         </div>
+
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
                                                                             <?php if(isset($article[0][2])){echo date('D, d M Y',strtotime($article[0][2]));}else{} ?> </span>
+
                                                                         <div><?php if(isset($article[0][1])){echo mb_strimwidth(strip_tags($article[0][1]), 0, 100, "...");}else{}  ?></div>
+
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-1">
                                                                             <i class="fas fa-angle-right"></i>
@@ -395,24 +412,32 @@ $conn = $database->getConnection();
                                                                         <!--    <a href="#" style="float: right;margin-top: 15px;">More
                                                                             Info <i class="fas fa-angle-right"></i></a> -->
                                                                     </div>
+
                                                                     <div class="clr "></div>
+
                                                                     <div class="clr "></div>
+
                                                                     <div class="clr "></div>
                                                                 </li>
                                                                 <li class="span6 ">
+
                                                                     <div class="moduleItemIntrotext ">
                                                                         <a class="moduleItemImage " href="https://www.wired.co.uk/article/internet-of-things-what-is-explained-iot"
                                                                             title="Continue reading &quot;Nire haze duma kote gace bika&quot; ">
                                                                             <img src="assets/images/<?php if(isset($article[1][3])){echo $article[1][3];}else{} ?>" style="height:120px;">
                                                                         </a>
+
                                                                         <div class="title ">
                                                                             <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/425-nire-haze-duma-kote-gace-bika ">
                                                                             <?php if(isset($article[1][0])){echo $article[1][0];}else{} ?></a>
                                                                         </div>
+
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
                                                                             <?php if(isset($article[1][2])){echo date('D, d M Y',strtotime($article[1][2]));}else{} ?></span>
+
                                                                         <div><?php if(isset($article[1][1])){echo mb_strimwidth(strip_tags($article[1][1]), 0, 100, "...");}else{}  ?></div>
+
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-2">
                                                                             <i class="fas fa-angle-right"></i>
@@ -431,13 +456,17 @@ $conn = $database->getConnection();
                                                                             title="Continue reading &quot;Karun maso poka nace vire nase&quot; ">
                                                                             <img src="assets/images/<?php if(isset($article[2][3])){echo $article[2][3];}else{} ?>" style="height:120px;">
                                                                         </a>
+
                                                                         <div class="title ">
                                                                             <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/424-karun-maso-poka-nace-vire-nase "><?php if(isset($article[2][0])){echo $article[2][0];}else{} ?></a>
                                                                         </div>
+
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
                                                                             <?php if(isset($article[2][2])){echo date('D, d M Y',strtotime($article[2][2]));}else{} ?></span>
+
                                                                         <div><?php if(isset($article[2][1])){echo mb_strimwidth(strip_tags($article[2][1]), 0, 100, "...");}else{}  ?></div>
+
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-3">
                                                                             <i class="fas fa-angle-right"></i>
@@ -445,6 +474,7 @@ $conn = $database->getConnection();
                                                                         <!-- <a href="#" style="float: right;margin-top: 15px;">More
                                                                             Info <i class="fas fa-angle-right"></i></a> -->
                                                                     </div>
+
                                                                     <div class="clr "></div>
                                                                     <div class="clr "></div>
                                                                     <div class="clr "></div>
@@ -455,13 +485,17 @@ $conn = $database->getConnection();
                                                                             title="Continue reading &quot;Gamu poza sima kite rima cola&quot; ">
                                                                             <img src="assets/images/<?php if(isset($article[3][3])){echo $article[3][3];}else{} ?>" style="height:120px;">
                                                                         </a>
+
                                                                         <div class="title ">
                                                                             <a class="moduleItemTitle " href="/templates/joomla3/sj-flat-news/index.php/component/k2/item/423-gamu-poza-sima-kite-rima-cola "><?php if(isset($article[3][0])){echo $article[3][0];}else{} ?></a>
                                                                         </div>
+
                                                                         <span class="moduleItemDateCreated ">
                                                                             <i class="far fa-calendar"></i>
                                                                             <?php if(isset($article[3][2])){echo date('D, d M Y',strtotime($article[3][2]));}else{} ?></span>
+
                                                                         <div><?php if(isset($article[3][1])){echo mb_strimwidth(strip_tags($article[3][1]), 0, 100, "...");}else{}  ?></div>
+
                                                                         <a class="moduleItemReadMore " href="#"
                                                                             data-toggle="modal" data-target="#exampleModalCenter-4">
                                                                             <i class="fas fa-angle-right"></i>
@@ -478,6 +512,7 @@ $conn = $database->getConnection();
                                                             </ul>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -504,8 +539,11 @@ $conn = $database->getConnection();
                 </div>
                 <div class=" innerItem-description ">
                     <h1 class="video-title "><?php if(isset($video[0][2])){echo $video[0][2];}else{} ?>
+
                     </h1>
-                    <i class="far fa-calendar" style="color:#cccccc;font-size:12px;letter-spacing:1px; ">
+
+                    <i class="far fa-calendar" style="color:#cccccc;font-size:12px;letter-spacing:
+                                            1px; ">
                         <span>
                         <?php if(isset($video[0][3])){echo date('D, d M Y',strtotime($video[0][3]));}else{} ?>
                         </span></i>
@@ -523,8 +561,10 @@ $conn = $database->getConnection();
                 </div>
                 <div class="innerItem-description ">
                     <h1 class="video-title "><?php if(isset($video[1][2])){echo $video[1][2];}else{} ?>
+
                     </h1>
-                    <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:1px; ">
+                    <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:
+                                            1px; ">
                         <span>
                         <?php if(isset($video[1][3])){echo date('D, d M Y',strtotime($video[1][3]));}else{} ?>                           
                         </span></i>
@@ -543,10 +583,12 @@ $conn = $database->getConnection();
                 </div>
                 <div class="innerItem-description ">
                     <h1 class="video-title "><?php if(isset($video[2][2])){echo $video[2][2];}else{} ?>
+
                     </h1>
                     <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:1px; ">
                         <span>
-                        <?php if(isset($video[2][3])){echo date('D, d M Y',strtotime($video[2][3]));}else{} ?>                            
+                        <?php if(isset($video[2][3])){echo date('D, d M Y',strtotime($video[2][3]));}else{} ?>
+                            
                         </span></i>
                     <a href="# " style="font-size:12px;color: #cccccc;float: right;margin-bottom: -15px ">
                         <i class="far fa-comments "></i>
@@ -562,6 +604,7 @@ $conn = $database->getConnection();
                         <i class="fa fa-play icon-play"></i>
                     </a>
                 </div>
+
                 <div class="innerItem-description ">
                     <h1 class="video-title "><?php if(isset($video[3][2])){echo $video[3][2];}else{} ?>
                         <span>
@@ -569,7 +612,8 @@ $conn = $database->getConnection();
                                 Info <i class="fas fa-angle-right"></i></a>
                         </span>
                     </h1>
-                    <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:1px; ">
+                    <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:
+                                            1px; ">
                         <span>
                         <?php if(isset($video[3][3])){echo date('D, d M Y',strtotime($video[3][3]));}else{} ?>
                         </span></i>
@@ -587,10 +631,12 @@ $conn = $database->getConnection();
                         <i class="fa fa-play icon-play"></i>
                     </a>
                 </div>
+
                 <div class="innerItem-description ">
                     <h1 class="video-title "><?php if(isset($video[4][2])){echo $video[4][2];}else{} ?>
                     </h1>
-                    <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:1px; ">
+                    <i class="far fa-calendar " style="color:#cccccc;font-size: 12px;letter-spacing:
+                                            1px; ">
                         <span>
                         <?php if(isset($video[4][3])){echo date('D, d M Y',strtotime($video[4][3]));}else{} ?>
                         </span></i>
@@ -619,6 +665,7 @@ $conn = $database->getConnection();
                                       <div class="apester-media" data-media-id="5b9f5c37d4b9a935cd6fb9ae" height="434"></div><script async src="https://static.apester.com/js/sdk/latest/apester-sdk.js"></script>
                                         <div class="clr "></div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -725,6 +772,7 @@ $conn = $database->getConnection();
                 <div class="inner-community">
                     <p>I Have Wings</p>
                 </div>
+
             </div>
             <div class="fourth-community commons-div">
                 <div class="inner-community">
@@ -739,6 +787,7 @@ $conn = $database->getConnection();
                 </div>
             </div>
         </div>
+
     </div>
     <section style="background-color:#363636;height: 60px">
         <h1 class="footer-inner"> Powered by <span style="color:#2abfd4"> <a href="www.wingxp.com" class="footer-link">
@@ -754,7 +803,8 @@ $conn = $database->getConnection();
                 <div class="modal-header" style="background: #82024f;">
                     <h5 class="mod-title" id="exampleModalLabel">Why Clubs</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" style="font-size: 30px;"><i class="fas fa-times-circle"
+                        <span aria-hidden="true" style="font-size: 30px;
+                       "><i class="fas fa-times-circle"
                                 style="margin-top: 15px;  color: #fff;"></i></span>
                     </button>
                 </div>
