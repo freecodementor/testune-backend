@@ -42,7 +42,7 @@ if(isset($_POST['action']))
                             $workshop_id=$_POST['id'];    
                             $work_up = "SELECT primary_image,secondary_image,course_icon from workshop where workshop_id = '$workshop_id'; ";                               
                             $work_up .= "UPDATE  workshop SET title = '$course', speaker='$speaker',description_line='$editor1',class_applicable_for='$class',subscription_level='$sub',
-                            no_of_classes='$classes',school_price='$school_price',mrp_price='$price',learning='$editor3',";
+                            no_of_classes='$classes',school_price='$school_price',mrp_price='$price',learning='$editor2',";
                             if ($_FILES['primary']['name']==''){}else{ $work_up .= "primary_image='$p',";}
                             if ($_FILES['secondary']['name']==''){}else{ $work_up .= "secondary_image='$s',";}
                             if ($_FILES['icon']['name']==''){}else{ $work_up .= "course_icon='$i',";}
