@@ -3,8 +3,6 @@
 include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $vid_up = "SELECT online_test.test_name, online_test.test_creator, online_test.duration, online_test.test_type, 

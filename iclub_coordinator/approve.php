@@ -26,6 +26,9 @@ switch ($type) {
     case 'workshop':
     $approve=  "UPDATE workshop set status='1' where workshop_id='$id'";
         break;
+    case 'quiz':
+        $approve=  "UPDATE quiz set status='1' where quiz_id='$id'";
+        break;
     default:
         echo 'error';
 }

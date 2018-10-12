@@ -1,7 +1,7 @@
 <?php
 session_start();
 //$_SESSION['club_id']="web";
-include_once "../../assets/Users.php";
+include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
@@ -34,7 +34,7 @@ else{
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="../../assets/main.css">
+    <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>

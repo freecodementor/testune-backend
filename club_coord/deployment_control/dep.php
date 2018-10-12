@@ -25,7 +25,10 @@ switch ($type) {
         break;
     case 'live_course':  
     $sql="select mrp_price,school_price from live_course where course_id='$id'";        
-        break;    
+        break; 
+    case 'quiz':  
+        $sql="select mrp_price,school_price from quiz where quiz_id='$id'";        
+        break;   
     default:
         echo 'Please deploy again';
         
