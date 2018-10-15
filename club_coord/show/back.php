@@ -16,26 +16,29 @@ else{
 
 switch ($id) {
     case 'article':
-        $display= "CALL `show_articles`('$club_id');";
+        $display= "CALL `show_articles_cont`('$club_id');";
         break;
     case 'course':
-    $display= "CALL `show_courses`('$club_id');";
+    $display= "CALL `show_courses_cont`('$club_id');";
         break;
     case 'ebook':
-    $display= "CALL `show_ebooks`('$club_id');";
+    $display= "CALL `show_ebooks_cont`('$club_id');";
         break;
     case 'online_test':
-    $display= "CALL `show_online_tests`('$club_id');";
+    $display= "CALL `show_online_tests_cont`('$club_id');";
         break;
     case 'video':
-    $display= "CALL `show_videos`('$club_id');";
+    $display= "CALL `show_videos_cont`('$club_id');";
         break;
     case 'webinar':
-    $display= "CALL `show_webinars`('$club_id');";
+    $display= "CALL `show_webinars_cont`('$club_id');";
         break;
     case 'workshop':
-    $display= "CALL `show_workshops`('$club_id');";
+    $display= "CALL `show_workshops_cont`('$club_id');";
         break;
+    case 'quiz':
+        $display= "CALL `show_quiz_cont`('$club_id');";
+         break;
     default:
         echo 'error';
 }
