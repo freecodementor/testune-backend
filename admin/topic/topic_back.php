@@ -1,23 +1,25 @@
 <?php
-include_once "../assets/Users.php";
+
+include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-$club_category_name = $_POST['club_category_name'];
-$club_category_description = $_POST['club_category_description'];
-
-
+$topic_name = $_POST['topic_name'];
+$topic_desc = $_POST['desc'];
+$start = $_POST['start'];
+$end = $_POST['end'];
+$status =$_POST['status'];
 if(isset($_POST['action']))
 {
-    if ($_POST['action']=='update'){
-        $club_category_id=$_POST['club_category_id'];
-        $club_cat_up = "UPDATE  club_category SET club_category_name = '$club_category_name', club_category_description='$club_category_description' where club_category_id= '$club_category_id'";
-        $conn->query($club_cat_up);
+    if ($_POST['action']=='update'){  
+        $topic_id = $_POST['id'];
+        $topic_up = "UPDATE  topic SET topic_name = '$topic_name', topic_desc='$topic_desc', start_date='$start', end_date='$end',status='$status' where topic_id= '$topic_id'";
+        $conn->query($topic_up);
         echo "updated";
         
     }
     else if ($_POST['action']=='add'){
-        $check="SELECT * FROM club_category WHERE club_category_name = '$club_category_name'";
+        $club_id=$_POST['clubs'];
+        $check="SELECT * FROM topic WHERE topic_name = '$topic_name'";
     $result1 = $conn->query($check);
     $num_rows = mysqli_num_rows($result1);
     
@@ -30,10 +32,9 @@ if(isset($_POST['action']))
     else {
        
        
-        $sql = "INSERT INTO club_category (club_category_name, club_category_description)
-    VALUES ('$club_category_name','$club_category_description');";
+        $sql = "INSERT INTO topic (club_id,topic_name, topic_desc,start_date,end_date,status)
+    VALUES ('$club_id','$topic_name','$topic_desc','$start','$end','$status');";
      $sql .= "SELECT LAST_INSERT_ID()"; 
-     
      if ($conn->multi_query($sql)) {
         do {
             if ($result = $conn->store_result()) {
@@ -41,8 +42,8 @@ if(isset($_POST['action']))
                    
                     $var = (string) $row[0];
                 }
-                $club_category_id = "club_".$var."";
-                $sqli = "UPDATE  club_category SET club_category_id = '$club_category_id' where sno= $var";
+                $topic_id = "tp_".$var."";
+                $sqli = "UPDATE  topic SET topic_id = '$topic_id' where sno= $var";
              
                 $conn->query($sqli);
                 echo "success";

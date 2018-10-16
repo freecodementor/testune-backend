@@ -1,7 +1,9 @@
 <?php
 include_once "../../assets/Users.php";
 $database = new Database();
-$conn = $database->getConnection();
+$conn = $database->getConnection();   
+$get_topic="select * from topic";
+$result = $conn->query($get_topic);
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -79,8 +81,6 @@ $conn = $database->getConnection();
       <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 
-<!DOCTYPE html>
-<html lang="en">
 <body>
    <nav>
         <ul class="nav__main">
@@ -88,121 +88,66 @@ $conn = $database->getConnection();
             <li><a href="?q=logout" class="logout-link">Logout</a></li>
         </ul>
     </nav>
-
-
-
- <div class="page-description-header">
+<div class="page-description-header">
         <div class="page-container">
-            <h1 class="page-description-text">NEW TOPIC</h1> <p id="msg"></p>
+            <h1 class="page-description-text">View/Update Topic Detail</h1>
         </div>
     </div>
-    <div class="page-middle-wrapper">
-        <form action="" class="page-form" id="topic_form">
-        <select id="club_category_id" name="club_category_id" class="__select " onchange="fetch_clubs();">
-                    <?php 
-                    $c=$conn->query("select club_category_id,club_category_name from club_category where 1");
-                    $cs=mysqli_num_rows($c);
-                    if($cs > '0'){ 
-                        while($c1=mysqli_fetch_array($c)){                               
-                       echo '<option value="'.$c1[0].'">'.$c1[1].'</option>';                     
-                    }}
-                      $conn->close();?>
-                    </select>
-        <select id="clubs" name="clubs" class="__select">
-        </select><br>
-        <input type="text" name="topic_name" id="topic_name" placeholder="Topic Name" class="form-field"
-                required="true"><br><input type="hidden" name="action" value="add">
-            <textarea name="desc" id="desc" cols="30" rows="10" placeholder="Topic Description" class="form-textarea" required="true"></textarea><br>
-            <input type="text" type="text" name="start" id="start" required="true" placeholder="Start Date" class="form-field" autocomplete="off"><br>
-            <input type="text" type="text" name="end" id="end" required="true" placeholder="End Date" class="form-field" autocomplete="off"><br>
-            <input type="radio" name="status" value="1" checked>Activate
-            <input type="radio" name="status" value="0"> Deactivate<br>
-            <input type="button" name="submit" value="SUBMIT" id="sub" name="sub" onclick="check_form()" class="submit__btn " sty>
-            
-        </form>
-    </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script language="javascript">
-$(function(){
-$("#password").keyup(function(event){
-    if(event.keyCode == 13){
-        login();
-    }
-});
-});
-
-function fetch_clubs(){
-    var club_category_id= $('#club_category_id').val();
-
-    $.ajax({
-						  type: 'POST',
-						  url: 'get_club.php?club_category_id='+club_category_id,
-						  data: '',
-						  beforeSend: function() { 
-							},
-						  success: function(response){
-						     $('#clubs').html(response);
-						  } 
-					       });
-}
-
-function check_form()
+    <div class="page-container">
+        <table id="page-table">
+            <tr>
+                <th>Sno</th>
+                <th>Club Id</th>
+                <th>Topic Name</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Status</th>
+                <th>Update</th>
+            </tr>
+            <?php   $count=0; 
+   $rows=mysqli_num_rows($result);   
+   if($rows>0)
    {
-           var club_name= $('#topic_name').val();    
-            var desc= $('#desc').val(); 
-             if(club_name === '' || desc === '' )
-                  {
-		        alert('Please make sure all fields are filled.');
-		  }
-             else
-		 {          
-                           add_topic();
-                 } 
-   }
+   while($r=mysqli_fetch_array($result))
+   {  $count++;
+   ?>
+                <tbody>
+                    <tr>
+                        <td>
+                            <?php echo $count; ?>
+                        </td>
+                        <td>
+                            <?php echo $r['club_id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $r['topic_name']; ?>
+                        </td>
+                        <td>
+                            <?php echo $r['start_date']; ?>
+                        </td>
+                        <td>
+                            <?php echo $r['end_date']; ?>
+                        </td>
+                        <td>
+                            <?php echo $r['status']; ?>
+                        </td>                       
+                        <td><a href="update_topic.php?id=<?php echo $r['topic_id']; ?>" class="view_faculty_detail">
+                                Update</td>
+                    </tr>
+                </tbody>
+                <?php } }
+       else
+         { 
+            echo "<tbody><tr><td colspan='6'>No Record Found</td></tr></tbody>";
+         }
+ ?>
+                        
+                    </table>
+        <a href="#" class="home_link">Home</a>
+    </div>
+ 
 
-function add_topic(){
-    event.preventDefault();
-    var form = $('#topic_form')[0];
-    var data = new FormData(form);
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "topic_back.php",
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-       success: function (data) {
-            console.log(data);
-            if(data=='success'){
-           alert("Topic Added !");
-           location.reload();
-            }            
-            if(data=='exists'){
-           alert("Topic Already Exists !");
-           location.reload();
-            }
-        },
-        error: function (e) {
-            console.log(e);
-            alert('Error ! Check console for error !');
-        }
-});
-}
-</script>
-  </div>
-  </div>
-</div>
-<!--section for intro text and button ends--> 
-<!--section for features starts-->
-<div class="section colored">
-  <div class="container clearfix"> 
-     <!--features starts-->     
-</div> 
-<br /> <br /> 
+<!--copyright starts-->
   <div class="footer ">
             <div class="footerInner">
                 <h1>&copy; 2018. All the respective rights reserved. SPACEDTIMES  </h1>
@@ -213,4 +158,8 @@ function add_topic(){
         crossorigin="anonymous">
 </body>
 
+</html><!--copyright ends--> 
+
+
+</body>
 </html>

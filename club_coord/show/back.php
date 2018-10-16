@@ -46,31 +46,16 @@ switch ($id) {
 $result = $conn->query($display);
 if (mysqli_num_rows($result)>0)
 {
-echo '<br>';
-echo("<table>");
-$first_row = true;
-while ($row = mysqli_fetch_assoc($result)) {
-    if ($first_row) {
-        $first_row = false;        
-        // Output header row from keys.
-        echo '<tr>';
-        foreach($row as $key => $field) {
-            echo '<th>' . htmlspecialchars($key) . '</th>';
-        } 
-        echo '</tr>';
-    }
-    echo '<tr>';
+echo("<tbody>");
+while ($row = mysqli_fetch_assoc($result)) {    
+    echo '<tbody><tr>';
     foreach($row as $key => $field) {
         echo '<td>' . strip_tags($field) . '</td>';
-    }
-    echo '</tr>';
+        }
+    echo '</tr></tbody>';
     }
 }
-    else {
-        echo "<table><tr><th>$id details</th></tr><tr><td>NO DATA</td></tr>";
-    }
-
-echo("</table>");
+echo("</tbody>");
 $conn->close();
 ?>
 <style>

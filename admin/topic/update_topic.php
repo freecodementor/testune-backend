@@ -1,23 +1,20 @@
 <?php
-include_once "../assets/Users.php";
+include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
-
-$club_category_id = $_GET['id'];
-
-$check="SELECT club_category_name,club_category_description FROM club_category WHERE club_category_id = '$club_category_id'";
-
-$result = $conn->query($check);
-
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+    $topic = "SELECT topic_name,topic_desc,start_date,end_date,status from topic where topic_id= '$id'";
+    $result = $conn->query($topic);
     while($row = $result->fetch_array())
     {
-     $club_category_name =$row['club_category_name'];
-     $club_category_description = $row['club_category_description'];
-    
+     $topic_name =$row['topic_name'];
+     $topic_desc =$row['topic_desc'];
+     $start_date =$row['start_date'];
+     $end_date =$row['end_date'];
+     $status =$row['status'];
     }
-
-
-$conn->close();
+}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -25,68 +22,27 @@ $conn->close();
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Admin Panel - SpacedTimes</title>
 <!--style sheet-->
-<script language="javascript" src="http://www.testune.com/spacedtimes/fancybox/ckeditor/ckeditor.js"></script>
-<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/style.css"/>
-<link rel="stylesheet" media="screen" href="http://www.testune.com/spacedtimes/store_manager/css/navigation.css"/>
-<link href="http://www.testune.com/spacedtimes/faculty/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.min.js"></script>
-<script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-<script type="text/javascript" src="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="http://www.testune.com/spacedtimes/fancybox/jquery.fancybox-1.3.4.css" />
+<script language="javascript" src="http://www.iclubs.in/fancybox/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" media="screen" href="../main.css"/>
+<script type="text/javascript" src="http://www.iclubs.in/fancybox/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.iclubs.in/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script type="text/javascript" src="http://www.iclubs.in/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.iclubs.in/fancybox/jquery.fancybox-1.3.4.css" />
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script src="http://www.testune.com/spacedtimes/fancybox/jquery-ui.js" type="text/javascript"></script>
- <link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="http://www.testune.com/spacedtimes/fancybox/jquery-ui.css" />
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>var $j = jQuery.noConflict(true);</script>
   <script>
   $j( function() {
     dateFormat: "yy-mm-dd"
-    $j( "#datepicker" ).datepicker({
+    $j( "#start,#end" ).datepicker({
   dateFormat: "yy-mm-dd"
 });
   } );
   </script>
 
- <style>
-                       select {
-	-moz-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-webkit-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-ms-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	border: 1px solid #00897B;
-	display: block;
-	text-decoration: none;
-	width: 100%;
-	outline: 0;
-	font-size: 15px;
-	border-radius: 5px;
-	padding: 5px;
-	margin-top: 10px;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-textarea {
-	-moz-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-webkit-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-ms-transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	-ms-appearance: none;
-	appearance: none;
-	color: black;
-	display: block;
-	text-decoration: none;
-	width: 100%;
-	outline: 0;
-	border: 1px solid #00897B;
-	font-size: 15px;
-	margin-top: 10px;
-}
- </style>  <script type="text/javascript">
+<script type="text/javascript">
 		$(document).ready(function() {
 				$("a.pop2").fancybox({
 				'overlayColor'		: '#000',
@@ -133,61 +89,39 @@ textarea {
 				});     
 			});
 			</script>
+      <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
+
+<!DOCTYPE html>
+<html lang="en">
 <body>
-<!--top starts-->
-
-<!--header ends--> <!--section for intro text and button starts-->
-<div class="section">
-  <div class="container clearfix">
-    <div class="grid_12 action3">
-    <table>
-                                <tbody><tr>  
-                                  <td style="padding: 0em 0em;">
-					<section class="wrapper special popup ">
-                                                     <header class="mb-3">
-              <h2 class="text-grey " style=" line-height:1.25em;"><strong>NEW CLUB</strong></h2>
-              
-              <p id="msg"></p>
-						      </header>
-							    <div class="content">
-                                                                  <div class="container">
-                                                                  
-                                                                  <form class="col-md-offset-4 col-md-3 col-md-offset-4  " id="fileUploadForm" enctype="multipart/form-data">
-                                                                                        <div class="10u -1u" style="padding: 20px 0 0 20px;">
-                                        
-												<input type="text" placeholder="Club Category" value="<?php if(isset($club_category_name)){echo $club_category_name;unset($club_category_name);}else{echo 'No data';} ?>" name="club_category_name" id="club_category_name" class="padding-popup radius03" required="true">
-											</div>
-                      
-                      
-                                            
-                     
-                      
-                       
-										 	
-                                                                                        
-<div class="10u -1u" style="padding: 20px 0 0 20px;">
-												<textarea type="text" placeholder="Description"  style="margin-bottom:10px; min-height:100px;" name="club_category_description" id="club_category_description" class="padding-popup radius03" required="true"><?php if(isset($club_category_description)){echo $club_category_description;unset($club_category_description);}else{echo 'No data';} ?></textarea>
-											</div> 
+   <nav>
+        <ul class="nav__main">
+            <li class="logo-list"><a href="index.php" style="text-decoration:none;color:#fff;"> SPACEDTIMES </a></li>
+            <li><a href="?q=logout" class="logout-link">Logout</a></li>
+        </ul>
+    </nav>
 
 
 
-											
-                                            <input type="hidden" name="action" value="update"> 
-                                            <input type="hidden" name="club_category_id" value="<?php echo $club_category_id;?>"> 
-                      
-										 	
-											<div class="10u -1u" style="padding: 20px 0 0 20px; ">
-												<input style="min-height:30px;" type="button" name="submit" value="SUBMIT" class="special-orange popup-big button-popup" id="sub" name="sub" onclick="check_form()" >  
-                                            </div><br>
-                                            
-
-                                        </form>
-										</div>  
-                                      	 </div>
-                 </section> </td></tr>
-</tbody></table>
-       
+ <div class="page-description-header">
+        <div class="page-container">
+            <h1 class="page-description-text">UPDATE TOPIC</h1> <p id="msg"></p>
+        </div>
+    </div>
+    <div class="page-middle-wrapper">
+        <form action="" class="page-form" id="topic_form">              
+        <input value="<?php if(isset($topic_name)){echo $topic_name;}else{}?>" type="text" name="topic_name" id="topic_name" placeholder="Topic Name" class="form-field"
+                required="true"><br><input  type="hidden" name="action" value="update"><input  type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
+            <textarea name="desc" id="desc" cols="30" rows="10" placeholder="Topic Description" class="form-textarea" required="true"><?php if(isset($topic_desc)){echo $topic_desc;}else{}?></textarea><br>
+            <input type="text" value="<?php if(isset($start_date)){echo $start_date;}else{}?>" type="text" name="start" id="start" required="true" placeholder="Start Date" class="form-field" autocomplete="off"><br>
+            <input type="text" value="<?php if(isset($end_date)){echo $end_date;}else{}?>" type="text" name="end" id="end" required="true" placeholder="End Date" class="form-field" autocomplete="off"><br>
+            <input type="radio" name="status" value="1" <?php if(isset($status)){if($status==1){echo 'checked';}else{}}else{} ?>>Activate
+            <input type="radio" name="status" value="0" <?php if(isset($status)){if($status==0){echo 'checked';}else{}}else{} ?>> Deactivate<br>
+            <input type="button" name="submit" value="SUBMIT" id="sub" name="sub" onclick="check_form()" class="submit__btn ">
+            
+        </form>
+    </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -200,84 +134,80 @@ $("#password").keyup(function(event){
 });
 });
 
+function fetch_clubs(){
+    var club_category_id= $('#club_category_id').val();
 
-
-
+    $.ajax({
+						  type: 'POST',
+						  url: 'get_club.php?club_category_id='+club_category_id,
+						  data: '',
+						  beforeSend: function() { 
+							},
+						  success: function(response){
+						     $('#clubs').html(response);
+						  } 
+					       });
+}
 
 function check_form()
    {
-           var club_category_name= $('#club_category_name').val();    
-
-     var club_category_description= $('#club_category_description').val(); 
-                
-	    
-    
-	  
-          
-           if(club_category_name === '' || club_category_description === '' )
+           var club_name= $('#topic_name').val();    
+            var desc= $('#desc').val(); 
+             if(club_name === '' || desc === '' )
                   {
 		        alert('Please make sure all fields are filled.');
 		  }
-           
-           
-	    else
+             else
 		 {          
-           
-                  ajaxbackend();
+                           add_topic();
                  } 
    }
 
-function ajaxbackend(){
-  
-
-    //stop submit the form, we will post it manually.
+function add_topic(){
     event.preventDefault();
-
-    // Get form
-    var form = $('#fileUploadForm')[0];
-
-    // Create an FormData object 
+    var form = $('#topic_form')[0];
     var data = new FormData(form);
-
-    // If you want to add an extra field for the FormData
-    data.append("action", "update");
-
-    // disabled the submit button
-    
-
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "club_cat_back.php",
+        url: "topic_back.php",
         data: data,
         processData: false,
         contentType: false,
         cache: false,
         timeout: 600000,
-        success: function (data) {
+       success: function (data) {
             console.log(data);
             if(data=='updated'){
-           alert("Content Manager Deatils Updated !");
+           alert("Topic Updated !");
            location.reload();
-            }      
+            } 
         },
         error: function (e) {
             console.log(e);
             alert('Error ! Check console for error !');
         }
 });
-} 
+}
 </script>
-<script>
-   
-</script>
-
-    </div>
+  </div>
   </div>
 </div>
 <!--section for intro text and button ends--> 
 <!--section for features starts-->
- 
-
+<div class="section colored">
+  <div class="container clearfix"> 
+     <!--features starts-->     
+</div> 
+<br /> <br /> 
+  <div class="footer ">
+            <div class="footerInner">
+                <h1>&copy; 2018. All the respective rights reserved. SPACEDTIMES  </h1>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
 </body>
+
 </html>
