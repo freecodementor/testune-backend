@@ -37,7 +37,7 @@ if(isset($_POST['action']))
                 $vid_up = "SELECT video_file,link from video where video_id = '$video_id'; ";
                 $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',topic_id='$topic',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
-                if($link ==''){}else{$link .= "video_file='$link',";}
+                if($link ==''){}else{$vid_up .= "video_file='$link',";}
                 $vid_up .= "vendor_id='$vendor_id',school_price='$school_price',mrp_price='$price',club_id='$club_id' where video_id= '$video_id'";
                 if ($conn->multi_query($vid_up))
                 {       
