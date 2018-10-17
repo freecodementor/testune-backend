@@ -11,12 +11,6 @@ if(isset($_GET['id'])){
     vendor.vendor_icon,activities.icon from article  INNER JOIN vendor ON 
     article.vendor_id =   vendor.vendor_id INNER JOIN topic ON 
     article.topic_id =   topic.topic_id  INNER JOIN activities ON activities.page_name LIKE 'article.php' where article_id= '$id'";
-    $r="SELECT role from content_manager where email_id = '$uid'";
-    $rresult = $conn->query($r);
-    while($row = $rresult->fetch_array())
-    {
-        $role =$row['role'];
-    }
     $result = $conn->query($art_up);
     while($row = $result->fetch_array())
     {
