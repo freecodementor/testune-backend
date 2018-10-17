@@ -1,4 +1,5 @@
 <?php
+$uid=$_SESSION['uid'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -6,18 +7,26 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT workshop.title,workshop.description,workshop.speaker,workshop.no_of_classes,workshop.class_applicable_for,
+    $art_up = "SELECT workshop.title,workshop.description,workshop.speaker,workshop.no_of_classes,workshop.class_applicable_for, topic.topic_name,
     workshop.learning,vendor.vendor_name,workshop.prerequisites,workshop.mrp_price,workshop.school_price,
     workshop.primary_image,workshop.secondary_image,workshop.course_icon,vendor.vendor_icon,activities.icon,
     workshop.start_time,workshop.end_time,workshop.duration,workshop.date
      from workshop 
      INNER JOIN vendor ON 
-    workshop.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    workshop.vendor_id =   vendor.vendor_id   INNER JOIN topic ON 
+    workshop.topic_id =   topic.topic_id  INNER JOIN activities ON
      activities.page_name LIKE 'workshop.php' where workshop_id= '$id'";
+     $r="SELECT role from content_manager where email_id = '$uid'";
+     $rresult = $conn->query($r);
+     while($row = $rresult->fetch_array())
+     {
+         $role =$row['role'];
+     }
     $result = $conn->query($art_up);
     while($row = $result->fetch_array())
     {
      $title =$row['title'];
+     $topic =$row['topic_name'];
      $speaker =$row['speaker'];
      $description =$row['description'];
      $no_of_classes = $row['no_of_classes'];
@@ -158,6 +167,7 @@ $conn->close();
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor :<?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h1>
+                    <h1 class="last-text">Topic :<?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>

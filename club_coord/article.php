@@ -1,12 +1,22 @@
 <?php
+session_start();
+$_SESSION['uid']="a@a.com";
+$uid=$_SESSION['uid'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT article.name, article.description, article.duration, article.author, article.mrp_price,article.school_price,article.class_applicable_for, article.article_file,vendor.vendor_name,
+    $art_up = "SELECT article.name,topic.topic_name, article.description, article.duration, article.author, article.mrp_price,article.school_price,article.class_applicable_for, article.article_file,vendor.vendor_name,
     vendor.vendor_icon,activities.icon from article  INNER JOIN vendor ON 
-    article.vendor_id =   vendor.vendor_id  INNER JOIN activities ON activities.page_name LIKE 'article.php' where article_id= '$id'";
+    article.vendor_id =   vendor.vendor_id INNER JOIN topic ON 
+    article.topic_id =   topic.topic_id  INNER JOIN activities ON activities.page_name LIKE 'article.php' where article_id= '$id'";
+    $r="SELECT role from content_manager where email_id = '$uid'";
+    $rresult = $conn->query($r);
+    while($row = $rresult->fetch_array())
+    {
+        $role =$row['role'];
+    }
     $result = $conn->query($art_up);
     while($row = $result->fetch_array())
     {
@@ -20,13 +30,14 @@ if(isset($_GET['id'])){
      $vendor_id = $row['vendor_name'];
      $ven_icon = $row['vendor_icon'];
      $act_icon = $row['icon'];    
+     $topic = $row['topic_name'];   
     }
 }
 else{
     echo "<script>alert('No Article Selected, Please go back and select a Article to view it...')</script>";
     die;
 }
-$conn->close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,6 +117,7 @@ $conn->close();
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor : <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h1>
+                    <h1 class="last-text">Topic : <?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>

@@ -1,18 +1,21 @@
 <?php
+$uid=$_SESSION['uid'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,
+    $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,topic.topic_name,
     webinar.time,vendor.vendor_name,webinar.class_applicable_for,webinar.mrp_price,webinar.school_price,webinar.start_time,webinar.end_time, vendor.vendor_icon,activities.icon
      from webinar INNER JOIN vendor ON 
-    webinar.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    webinar.vendor_id =   vendor.vendor_id  INNER JOIN topic ON 
+    webinar.topic_id =   topic.topic_id INNER JOIN activities ON
      activities.page_name LIKE 'webinar.php' where webinar_id= '$id'";
     $result = $conn->query($art_up);
     while($row = $result->fetch_array())
     {
      $title =$row['title'];
+     $topic =$row['topic_name'];
      $speaker = $row['speaker'];
      $description =$row['description'];
      $duration = $row['duration'];
@@ -115,6 +118,7 @@ $conn->close();
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor : <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h1>
+                    <h1 class="last-text">Topic : <?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>

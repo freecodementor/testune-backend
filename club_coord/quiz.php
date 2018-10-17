@@ -4,15 +4,17 @@ $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $quiz_up = "SELECT quiz.quiz_title, quiz.quiz_creator, quiz.no_of_questions, quiz.link,  
+    $quiz_up = "SELECT quiz.quiz_title, quiz.quiz_creator, quiz.no_of_questions, quiz.link, topic.topic_name, 
     quiz.school_price,quiz.mrp_price,quiz.class_applicable_for,quiz.quiz_details,vendor.vendor_name,vendor.vendor_icon,activities.icon from quiz 
     INNER JOIN vendor ON 
-    quiz.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    quiz.vendor_id =   vendor.vendor_id INNER JOIN topic ON 
+    quiz.topic_id =   topic.topic_id  INNER JOIN activities ON
      activities.page_name LIKE 'quiz.php' where quiz_id= '$id'";
     $result = $conn->query($quiz_up);
     while($row = $result->fetch_array())
     {
      $test_name =$row['quiz_title'];
+     $topic =$row['topic_name'];
      $test_creator = $row['quiz_creator'];
      $ques =$row['no_of_questions'];
      $link = $row['link'];
@@ -106,6 +108,7 @@ $conn->close();
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor :<?php if(isset($vendor)){echo $vendor;}else{}?></h1>
+                    <h1 class="last-text">Topic :<?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>

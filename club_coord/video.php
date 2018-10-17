@@ -1,4 +1,5 @@
 <?php
+$uid=$_SESSION['uid'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -6,16 +7,18 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT video.title, video.description_line, video.duration, video.learning, video.vendor_id,video.class_applicable_for,video.mrp_price, video.school_price,
+    $vid_up = "SELECT video.title, video.description_line, video.duration, topic.topic_name,video.learning, video.vendor_id,video.class_applicable_for,video.mrp_price, video.school_price,
     video.video_file,vendor.vendor_name,vendor.vendor_icon,activities.icon from video
     INNER JOIN vendor ON 
-    video.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    video.vendor_id =   vendor.vendor_id  INNER JOIN topic ON 
+    video.topic_id =   topic.topic_id  INNER JOIN activities ON
      activities.page_name LIKE 'video.php' where video_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
     {
      $title =$row['title'];
+     $topic =$row['topic_name'];
      $description_line = $row['description_line'];
      $duration =$row['duration'];
      $learning = $row['learning'];
@@ -123,6 +126,7 @@ echo ' '.minutes($duration).' ';
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor : <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h1>
+                    <h1 class="last-text">Topic : <?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>

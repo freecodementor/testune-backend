@@ -1,4 +1,6 @@
 <?php
+session_start();
+$uid=$_SESSION['uid'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
@@ -6,10 +8,11 @@ $conn = $database->getConnection();
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, 
+    $vid_up = "SELECT live_course.description_line,live_course.description, live_course.duration, live_course.learning, topic.topic_name,
     vendor.vendor_name, live_course.mrp_price, live_course.school_price,live_course.class_applicable_for,vendor.vendor_icon,activities.icon,live_course.primary_image,live_course.secondary_image,live_course.course_icon
      from live_course  INNER JOIN vendor ON 
-    live_course.vendor_id =   vendor.vendor_id  
+    live_course.vendor_id =   vendor.vendor_id  INNER JOIN topic ON 
+    live_course.topic_id =   topic.topic_id 
     INNER JOIN activities ON
      activities.page_name LIKE 'course.php' 
       where course_id= '$id'";
@@ -18,6 +21,7 @@ if(isset($_GET['id'])){
     while($row = $result->fetch_array())
     {    
      $description_line = $row['description_line'];
+     $topic = $row['topic_name'];
      $description = $row['description'];
      $duration =$row['duration'];
      $learning = $row['learning'];
@@ -143,6 +147,7 @@ $conn->close();
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor : <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h1>
+                    <h1 class="last-text">Topic : <?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>

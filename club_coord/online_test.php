@@ -4,16 +4,18 @@ $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT online_test.test_name, online_test.test_creator, online_test.duration, online_test.test_type, 
+    $vid_up = "SELECT online_test.test_name, online_test.test_creator, online_test.duration, online_test.test_type, topic.topic_name,
     online_test.school_price,online_test.mrp_price,online_test.class_applicable_for,online_test.test_data,vendor.vendor_name,vendor.vendor_icon,activities.icon from online_test 
     INNER JOIN vendor ON 
-    online_test.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    online_test.vendor_id =   vendor.vendor_id INNER JOIN topic ON 
+    online_test.topic_id =   topic.topic_id  INNER JOIN activities ON
      activities.page_name LIKE 'online_test.php' where test_id= '$id'";
     $result = $conn->query($vid_up);
 
     while($row = $result->fetch_array())
     {
      $test_name =$row['test_name'];
+     $topic =$row['topic_name'];
      $test_creator = $row['test_creator'];
      $duration =$row['duration'];
      $test_type = $row['test_type'];
@@ -114,6 +116,7 @@ echo ' '.minutes($duration).' ';
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor :<?php if(isset($vendor)){echo $vendor;}else{}?></h1>
+                    <h1 class="last-text">Topic :<?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>
