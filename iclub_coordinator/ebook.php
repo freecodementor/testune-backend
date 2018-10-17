@@ -1,11 +1,15 @@
 <?php
-include_once "../assets/Users.php";
+session_start();
+//$_SESSION['club_id']="app";
+$cid="club_app";
+include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $ebk_up = "SELECT name, description, duration, author, school_price,mrp_price,vendor_id,class_applicable_for,subscription_level from ebook where book_id= '$id'";
+    $ebk_up = "SELECT name, description, duration, author, school_price,mrp_price,vendor_id,topic_id,class_applicable_for,subscription_level from ebook where book_id= '$id'";
     $result = $conn->query($ebk_up);
+
     while($row = $result->fetch_array())
     {
      $title =$row['name'];
@@ -14,6 +18,7 @@ if(isset($_GET['id'])){
      $author = $row['author'];
      $price =$row['mrp_price'];
      $vendor_id =$row['vendor_id'];
+     $topic_id =$row['topic_id'];
      $class = explode(",",$row['class_applicable_for']);
      $sub = $row['subscription_level'];
      $school_price =$row['school_price'];     
@@ -24,19 +29,22 @@ else{
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../../assets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
+
 <body style="background: #825582;">
     <div class="navigationBar">
         <div class="logoBox">
@@ -251,6 +259,27 @@ else{
                     }
                      else { ?>
                          <option  disabled="disabled" selected>No Vendors</option>   
+                    <?php } ?>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <select id="topic" name="topic" class="__select">
+                    <option value="">Choose Topic</option>
+                    <?php 
+                    $v=$conn->query("select topic_id,topic_name from topic where club_id= '$cid'");
+                    $vs=mysqli_num_rows($v);
+                    if($vs > '0'){ 
+                        while($v1=mysqli_fetch_array($v)){
+                                  if(isset($topic_id) && $topic_id== $v1[0]){?>
+                        <option value='<?php echo $v1[0]; ?>' selected><?php echo $v1[1]; ?></option> 
+                   <?php   }  else{?>
+                       <option value='<?php echo $v1[0]; ?>'><?php echo $v1[1]; ?></option>
+                 <?php  }
+                    ?>
+                             <?php }
+                    }
+                     else { ?>
+                         <option  disabled="disabled" selected>No Topics</option>   
                     <?php } $conn->close();?>
                     </select>
                 </div>
@@ -278,8 +307,6 @@ else{
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.0.201604172/pdfobject.min.js"></script>
-        <script>PDFObject.embed("../assets/ebook/<?php if(isset($ebook_file)){echo $ebook_file;}else{}?>", "#ebookfile");</script>
     <script language="javascript">
     function ajaxbackend(){
     var checkboxes = document.getElementsByName('class[]');
@@ -301,8 +328,9 @@ else{
     var editor1= $('#editor1').val(); 
     var price= $('#price').val();
     var school_price= $('#school_price').val(); 
+    var topic= $('#topic').val(); 
      
-    if(course == '' || duration == '' || author == '' || editor1 == '' || price == '' || school_price == '' || vals == '' )
+    if(topic == '' || course == '' || duration == '' || author == '' || editor1 == '' || price == '' || school_price == '' || vals == '' )
                   {
 		        alert('Please make sure all fields are filled.');
                 event.preventDefault();

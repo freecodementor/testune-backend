@@ -4,15 +4,18 @@ $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT online_test.test_name, online_test.test_creator, online_test.duration, online_test.test_type, 
+    $vid_up = "SELECT online_test.test_name, online_test.test_creator, online_test.duration, online_test.test_type, topic.topic_name,
     online_test.school_price,online_test.mrp_price,online_test.class_applicable_for,online_test.test_data,vendor.vendor_name,vendor.vendor_icon,activities.icon from online_test 
     INNER JOIN vendor ON 
-    online_test.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    online_test.vendor_id =   vendor.vendor_id INNER JOIN topic ON 
+    online_test.topic_id =   topic.topic_id  INNER JOIN activities ON
      activities.page_name LIKE 'online_test.php' where test_id= '$id'";
     $result = $conn->query($vid_up);
+
     while($row = $result->fetch_array())
     {
      $test_name =$row['test_name'];
+     $topic =$row['topic_name'];
      $test_creator = $row['test_creator'];
      $duration =$row['duration'];
      $test_type = $row['test_type'];
@@ -38,7 +41,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../assets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 </head>
 <body>
@@ -88,13 +91,13 @@ echo ' '.minutes($duration).' ';
         </div>
         <div class="div-gap">
             <div class="pre-wrap">
-                <h1 class="desc-head">Test Details</h1>
+                <h1 class="desc-head">What Will I Get?</h1>
                 <div class="pre-list" style="overflow-x:auto;overflow-y: auto;max-height: 200px;">
                 <?php if(isset($test_data)){echo $test_data;}else{}?>
                 </div>
             </div>
         </div>
-    <form id="approve" method="POST" action="">
+    
         <div class="div-gap">
             <h1 class="desc-head">Webinar Is Applicable For Class</h1>
             <div class="class-wrap">
@@ -113,14 +116,12 @@ echo ' '.minutes($duration).' ';
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor :<?php if(isset($vendor)){echo $vendor;}else{}?></h1>
+                    <h1 class="last-text">Topic :<?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>
     </div>
-                <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
-                <input type="hidden" name="type" value="online_test">
-                <button class="p__btn" type="submit" onclick="ajaxbackend()">Approve</button>
-                </form>
+
            <div class="footer">
         <div class="footerInner">
             <h1>SPACEDTIMES</h1>
@@ -141,7 +142,7 @@ echo ' '.minutes($duration).' ';
                         $.ajax({
                         type: "POST",
                         enctype: 'multipart/form-data',
-                        url: "approve.php",
+                        url: "<?php if(isset($role)){if($role=='1'){echo 'approve.php';}}else{}?>",
                         data: data,
                         processData: false,
                         contentType: false,

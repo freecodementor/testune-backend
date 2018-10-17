@@ -1,18 +1,21 @@
 <?php
+$uid=$_SESSION['uid'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,
+    $art_up = "SELECT webinar.title,webinar.speaker,webinar.description,webinar.duration,webinar.learning,webinar.date,topic.topic_name,
     webinar.time,vendor.vendor_name,webinar.class_applicable_for,webinar.mrp_price,webinar.school_price,webinar.start_time,webinar.end_time, vendor.vendor_icon,activities.icon
      from webinar INNER JOIN vendor ON 
-    webinar.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    webinar.vendor_id =   vendor.vendor_id  INNER JOIN topic ON 
+    webinar.topic_id =   topic.topic_id INNER JOIN activities ON
      activities.page_name LIKE 'webinar.php' where webinar_id= '$id'";
     $result = $conn->query($art_up);
     while($row = $result->fetch_array())
     {
      $title =$row['title'];
+     $topic =$row['topic_name'];
      $speaker = $row['speaker'];
      $description =$row['description'];
      $duration = $row['duration'];
@@ -41,7 +44,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../assets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 </head>
 <body>
@@ -115,14 +118,12 @@ $conn->close();
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor : <?php if(isset($vendor_id)){echo $vendor_id;}else{}?></h1>
+                    <h1 class="last-text">Topic : <?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>
     </div>    
-            <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>"> 
-            <input type="hidden" name="type" value="webinar">            
-            <button class="p__btn" type="submit" onclick="ajaxbackend()">Approve</button>
-            </form>
+           
            <div class="footer">
         <div class="footerInner">
             <h1>SPACEDTIMES</h1>
@@ -135,35 +136,7 @@ $conn->close();
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>        
-        <script language="javascript">
-    function ajaxbackend(){   
-                        event.preventDefault();                 
-                        var form = $('#approve')[0];           
-                        var data = new FormData(form);                                                      
-                        $.ajax({
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        url: "approve.php",
-                        data: data,
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        timeout: 600000,
-                        success: function (data) {   
-                            console.log(data);                          
-                            if (data=='approved')
-                        {alert('Approved Successfully !');
-                        location.reload(true); 
-                        }else if(data=='error')
-                        {alert('Error Approving !');}                                                                       
-                        },
-                        error: function (e) {           
-                            console.log(e);
-                        }
-                    });      
-                    
-                }
-        </script>
+      
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";

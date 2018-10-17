@@ -1,19 +1,23 @@
 <?php
+$uid=$_SESSION['uid'];
 include_once "../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $vid_up = "SELECT ebook.name, ebook.author, ebook.duration, 
+    $vid_up = "SELECT ebook.name, ebook.author, ebook.duration, topic.topic_name,
     ebook.description, ebook.mrp_price,ebook.school_price,ebook.class_applicable_for,ebook.ebook_file,
     vendor.vendor_name,vendor.vendor_icon,activities.icon 
      from ebook INNER JOIN vendor ON    ebook.vendor_id 
-     =   vendor.vendor_id  INNER JOIN activities ON
+     =   vendor.vendor_id INNER JOIN topic ON    ebook.topic_id 
+     =   topic.topic_id   INNER JOIN activities ON
      activities.page_name LIKE 'ebook.php' where book_id= '$id'";
     $result = $conn->query($vid_up);
+
     while($row = $result->fetch_array())
     {
      $ebk_file =$row['name'];
+     $topic =$row['topic_name'];
      $author = $row['author'];
      $duration =$row['duration'];
      $description = $row['description'];
@@ -23,7 +27,8 @@ if(isset($_GET['id'])){
      $ven_icon = $row['vendor_icon'];
      $vendor = $row['vendor_name'];
      $act_icon = $row['icon'];
-     $ebook_file =$row['ebook_file'];     
+     $ebook_file =$row['ebook_file'];
+     
     }
 }
 else{
@@ -39,9 +44,12 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../assets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
 </head>
+
+
 <body>
     <div class="navigationBar">
         <div class="logoBox">
@@ -103,8 +111,7 @@ echo ' '.minutes($duration).' ';
                     <li>Classification</li>
                 </ul>
             </div>
-        </div> -->
-    <form id="approve" method="POST" action="">
+        </div> -->    
         <div class="div-gap">
             <h1 class="desc-head">Webinar Is Applicable For Class</h1>
             <div class="class-wrap">
@@ -124,14 +131,11 @@ echo ' '.minutes($duration).' ';
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor : <?php if(isset($vendor)){echo $vendor;}else{}?></h1>
+                    <h1 class="last-text">Topic : <?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>
-    </div>
-          <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
-           <input type="hidden" name="type" value="ebook">
-           <button class="p__btn" type="submit" onclick="ajaxbackend()">Approve</button>          
-          </form>
+    </div>          
            <div class="footer">
         <div class="footerInner">
             <h1>SPACEDTIMES</h1>
@@ -146,35 +150,7 @@ echo ' '.minutes($duration).' ';
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-        <script language="javascript">
-    function ajaxbackend(){   
-                        event.preventDefault();                 
-                        var form = $('#approve')[0];           
-                        var data = new FormData(form);                                                      
-                        $.ajax({
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        url: "approve.php",
-                        data: data,
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        timeout: 600000,
-                        success: function (data) {   
-                            console.log(data);                          
-                            if (data=='approved')
-                        {alert('Approved Successfully !');
-                        location.reload(true); 
-                        }else if(data=='error')
-                        {alert('Error Approving !');}                                                                       
-                        },
-                        error: function (e) {           
-                            console.log(e);
-                        }
-                    });      
-                    
-                }
-        </script>
+     
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";

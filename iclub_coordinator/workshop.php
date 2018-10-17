@@ -1,13 +1,19 @@
 <?php
-include_once "../assets/Users.php";
+session_start();
+$cid="club_app";
+include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
+
+
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $web_up = "SELECT title,description_line,no_of_classes,mrp_price,school_price,class_applicable_for,
     subscription_level,learning,prerequisites, primary_image,secondary_image,date,duration,
-     course_icon, vendor_id, class_applicable_for,subscription_level,start_time,end_time,duration,speaker from workshop where workshop_id= '$id'";     
+     course_icon, vendor_id,topic_id, class_applicable_for,subscription_level,start_time,end_time,duration from workshop where workshop_id= '$id'";
+     
     $result = $conn->query($web_up);
+
     while($row = $result->fetch_array())
     {
      $title =$row['title'];
@@ -25,12 +31,15 @@ if(isset($_GET['id'])){
      $school_price =$row['school_price'];
      $start =$row['start_time'];
      $end =$row['end_time'];
-     $duration =$row['duration'];    
-     $speaker =$row['speaker'];      
+     $topic_id =$row['topic_id'];
+     $duration =$row['duration'];
+     
     }
 }
-else{   
+else{
+
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +50,7 @@ else{
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../../assets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -94,9 +103,6 @@ else{
                 </div>
                 <div class="input-group">
                     <input type="text" value="<?php if(isset($school_price)){echo $school_price;}else{}?>" name="school_price" id="school_price" placeholder="Enter School Price" class="field-right" />
-                </div>
-                <div class="input-group">
-                    <input type="text"  value="<?php if(isset($speaker)){echo $speaker;}else{}?>" name="speaker" id="speaker" placeholder="Speaker" />
                 </div>
             </div>
             <h1 class="text-head">What Will I Get ? </h1>
@@ -245,10 +251,10 @@ else{
                     <input type="text" value="<?php if(isset($date)){echo $date;}else{}?>" name="date" id="datepicker" placeholder="Enter Date" class="field-right" />
                 </div>
                 <div class="input-group">
-                    <input type="time" value="<?php if(isset($start)){echo $start;}else{}?>" name="start" id="start" placeholder="Enter Start Time" class="field-right" />
+                    <input type="text" value="<?php if(isset($start)){echo $start;}else{}?>" name="start" id="start" placeholder="Enter Start Time" class="field-right" />
                 </div>
                 <div class="input-group">
-                    <input type="time" value="<?php if(isset($end)){echo $end;}else{}?>" name="end" id="end" placeholder="Enter End Time" class="field-right" />
+                    <input type="text" value="<?php if(isset($end)){echo $end;}else{}?>" name="end" id="end" placeholder="Enter End Time" class="field-right" />
                 </div>
             </div>
             <div class="upload_div">
@@ -295,9 +301,30 @@ else{
                     }
                      else { ?>
                          <option  disabled="disabled" selected>No Vendors</option>   
-                    <?php } $conn->close();?>
+                    <?php } ?>
                 </select>
             </div>
+            <div class="input-group">
+                    <select id="topic" name="topic" class="__select">
+                    <option value="" >Choose Topic</option>
+                    <?php 
+                    $v=$conn->query("select topic_id,topic_name from topic where club_id= '$cid'");
+                    $vs=mysqli_num_rows($v);
+                    if($vs > '0'){ 
+                        while($v1=mysqli_fetch_array($v)){
+                                  if(isset($topic_id) && $topic_id== $v1[0]){?>
+                        <option value='<?php echo $v1[0]; ?>' selected><?php echo $v1[1]; ?></option> 
+                   <?php   }  else{?>
+                       <option value='<?php echo $v1[0]; ?>'><?php echo $v1[1]; ?></option>
+                 <?php  }
+                    ?>
+                             <?php }
+                    }
+                     else { ?>
+                         <option  disabled="disabled" selected>No Topics</option>   
+                    <?php } $conn->close();?>
+                    </select>
+                </div>
             <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>"> 
             <input type="hidden" name="action" <?php if(isset($id)){echo 'value="update"';}else{echo 'value="publish"';}?>>
             <button name="submit" value="submit" type="submit" id="submit" onclick="ajaxbackend()" class="p__btn">Publish</button>
@@ -339,10 +366,10 @@ else{
             var price= $('#price').val();
             var start= $('#start').val();
             var end= $('#end').val();
-            var end= $('#speaker').val();
             var duration= $('#duration').val(); 
             var school_price= $('#school_price').val();
-             if(speaker == '' || start == '' ||end == '' ||duration == '' ||course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || school_price == '' || price == '' || vals=='' )
+            var topic= $('#topic').val();
+             if(topic == '' || start == '' ||end == '' ||duration == '' ||course == '' || editor3 == '' || editor1 == '' || editor2 == '' || vendor == ''  || classes == '' || sub_lvl == '' || cls_lvl == '' || school_price == '' || price == '' || vals=='' )
                           {
                         alert('Please make sure all fields are filled.');
                         event.preventDefault();

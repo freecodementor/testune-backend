@@ -4,15 +4,17 @@ $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $quiz_up = "SELECT quiz.quiz_title, quiz.quiz_creator, quiz.no_of_questions, quiz.link,  
+    $quiz_up = "SELECT quiz.quiz_title, quiz.quiz_creator, quiz.no_of_questions, quiz.link, topic.topic_name, 
     quiz.school_price,quiz.mrp_price,quiz.class_applicable_for,quiz.quiz_details,vendor.vendor_name,vendor.vendor_icon,activities.icon from quiz 
     INNER JOIN vendor ON 
-    quiz.vendor_id =   vendor.vendor_id  INNER JOIN activities ON
+    quiz.vendor_id =   vendor.vendor_id INNER JOIN topic ON 
+    quiz.topic_id =   topic.topic_id  INNER JOIN activities ON
      activities.page_name LIKE 'quiz.php' where quiz_id= '$id'";
     $result = $conn->query($quiz_up);
     while($row = $result->fetch_array())
     {
      $test_name =$row['quiz_title'];
+     $topic =$row['topic_name'];
      $test_creator = $row['quiz_creator'];
      $ques =$row['no_of_questions'];
      $link = $row['link'];
@@ -88,7 +90,6 @@ $conn->close();
                 </div>
             </div>
         </div>
-    <form id="approve" method="POST" action="">
         <div class="div-gap">
             <h1 class="desc-head">Quiz Is Applicable For Class</h1>
             <div class="class-wrap">
@@ -106,14 +107,11 @@ $conn->close();
         <div class="div-gap">
             <div class="last-wrap">
                 <h1 class="last-text">Vendor :<?php if(isset($vendor)){echo $vendor;}else{}?></h1>
+                    <h1 class="last-text">Topic :<?php if(isset($topic)){echo $topic;}else{}?></h1>
                 <h1 class="last-text">Price : Rs <?php if(isset($price)){echo $price;}else{}?></h1>
             </div>
         </div>
-    </div>
-                <input type="hidden" name="id" value="<?php if(isset($id)){echo $id;}else{}?>">
-                <input type="hidden" name="type" value="quiz">
-                <button class="p__btn" type="submit" onclick="ajaxbackend()">Approve</button></form>
-                </form>
+    </div>                
            <div class="footer">
         <div class="footerInner">
             <h1>SPACEDTIMES</h1>
@@ -125,36 +123,7 @@ $conn->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-        <script language="javascript">
-    function ajaxbackend(){   
-                        event.preventDefault();                 
-                        var form = $('#approve')[0];           
-                        var data = new FormData(form);                                                      
-                        $.ajax({
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        url: "approve.php",
-                        data: data,
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        timeout: 600000,
-                        success: function (data) {   
-                            console.log(data);                          
-                            if (data=='approved')
-                        {alert('Approved Successfully !');
-                        location.reload(true); 
-                        }else if(data=='error')
-                        {alert('Error Approving !');}                                                                       
-                        },
-                        error: function (e) {           
-                            console.log(e);
-                        }
-                    });      
-                    
-                }
-        </script>
+        crossorigin="anonymous"></script>        
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";

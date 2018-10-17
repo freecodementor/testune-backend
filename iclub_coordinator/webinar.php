@@ -1,10 +1,13 @@
 <?php
-include_once "../assets/Users.php";
+session_start();
+$cid="club_app";
+$club_id='club_web';
+include_once "../../assets/Users.php";
 $database = new Database();
 $conn = $database->getConnection();
 if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $web_up = "SELECT title,speaker,description,duration,date,start_time,mrp_price,school_price,learning,vendor_id,class_applicable_for,subscription_level,start_time,end_time from webinar where webinar_id= '$id'";
+    $web_up = "SELECT title,speaker,description,duration,date,start_time,mrp_price,school_price,learning,vendor_id,topic_id,class_applicable_for,subscription_level,start_time,end_time from webinar where webinar_id= '$id'";
     $result = $conn->query($web_up);
     while($row = $result->fetch_array())
     {
@@ -12,7 +15,8 @@ if(isset($_GET['id'])){
      $speaker = $row['speaker'];
      $description =$row['description'];
      $duration = date("h:i",strtotime($row['duration']));
-     $date =$row['date'];     
+     $date =$row['date'];    
+     $topic_id =$row['topic_id']; 
      $start =$row['start_time'];
      $end =$row['end_time'];
      $price =$row['mrp_price'];
@@ -24,17 +28,20 @@ if(isset($_GET['id'])){
     }
 }
 else{
+
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../../assets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -50,6 +57,7 @@ else{
   } );
   </script>
 </head>
+
 <body style="background: #825582;">
     <div class="navigationBar">
         <div class="logoBox">
@@ -109,6 +117,7 @@ else{
                         <label>
                             <input type="checkbox" name="class[]" value='8' <?php if(isset($class)){echo (in_array("8",$class)) ? 'checked="checked"' : '';}else{}?>><span class="checkbox-material"><span class="check"></span></span>
                             <br> <span style="margin-left: -15px">Class 8</span>
+
                         </label>
                     </div>
                 </div>
@@ -248,6 +257,27 @@ else{
                     }
                      else { ?>
                          <option  disabled="disabled" selected>No Vendors</option>   
+                    <?php }?>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <select id="topic" name="topic" class="__select">
+                    <option value="" >Choose Topic</option>
+                    <?php 
+                    $v=$conn->query("select topic_id,topic_name from topic where club_id= '$cid'");
+                    $vs=mysqli_num_rows($v);
+                    if($vs > '0'){ 
+                        while($v1=mysqli_fetch_array($v)){
+                                  if(isset($topic_id) && $topic_id== $v1[0]){?>
+                        <option value='<?php echo $v1[0]; ?>' selected><?php echo $v1[1]; ?></option> 
+                   <?php   }  else{?>
+                       <option value='<?php echo $v1[0]; ?>'><?php echo $v1[1]; ?></option>
+                 <?php  }
+                    ?>
+                             <?php }
+                    }
+                     else { ?>
+                         <option  disabled="disabled" selected>No Topics</option>   
                     <?php } $conn->close();?>
                     </select>
                 </div>
@@ -298,9 +328,10 @@ else{
             var start= $('#start').val();
             var date= $('#date').val(); 
             var vendor= $('#vendor').val();  
-            var price= $('#price').val();            
+            var price= $('#price').val(); 
+            var topic= $('#topic').val();            
             var school_price= $('#school_price').val();   
-             if(start == '' || end == '' ||course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == ''  || speaker == '' || time == '' || date == '' || price == '' || school_price == '' || vals == '')
+             if(topic == '' || start == '' || end == '' ||course == '' || duration == '' || editor1 == '' || editor2 == '' || vendor == ''  || speaker == '' || time == '' || date == '' || price == '' || school_price == '' || vals == '')
             {
              alert('Please make sure all fields are filled.');
              event.preventDefault();

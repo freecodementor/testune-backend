@@ -13,16 +13,21 @@ $vendor_id = $_POST['vendor'];
 $price = $_POST['mrp_price'];
 $school_price = $_POST['school_price'];
 $class = $_POST['class'];
-if(isset($_POST['link'])){$link=$_POST['link'];}else{$link='';}
+$topic = $_POST['topic'];
+if(isset($_POST['link'])){$link=$_POST['link'];}else{$link='abc';}
 $sub=$_POST['sub'];
 function ren_save(){
-    $target_dir = "../assets/video/";
+    $target_dir = "../../assets/video/";
     $f = $target_dir . basename($_FILES["fileToUpload"]["name"]);
     $filetype = strtolower(pathinfo($f,PATHINFO_EXTENSION));
     $file = date("hisa").rand(0,10).rand(0,10).".".$filetype;
     move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $file);  
     return $file;                                     
 }
+
+
+
+
 if(isset($_POST['action']))
 {   
     if ($_POST['action']=='update')
@@ -30,19 +35,20 @@ if(isset($_POST['action']))
         $f=ren_save();        
                 $video_id=$_POST['id'];
                 $vid_up = "SELECT video_file,link from video where video_id = '$video_id'; ";
-                $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',";
+                $vid_up .= "UPDATE  video SET title = '$title', description_line='$description_line',duration='$duration',learning='$learning',class_applicable_for='$class',subscription_level='$sub',topic_id='$topic',";
                 if($_FILES['fileToUpload']['name']==''){}else{$vid_up .= "video_file='$f',";}
-                if($link ==''){}else{$link .= "video_file='$link',";}
+                if($link ==''){}else{$vid_up .= "link='$link',";}
                 $vid_up .= "vendor_id='$vendor_id',school_price='$school_price',mrp_price='$price',club_id='$club_id' where video_id= '$video_id'";
                 if ($conn->multi_query($vid_up))
                 {       
-                    do {                        
+                    do {
+                        
                                 if ($result = $conn->store_result()){
                                     while ($row = $result->fetch_row()){               
                                         if($_FILES['fileToUpload']['name']!==''){
                                             $var = (string) $row[0];
                                             error_reporting(0); 
-                                            if(!unlink('../assets/video/'.$var)){}else{}
+                                            if(!unlink('../../assets/video/'.$var)){}else{}
                                         }
                                     } 
                                     echo 'updated';             
@@ -76,10 +82,10 @@ if(isset($_POST['action']))
                                 $f=ren_save();
                      
                             //Data Upload
-                            $sql = "INSERT INTO video  (title,description_line,duration,mrp_price,school_price,learning,vendor_id,club_id,class_applicable_for,subscription_level";
+                            $sql = "INSERT INTO video  (title,description_line,duration,mrp_price,school_price,learning,vendor_id,club_id,class_applicable_for,subscription_level,topic_id";
                             if($_FILES['fileToUpload']['name']==''){}else{$sql .= ",video_file";}
                             if($link==''){}else{$sql .= ",link";}
-                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$school_price','$learning','$vendor_id','$club_id','$class','$sub'";
+                            $sql .= ") VALUES ('$title','$description_line','$duration','$price','$school_price','$learning','$vendor_id','$club_id','$class','$sub','$topic'";
                             if($_FILES['fileToUpload']['name']==''){}else{ $sql .= " ,'$f'";}
                             if($link ==''){}else{ $sql .= " ,'$link'";}
                             $sql .= ");";
